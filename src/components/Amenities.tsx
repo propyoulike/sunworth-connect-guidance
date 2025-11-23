@@ -5,6 +5,17 @@ interface AmenitiesProps {
 }
 
 const Amenities = ({ onCtaClick }: AmenitiesProps) => {
+  const amenityImages = [
+    { src: "/images/amenities/basketball.jpg", title: "Basketball Court", description: "Professional court for sports enthusiasts" },
+    { src: "/images/amenities/gym.jpg", title: "Gymnasium", description: "State-of-the-art fitness equipment" },
+    { src: "/images/amenities/swimming-pool.jpg", title: "Swimming Pool", description: "Olympic-size pool for all ages" },
+    { src: "/images/amenities/tennis.jpg", title: "Tennis Court", description: "Premium tennis facilities" },
+    { src: "/images/amenities/playground.png", title: "Children's Play Area", description: "Safe and fun play zones for kids" },
+    { src: "/images/amenities/library.jpg", title: "Library", description: "Quiet reading and study space" },
+    { src: "/images/amenities/forest-walk.jpg", title: "Forest Walk", description: "Scenic nature trails within the township" },
+    { src: "/images/amenities/cricket.webp", title: "Cricket Pitch", description: "Full-sized cricket ground" }
+  ];
+
   const amenityCategories = [
     {
       title: "Sports & Fitness",
@@ -36,7 +47,25 @@ const Amenities = ({ onCtaClick }: AmenitiesProps) => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 max-w-7xl mx-auto">
+          {amenityImages.map((amenity, index) => (
+            <div key={index} className="group relative rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-medium)' }}>
+              <div className="aspect-square overflow-hidden">
+                <img 
+                  src={amenity.src} 
+                  alt={amenity.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+                <h4 className="text-white font-bold text-lg mb-1">{amenity.title}</h4>
+                <p className="text-white/80 text-sm">{amenity.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 max-w-7xl mx-auto">
           {amenityCategories.map((category, index) => (
             <div key={index} className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
               <h3 className="text-xl font-bold mb-4 text-foreground">{category.title}</h3>

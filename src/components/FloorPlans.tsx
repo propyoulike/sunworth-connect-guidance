@@ -9,15 +9,24 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
   const plans = [
     {
       title: "2 BHK",
+      image: "/images/2bhk-plan.webp",
       video: "https://www.youtube.com/shorts/z6-d5uB4rRA",
       description: "Thoughtful layouts with smart use of space",
-      price: "₹69.99 L onwards"
+      price: "Starting at ₹69.99 L*"
     },
     {
-      title: "3 BHK",
-      video: "https://youtu.be/B2izuPDFLak",
+      title: "3 BHK Regular",
+      image: "/images/3bhk-plan.webp",
+      video: "https://youtube.com/shorts/QEtUBt1Ac3U",
       description: "Premium homes for growing families",
-      price: "₹79.99 L onwards"
+      price: "Starting at ₹79.99 L*"
+    },
+    {
+      title: "3 BHK Royale",
+      image: "/images/3bhk-royale.webp",
+      video: "https://youtu.be/B2izuPDFLak",
+      description: "Luxurious space with premium finishes",
+      price: "Premium pricing - contact us"
     }
   ];
 
@@ -33,15 +42,22 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-12">
           {plans.map((plan, index) => (
             <Card key={index} className="p-6 hover:shadow-xl transition-shadow">
+              <div className="rounded-lg overflow-hidden mb-6 bg-muted">
+                <img 
+                  src={plan.image} 
+                  alt={`${plan.title} Floor Plan`}
+                  className="w-full h-auto"
+                />
+              </div>
               <div className="aspect-video rounded-lg overflow-hidden mb-6 bg-muted">
                 <iframe
                   width="100%"
                   height="100%"
                   src={plan.video.replace('youtu.be/', 'youtube.com/embed/').replace('shorts/', 'embed/')}
-                  title={`${plan.title} Floor Plan`}
+                  title={`${plan.title} Walkthrough`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
