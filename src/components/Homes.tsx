@@ -13,7 +13,13 @@ const homes = [
   },
 ];
 
-const Homes = () => {
+import { Button } from "@/components/ui/button";
+
+interface HomesProps {
+  onCtaClick: () => void;
+}
+
+const Homes = ({ onCtaClick }: HomesProps) => {
   return (
     <section className="py-20 lg:py-28 bg-gradient-to-b from-secondary/30 to-background">
       <div className="container mx-auto px-4">
@@ -52,9 +58,19 @@ const Homes = () => {
           ))}
         </div>
 
-        <p className="text-center text-sm text-muted-foreground mt-8">
+        <p className="text-center text-sm text-muted-foreground mt-8 mb-8">
           *Exact price and availability shared by your advisor based on current inventory.
         </p>
+
+        <div className="text-center">
+          <Button 
+            size="lg" 
+            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
+            onClick={onCtaClick}
+          >
+            Get Personalised Guidance
+          </Button>
+        </div>
       </div>
     </section>
   );

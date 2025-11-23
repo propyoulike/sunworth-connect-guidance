@@ -1,4 +1,9 @@
 import { MapPin, Train, Building2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+interface ConnectivityProps {
+  onCtaClick: () => void;
+}
 
 const connectivityPoints = [
   {
@@ -18,9 +23,9 @@ const connectivityPoints = [
   },
 ];
 
-const Connectivity = () => {
+const Connectivity = ({ onCtaClick }: ConnectivityProps) => {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="py-20 lg:py-28 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 text-foreground">
@@ -57,6 +62,16 @@ const Connectivity = () => {
               <p className="text-sm text-muted-foreground">{point.description}</p>
             </div>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Button 
+            size="lg" 
+            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
+            onClick={onCtaClick}
+          >
+            Get Personalised Guidance
+          </Button>
         </div>
       </div>
     </section>
