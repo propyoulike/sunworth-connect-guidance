@@ -17,18 +17,29 @@ const Views = ({ onCtaClick }: ViewsProps) => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto mb-12">
-          <div className="grid md:grid-cols-2 gap-8">
+        <div className="max-w-7xl mx-auto mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <div className="w-full h-full bg-muted flex items-center justify-center">
-                <p className="text-muted-foreground">Green View</p>
-              </div>
+              <img src="/images/views/elevation-1.webp" alt="Provident Sunworth Elevation" className="w-full h-full object-cover" />
             </div>
             <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <div className="w-full h-full bg-muted flex items-center justify-center">
-                <p className="text-muted-foreground">Township View</p>
-              </div>
+              <img src="/images/views/elevation-2.webp" alt="Provident Sunworth Elevation View" className="w-full h-full object-cover" />
             </div>
+            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
+              <img src="/images/views/night-view-1.webp" alt="Provident Sunworth Night View" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
+              <img src="/images/views/night-view-2.webp" alt="Clubhouse Night View" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
+              <img src="/images/views/viewing-deck.webp" alt="Viewing Deck" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
+              <img src="/images/views/tree-house.webp" alt="Tree House View" className="w-full h-full object-cover" />
+            </div>
+          </div>
+          <div className="mt-6 rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-strong)' }}>
+            <img src="/images/views/clubhouse.webp" alt="Clubhouse Aerial View" className="w-full h-auto" />
           </div>
         </div>
 

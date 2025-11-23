@@ -1,0 +1,212 @@
+import { Button } from "@/components/ui/button";
+import { MapPin } from "lucide-react";
+
+interface LocationProps {
+  onCtaClick: () => void;
+}
+
+const Location = ({ onCtaClick }: LocationProps) => {
+  const nearbyPlaces = {
+    commute: [
+      "NICE Road - 5 mins",
+      "Mysore Road - Adjacent",
+      "Kengeri Metro Station - 10 mins",
+      "Upcoming Metro Station - Walking distance"
+    ],
+    corporates: [
+      "Global Village Tech Park - 15 mins",
+      "RR Nagar IT Hub - 20 mins",
+      "Peenya Industrial Area - 25 mins",
+      "Electronic City - 40 mins"
+    ],
+    hospitals: [
+      "Columbia Asia Hospital - 10 mins",
+      "Manipal Hospital - 15 mins",
+      "BGS Global Hospital - 20 mins",
+      "Apollo Hospital - 25 mins"
+    ],
+    entertainment: [
+      "Orion Mall - 15 mins",
+      "Mantri Square Mall - 20 mins",
+      "PVR Cinemas - 15 mins",
+      "Wonderla Amusement Park - 20 mins"
+    ],
+    schools: [
+      "Chrysalis High School (On Campus)",
+      "Delhi Public School - 10 mins",
+      "Inventure Academy - 15 mins",
+      "Gear Innovation School - 12 mins"
+    ],
+    colleges: [
+      "PES University - 20 mins",
+      "BMS College of Engineering - 25 mins",
+      "MSRIT - 30 mins",
+      "Christ University - 35 mins"
+    ]
+  };
+
+  return (
+    <section className="py-20 lg:py-28 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
+            Perfect Setting: Location & Neighbourhood
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Strategically located on Mysore Road with excellent connectivity to all major IT hubs, schools, hospitals, and entertainment zones. Live close to everything that matters.
+          </p>
+        </div>
+
+        {/* Location Video */}
+        <div className="max-w-4xl mx-auto mb-16">
+          <div className="rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-strong)' }}>
+            <div className="aspect-video">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/CY-IwT0sCv0"
+                title="Provident Sunworth Location"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Nearby Places Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
+          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
+            <h3 className="text-xl font-bold mb-4 text-foreground">🚗 Commute</h3>
+            <ul className="space-y-2">
+              {nearbyPlaces.commute.map((place, index) => (
+                <li key={index} className="text-muted-foreground flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>{place}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
+            <h3 className="text-xl font-bold mb-4 text-foreground">🏢 Corporates</h3>
+            <ul className="space-y-2">
+              {nearbyPlaces.corporates.map((place, index) => (
+                <li key={index} className="text-muted-foreground flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>{place}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
+            <h3 className="text-xl font-bold mb-4 text-foreground">🏥 Hospitals</h3>
+            <ul className="space-y-2">
+              {nearbyPlaces.hospitals.map((place, index) => (
+                <li key={index} className="text-muted-foreground flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>{place}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
+            <h3 className="text-xl font-bold mb-4 text-foreground">🎭 Entertainment & Worship</h3>
+            <ul className="space-y-2">
+              {nearbyPlaces.entertainment.map((place, index) => (
+                <li key={index} className="text-muted-foreground flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>{place}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
+            <h3 className="text-xl font-bold mb-4 text-foreground">🎓 Schools</h3>
+            <ul className="space-y-2">
+              {nearbyPlaces.schools.map((place, index) => (
+                <li key={index} className="text-muted-foreground flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>{place}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
+            <h3 className="text-xl font-bold mb-4 text-foreground">🎓 Colleges</h3>
+            <ul className="space-y-2">
+              {nearbyPlaces.colleges.map((place, index) => (
+                <li key={index} className="text-muted-foreground flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>{place}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Address & Map */}
+        <div className="max-w-6xl mx-auto mb-12">
+          <div className="bg-card rounded-2xl p-8 lg:p-12 mb-8" style={{ boxShadow: 'var(--shadow-medium)' }}>
+            <div className="flex items-start gap-4 mb-6">
+              <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-2xl font-bold mb-2 text-foreground">Address</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Provident Sunworth City<br />
+                  Mysore Road, Kengeri<br />
+                  Bengaluru, Karnataka 560060
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-strong)' }}>
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.402499963756!2d77.46943907358731!3d12.881820216843305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f00790f55df%3A0xe9656a3f6a32b360!2sProvident%20Equinox%2C%20Tower%204N!5e0!3m2!1sen!2sin!4v1763916524937!5m2!1sen!2sin" 
+              width="100%" 
+              height="450" 
+              style={{ border: 0 }} 
+              allowFullScreen 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        <div className="text-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
+              onClick={onCtaClick}
+            >
+              Get Personalised Guidance
+            </Button>
+            <a 
+              href="https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20know%20more%20about%20the%20location%20and%20connectivity%20of%20Provident%20Sunworth" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="text-lg px-8 py-6 rounded-full font-semibold"
+              >
+                Chat on WhatsApp
+              </Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Location;

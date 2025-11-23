@@ -19,9 +19,11 @@ const MasterPlan = ({ onCtaClick }: MasterPlanProps) => {
 
         <div className="max-w-5xl mx-auto mb-12">
           <div className="relative rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-strong)' }}>
-            <div className="aspect-video bg-muted flex items-center justify-center">
-              <p className="text-muted-foreground">Master Plan Image</p>
-            </div>
+            <img 
+              src="/images/master-plan.webp" 
+              alt="Provident Sunworth City Master Plan" 
+              className="w-full h-auto"
+            />
           </div>
         </div>
 

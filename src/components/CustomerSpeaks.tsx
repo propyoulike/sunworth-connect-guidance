@@ -8,22 +8,16 @@ interface CustomerSpeaksProps {
 const CustomerSpeaks = ({ onCtaClick }: CustomerSpeaksProps) => {
   const testimonials = [
     {
-      name: "Rajesh Kumar",
-      home: "3 BHK Owner",
-      text: "The best decision we made for our family. The kids love playing outdoors, and the community is wonderful. Everything we need is right here.",
-      rating: 5
+      videoId: "k-dD6PtfrC8",
+      title: "Resident Testimonial 1"
     },
     {
-      name: "Priya Sharma",
-      home: "2 BHK Owner",
-      text: "Amazing connectivity to the city while living in such a green environment. The school on campus was a huge plus for us.",
-      rating: 5
+      videoId: "iwLw1Xu312s",
+      title: "Resident Testimonial 2"
     },
     {
-      name: "Anil Reddy",
-      home: "3 BHK Owner",
-      text: "The amenities are truly world-class. We haven't had to step out for recreation in months. It's like living in a resort.",
-      rating: 5
+      videoId: "MxtoYCTGaCE",
+      title: "Resident Testimonial 3"
     }
   ];
 
@@ -41,18 +35,18 @@ const CustomerSpeaks = ({ onCtaClick }: CustomerSpeaksProps) => {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="p-6 hover:shadow-xl transition-shadow">
-              <div className="flex mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <span key={i} className="text-yellow-500 text-xl">★</span>
-                ))}
-              </div>
-              <p className="text-muted-foreground mb-6 leading-relaxed italic">
-                "{testimonial.text}"
-              </p>
-              <div>
-                <p className="font-bold text-foreground">{testimonial.name}</p>
-                <p className="text-sm text-muted-foreground">{testimonial.home}</p>
+            <Card key={index} className="overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="aspect-video bg-muted">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${testimonial.videoId}`}
+                  title={testimonial.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
               </div>
             </Card>
           ))}

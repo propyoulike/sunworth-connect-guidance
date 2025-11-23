@@ -5,6 +5,7 @@ import MasterPlan from "@/components/MasterPlan";
 import FloorPlans from "@/components/FloorPlans";
 import Amenities from "@/components/Amenities";
 import Views from "@/components/Views";
+import Location from "@/components/Location";
 import Connectivity from "@/components/Connectivity";
 import Homes from "@/components/Homes";
 import CustomerSpeaks from "@/components/CustomerSpeaks";
@@ -54,6 +55,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Location & Neighbourhood */}
+      <Location onCtaClick={scrollToForm} />
 
       {/* Connectivity */}
       <Connectivity onCtaClick={scrollToForm} />
