@@ -6,45 +6,80 @@ interface HeroProps {
 
 const Hero = ({ onCtaClick }: HeroProps) => {
   return (
-    <section className="container mx-auto px-4 pt-12 pb-20 lg:pt-20 lg:pb-32">
-      <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        {/* Left Content - Desktop */}
-        <div className="order-2 lg:order-1">
-          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6 text-foreground">
-            Give your family a brighter everyday on Mysore Road.
-          </h1>
-          
-          <p className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed">
-            A 60-acre township where kids play in the open, weekends feel like a resort, and your 2 & 3 BHK home starts at <span className="font-semibold text-foreground">69.99 lakhs</span>. Live in a ready community with everything your family needs to grow.
-          </p>
-          
-          <Button 
-            size="lg" 
-            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold mb-4 w-full sm:w-auto"
-            onClick={onCtaClick}
-          >
-            Get Personalised Guidance
-          </Button>
-          
-          <p className="text-sm text-muted-foreground max-w-md">
-            Talk to a trusted advisor — no pressure, just honest guidance on the best units, views and pricing.
-          </p>
+    <section className="relative w-full">
+      {/* Full Width Video Hero */}
+      <div className="relative w-full h-[60vh] lg:h-[80vh] overflow-hidden">
+        <iframe
+          className="absolute top-0 left-0 w-full h-full"
+          src="https://www.youtube.com/embed/5PpgqAYGZHo?autoplay=1&mute=1&controls=0&loop=1&playlist=5PpgqAYGZHo&showinfo=0&rel=0"
+          title="Provident Sunworth City Video"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+        
+        {/* Overlay with gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+        
+        {/* Hero Content Overlay */}
+        <div className="absolute bottom-0 left-0 right-0 pb-12 lg:pb-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl">
+              <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6 text-white drop-shadow-lg">
+                The City Of More
+              </h1>
+              
+              <p className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed drop-shadow-md max-w-3xl">
+                South Bengaluru's largest township sprawling over 60 acres. 2 & 3 BHK homes starting at <span className="font-bold">₹69.99 lakhs</span>. Live where 7000 trees meet modern living.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  size="lg" 
+                  className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
+                  onClick={onCtaClick}
+                >
+                  Get Personalised Guidance
+                </Button>
+                
+                <a 
+                  href="https://wa.me/919379822010?text=Hi,%20I%27m%20interested%20in%20Provident%20Sunworth%20City" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Button 
+                    size="lg" 
+                    variant="outline"
+                    className="text-lg px-8 py-6 rounded-full font-semibold bg-white/90 hover:bg-white text-foreground border-white"
+                  >
+                    Chat on WhatsApp
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        {/* Right Content - Video */}
-        <div className="order-1 lg:order-2">
-          <div className="relative rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-strong)' }}>
-            <div className="aspect-video">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/5PpgqAYGZHo?autoplay=0&mute=1&controls=1&loop=1&playlist=5PpgqAYGZHo"
-                title="Provident Sunworth Video Tour"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
+      {/* Quick Info Bar */}
+      <div className="bg-muted/50 border-y border-border">
+        <div className="container mx-auto px-4 py-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+            <div>
+              <p className="text-sm text-muted-foreground mb-1">Price</p>
+              <p className="text-lg font-bold text-foreground">₹69.99 L Onwards</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mb-1">Typology</p>
+              <p className="text-lg font-bold text-foreground">2 & 3 BHK</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mb-1">Location</p>
+              <p className="text-lg font-bold text-foreground">Mysore Road</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mb-1">Size</p>
+              <p className="text-lg font-bold text-foreground">60 Acres</p>
             </div>
           </div>
         </div>

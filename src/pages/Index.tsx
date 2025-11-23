@@ -1,8 +1,14 @@
 import { useRef } from "react";
 import Hero from "@/components/Hero";
 import EmotionalUSPs from "@/components/EmotionalUSPs";
+import MasterPlan from "@/components/MasterPlan";
+import FloorPlans from "@/components/FloorPlans";
+import Amenities from "@/components/Amenities";
+import Views from "@/components/Views";
 import Connectivity from "@/components/Connectivity";
 import Homes from "@/components/Homes";
+import CustomerSpeaks from "@/components/CustomerSpeaks";
+import Brochure from "@/components/Brochure";
 import LeadForm from "@/components/LeadForm";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
 
@@ -28,7 +34,19 @@ const Index = () => {
       {/* Emotional USPs */}
       <EmotionalUSPs />
 
-      {/* Lead Form - Mid Page (desktop sidebar style) */}
+      {/* Master Plan */}
+      <MasterPlan onCtaClick={scrollToForm} />
+
+      {/* Floor Plans */}
+      <FloorPlans onCtaClick={scrollToForm} />
+
+      {/* Amenities */}
+      <Amenities onCtaClick={scrollToForm} />
+
+      {/* Views */}
+      <Views onCtaClick={scrollToForm} />
+
+      {/* Lead Form - Mid Page */}
       <section ref={formRef} className="py-20 lg:py-28 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
@@ -38,10 +56,16 @@ const Index = () => {
       </section>
 
       {/* Connectivity */}
-      <Connectivity />
+      <Connectivity onCtaClick={scrollToForm} />
 
       {/* Homes */}
-      <Homes />
+      <Homes onCtaClick={scrollToForm} />
+
+      {/* Customer Testimonials */}
+      <CustomerSpeaks onCtaClick={scrollToForm} />
+
+      {/* Brochure Download */}
+      <Brochure onCtaClick={scrollToForm} />
 
       {/* Footer */}
       <footer className="bg-foreground text-background py-12">
