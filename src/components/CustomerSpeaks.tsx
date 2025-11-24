@@ -1,10 +1,24 @@
 import { Button } from "@/components/ui/button";
+import useEmblaCarousel from "embla-carousel-react";
+import AutoScroll from "embla-carousel-auto-scroll";
+import { useEffect, useState } from "react";
+import { Play } from "lucide-react";
 
 interface CustomerSpeaksProps {
   onCtaClick: () => void;
 }
 
 const CustomerSpeaks = ({ onCtaClick }: CustomerSpeaksProps) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start" },
+    [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.8 })]
+  );
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+  }, [emblaApi]);
+
   const testimonials = [
     {
       name: "Resident Family 1",
@@ -35,27 +49,49 @@ const CustomerSpeaks = ({ onCtaClick }: CustomerSpeaksProps) => {
           </p>
         </div>
 
-        <div className="space-y-8 max-w-5xl mx-auto mb-12">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-card rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <div className="aspect-video bg-muted cursor-pointer group relative">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${testimonial.videoId}`}
-                  title={`${testimonial.name} Testimonial`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
+        <div className="overflow-hidden mb-12" ref={emblaRef}>
+          <div className="flex gap-6">
+            {testimonials.map((testimonial, index) => (
+              <div key={index} className="flex-[0_0_100%] md:flex-[0_0_85%] lg:flex-[0_0_70%]">
+                <div className="bg-card rounded-2xl overflow-hidden h-full" style={{ boxShadow: 'var(--shadow-strong)' }}>
+                  <div className="relative aspect-video group cursor-pointer">
+                    {activeVideo === testimonial.videoId ? (
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        src={`https://www.youtube.com/embed/${testimonial.videoId}?autoplay=1`}
+                        title={`${testimonial.name} Testimonial`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full"
+                      />
+                    ) : (
+                      <>
+                        <img
+                          src={`https://img.youtube.com/vi/${testimonial.videoId}/maxresdefault.jpg`}
+                          alt={`${testimonial.name} Testimonial`}
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          onClick={() => setActiveVideo(testimonial.videoId)}
+                          className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"
+                        >
+                          <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Play className="w-10 h-10 text-primary-foreground ml-1" fill="currentColor" />
+                          </div>
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <p className="text-muted-foreground mb-3 italic text-lg">"{testimonial.quote}"</p>
+                    <p className="font-semibold text-foreground">— {testimonial.name}</p>
+                  </div>
+                </div>
               </div>
-              <div className="p-6">
-                <p className="text-muted-foreground mb-3 italic text-lg">"{testimonial.quote}"</p>
-                <p className="font-semibold text-foreground">— {testimonial.name}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <div className="text-center">
