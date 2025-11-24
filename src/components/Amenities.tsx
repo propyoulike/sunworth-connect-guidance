@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface AmenitiesProps {
   onCtaClick: () => void;
@@ -12,6 +13,7 @@ const Amenities = ({ onCtaClick }: AmenitiesProps) => {
     { loop: true, align: "start" },
     [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 1 })]
   );
+  const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -80,19 +82,38 @@ const Amenities = ({ onCtaClick }: AmenitiesProps) => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 max-w-7xl mx-auto">
-          {amenityCategories.map((category, index) => (
-            <div key={index} className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
-              <h3 className="text-xl font-bold mb-4 text-foreground">{category.title}</h3>
-              <ul className="space-y-2">
-                {category.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="text-muted-foreground flex items-start">
-                    <span className="text-primary mr-2">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {amenityCategories.map((category, index) => {
+            const isExpanded = expandedCategory === index;
+            return (
+              <div key={index} className="bg-card rounded-xl overflow-hidden" style={{ boxShadow: 'var(--shadow-medium)' }}>
+                <button
+                  onClick={() => setExpandedCategory(isExpanded ? null : index)}
+                  className="w-full p-6 text-left hover:bg-muted/50 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-bold text-foreground">{category.title}</h3>
+                    {isExpanded ? (
+                      <ChevronUp className="w-5 h-5 text-primary" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-primary" />
+                    )}
+                  </div>
+                </button>
+                {isExpanded && (
+                  <div className="px-6 pb-6 animate-accordion-down">
+                    <ul className="space-y-2">
+                      {category.items.map((item, itemIndex) => (
+                        <li key={itemIndex} className="text-muted-foreground flex items-start">
+                          <span className="text-primary mr-2">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         <div className="text-center">
