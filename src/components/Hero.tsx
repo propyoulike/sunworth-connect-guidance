@@ -29,9 +29,11 @@ const Hero = ({ onCtaClick }: HeroProps) => {
                 The City Of More
               </h1>
               
+               {/* 
               <p className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed drop-shadow-md max-w-3xl">
                 South Bengaluru's largest township sprawling over 60 acres. 2 & 3 BHK homes starting at <span className="font-bold">₹69.99 lakhs</span>. Live where 7000 trees meet modern living.
               </p>
+               */}
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
