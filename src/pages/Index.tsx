@@ -75,7 +75,7 @@ const Index = () => {
           <h3 className="text-2xl font-bold mb-2">Provident Sunworth</h3>
           <p className="text-background/80 mb-6">Your family's brighter everyday on Mysore Road</p>
           <p className="text-sm text-background/60">
-            © 2026 PropYouLike, Authorised Channel Partner. All rights reserved.
+            © 2025 PropYouLike, Authorised Channel Partner. All rights reserved.
           </p>
         </div>
       </footer>
