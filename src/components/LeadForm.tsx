@@ -47,7 +47,7 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
     try {
       // Send lead to your Vercel backend
       const response = await fetch(
-        "https://sunworth-api.vercel.app/api/leads",
+        "https://sunworth-connect-guidance.lovable.app/api/leads",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
