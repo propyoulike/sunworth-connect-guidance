@@ -33,8 +33,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Emotional USPs */}
-      <EmotionalUSPs />
+      {/* Emotional USPs 
+      <EmotionalUSPs /> */}
 
       {/* Master Plan */}
       <MasterPlan onCtaClick={scrollToForm} />
