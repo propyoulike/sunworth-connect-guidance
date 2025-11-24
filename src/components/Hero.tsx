@@ -44,6 +44,7 @@ const Hero = ({ onCtaClick }: HeroProps) => {
                   Get Personalised Guidance with FREE Site Visit
                 </Button>
                 
+               {/* 
                 <a 
                   href="https://wa.me/919379822010?text=Hi,%20I%27m%20interested%20in%20Provident%20Sunworth%20City" 
                   target="_blank" 
@@ -57,6 +58,7 @@ const Hero = ({ onCtaClick }: HeroProps) => {
                     Chat on WhatsApp
                   </Button>
                 </a>
+               */}
               </div>
             </div>
           </div>
