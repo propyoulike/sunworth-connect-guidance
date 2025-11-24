@@ -25,11 +25,11 @@ const Hero = ({ onCtaClick }: HeroProps) => {
         <div className="absolute bottom-0 left-0 right-0 pb-12 lg:pb-20">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
+               {/* 
               <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6 text-white drop-shadow-lg">
                 The City Of More
               </h1>
               
-               {/* 
               <p className="text-xl lg:text-2xl text-white/90 mb-8 leading-relaxed drop-shadow-md max-w-3xl">
                 South Bengaluru's largest township sprawling over 60 acres. 2 & 3 BHK homes starting at <span className="font-bold">₹69.99 lakhs</span>. Live where 7000 trees meet modern living.
               </p>
