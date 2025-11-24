@@ -28,7 +28,7 @@ const EmotionalUSPs = () => {
     <section className="py-20 lg:py-28 bg-gradient-to-b from-background to-secondary/30">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-center mb-4 text-foreground">
-          Not just a flat. A childhood, a routine, a life you'll love.
+          A Home That Inspires You To Live More.
         </h2>
         <p>
 Provident Sunworth City is a 60-acre integrated township off Mysore Road–NICE Junction, offering 2 & 3 BHK homes with excellent connectivity and 19 acres of green landscapes. With 50+ amenities, a school, and retail spaces within the community, it’s designed for convenient, holistic living.
