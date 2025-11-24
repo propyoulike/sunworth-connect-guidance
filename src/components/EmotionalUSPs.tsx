@@ -4,22 +4,22 @@ const usps = [
   {
     icon: Home,
     title: "50+ Amenities",
-    description: "From sports to leisure — your weekends stay inside the community.",
+    description: "Sports & Fitness, leisure, Recreation, Wellness & Nature, Essential Services and everything in between — weekends feel complete within the community.",
   },
   {
     icon: Compass,
     title: "Excellent Connectivity",
-    description: "Quick access to the city while you come home to calm.",
+    description: "Stay effortlessly linked to the city while coming home to peace and quiet.",
   },
   {
     icon: Users,
     title: "Ready Community",
-    description: "Families already living here — festivals, friendships, playgroups.",
+    description: "A vibrant neighbourhood already buzzing with families, festivals, and friendships.",
   },
   {
     icon: Smile,
     title: "Kids-Friendly Living",
-    description: "Safe, open spaces where children grow up outdoors, not on screens.",
+    description: "Safe, open, nature-rich spaces where kids grow up exploring, not scrolling.",
   },
 ];
 
