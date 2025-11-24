@@ -9,6 +9,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
   const towers = [
     {
       name: "Tower 4J",
+      image: "/images/construction/tower-4j.png",
       status: [
         "2nd floor roof slab completed",
         "3rd floor roof slab shuttering & reinforcements work in progress"
@@ -18,6 +19,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
     },
     {
       name: "Tower 4H",
+      image: "/images/construction/tower-4h.png",
       status: [
         "1st floor Roof slab shuttering work in progress",
         "1st floor Roof slab reinforcement, work in progress"
@@ -27,6 +29,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
     },
     {
       name: "Tower 4G",
+      image: "/images/construction/tower-4g.png",
       status: [
         "Completion of Ground/stilt floor roof slab",
         "1st floor roof slab shuttering & Reinforcements work in progress"
@@ -36,6 +39,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
     },
     {
       name: "Tower 4F",
+      image: "/images/construction/tower-4f.png",
       status: [
         "Basement slab concreting completed",
         "Ground floor Shear wall concreting work in progress"
@@ -45,6 +49,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
     },
     {
       name: "Tower 4E",
+      image: "/images/construction/tower-4e.png",
       status: [
         "Basement shuttering & reinforcement work in progress"
       ],
@@ -53,6 +58,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
     },
     {
       name: "Tower 4D",
+      image: "/images/construction/tower-4d.png",
       status: [
         "Foundation completed",
         "Plinth beam work in progress"
@@ -62,6 +68,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
     },
     {
       name: "Tower 4C",
+      image: "/images/construction/tower-4c.png",
       status: [
         "Excavation work completed"
       ],
@@ -87,11 +94,19 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
           {towers.map((tower, index) => (
-            <div key={index} className="bg-card rounded-2xl p-6 hover:shadow-xl transition-shadow" style={{ boxShadow: 'var(--shadow-medium)' }}>
-              <div className="flex items-center gap-3 mb-6">
-                <Building2 className="w-8 h-8 text-primary" />
-                <h3 className="text-xl font-bold text-foreground">{tower.name}</h3>
+            <div key={index} className="bg-card rounded-2xl overflow-hidden hover:shadow-xl transition-shadow" style={{ boxShadow: 'var(--shadow-medium)' }}>
+              <div className="aspect-video overflow-hidden bg-muted">
+                <img 
+                  src={tower.image} 
+                  alt={`${tower.name} Construction Progress`}
+                  className="w-full h-full object-cover"
+                />
               </div>
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <Building2 className="w-8 h-8 text-primary" />
+                  <h3 className="text-xl font-bold text-foreground">{tower.name}</h3>
+                </div>
 
               <div className="mb-6">
                 <h4 className="text-sm font-semibold text-muted-foreground mb-3 uppercase">Tower Status</h4>
@@ -118,15 +133,16 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
               </div>
 
               <div className="border-t border-border pt-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Clock className="w-4 h-4 text-orange-600" />
-                  <h4 className="text-xs font-semibold text-muted-foreground uppercase">Upcoming Milestones</h4>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock className="w-4 h-4 text-orange-600" />
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase">Upcoming Milestones</h4>
+                  </div>
+                  <ul className="space-y-1">
+                    {tower.upcoming.map((item, i) => (
+                      <li key={i} className="text-sm text-foreground">{item}</li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-1">
-                  {tower.upcoming.map((item, i) => (
-                    <li key={i} className="text-sm text-foreground">{item}</li>
-                  ))}
-                </ul>
               </div>
             </div>
           ))}
