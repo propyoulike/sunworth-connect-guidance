@@ -71,7 +71,7 @@ const Views = ({ onCtaClick }: ViewsProps) => {
               className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
               onClick={onCtaClick}
             >
-              Get Personalised Guidance
+              Get Personalised Guidance with FREE Site Visit
             </Button>
             <a 
               href="https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20know%20about%20available%20views%20at%20Provident%20Sunworth" 
