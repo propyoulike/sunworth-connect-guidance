@@ -26,7 +26,7 @@ const StickyMobileCTA = ({ onCtaClick }: StickyMobileCTAProps) => {
         onClick={onCtaClick}
         className="w-full btn-gradient text-base py-6 rounded-full font-semibold"
       >
-        Get Personalised Guidance
+        Get Personalised Guidance with FREE Site Visit
       </Button>
     </div>
   );
