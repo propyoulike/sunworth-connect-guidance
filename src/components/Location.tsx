@@ -165,10 +165,10 @@ const Location = ({ onCtaClick }: LocationProps) => {
               </div>
             </div>
           </div>
-
+         
           <div className="rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-strong)' }}>
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.402499963756!2d77.46943907358731!3d12.881820216843305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f00790f55df%3A0xe9656a3f6a32b360!2sProvident%20Equinox%2C%20Tower%204N!5e0!3m2!1sen!2sin!4v1763916524937!5m2!1sen!2sin" 
+              src="https://www.google.com/maps/d/embed?mid=1R_qhSGztiUmFoQY8idXKpXjU-kF60pQ&ehbc=2E312F" 
               width="100%" 
               height="450" 
               style={{ border: 0 }} 
