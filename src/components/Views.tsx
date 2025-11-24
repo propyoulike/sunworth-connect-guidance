@@ -1,10 +1,32 @@
 import { Button } from "@/components/ui/button";
+import useEmblaCarousel from "embla-carousel-react";
+import AutoScroll from "embla-carousel-auto-scroll";
+import { useEffect } from "react";
 
 interface ViewsProps {
   onCtaClick: () => void;
 }
 
 const Views = ({ onCtaClick }: ViewsProps) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start" },
+    [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 1 })]
+  );
+
+  useEffect(() => {
+    if (!emblaApi) return;
+  }, [emblaApi]);
+
+  const viewImages = [
+    { src: "/images/views/elevation-1.webp", title: "Provident Sunworth Elevation" },
+    { src: "/images/views/elevation-2.webp", title: "Provident Sunworth Elevation View" },
+    { src: "/images/views/night-view-1.webp", title: "Provident Sunworth Night View" },
+    { src: "/images/views/night-view-2.webp", title: "Clubhouse Night View" },
+    { src: "/images/views/viewing-deck.webp", title: "Viewing Deck" },
+    { src: "/images/views/tree-house.webp", title: "Tree House View" },
+    { src: "/images/views/clubhouse.webp", title: "Clubhouse Aerial View" }
+  ];
+
   return (
     <section className="py-20 lg:py-28 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -17,29 +39,22 @@ const Views = ({ onCtaClick }: ViewsProps) => {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto mb-12">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <img src="/images/views/elevation-1.webp" alt="Provident Sunworth Elevation" className="w-full h-full object-cover" />
-            </div>
-            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <img src="/images/views/elevation-2.webp" alt="Provident Sunworth Elevation View" className="w-full h-full object-cover" />
-            </div>
-            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <img src="/images/views/night-view-1.webp" alt="Provident Sunworth Night View" className="w-full h-full object-cover" />
-            </div>
-            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <img src="/images/views/night-view-2.webp" alt="Clubhouse Night View" className="w-full h-full object-cover" />
-            </div>
-            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <img src="/images/views/viewing-deck.webp" alt="Viewing Deck" className="w-full h-full object-cover" />
-            </div>
-            <div className="relative rounded-2xl overflow-hidden aspect-video" style={{ boxShadow: 'var(--shadow-strong)' }}>
-              <img src="/images/views/tree-house.webp" alt="Tree House View" className="w-full h-full object-cover" />
-            </div>
-          </div>
-          <div className="mt-6 rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-strong)' }}>
-            <img src="/images/views/clubhouse.webp" alt="Clubhouse Aerial View" className="w-full h-auto" />
+        <div className="overflow-hidden mb-12" ref={emblaRef}>
+          <div className="flex gap-6">
+            {viewImages.map((view, index) => (
+              <div key={index} className="relative rounded-2xl overflow-hidden flex-[0_0_85%] md:flex-[0_0_60%] lg:flex-[0_0_45%]" style={{ boxShadow: 'var(--shadow-strong)' }}>
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src={view.src} 
+                    alt={view.title} 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                  <p className="text-white font-semibold text-lg">{view.title}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

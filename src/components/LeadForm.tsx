@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
   bhkPreference: z.string().min(1, "Please select a preference"),
 });
@@ -52,6 +53,7 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
         },
         body: JSON.stringify({
           name: data.name,
+          email: data.email,
           phone: data.phone,
           bhkPreference: data.bhkPreference,
           project: "Provident Sunworth",
@@ -127,6 +129,20 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
         </div>
 
         <div>
+          <Label htmlFor="email" className="text-foreground">Email *</Label>
+          <Input
+            id="email"
+            type="email"
+            {...register("email")}
+            placeholder="Your email address"
+            className="mt-1.5"
+          />
+          {errors.email && (
+            <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div>
           <Label htmlFor="phone" className="text-foreground">Phone *</Label>
           <Input
             id="phone"
@@ -148,8 +164,9 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="2 BHK">2 BHK</SelectItem>
-              <SelectItem value="3 BHK">3 BHK</SelectItem>
-              <SelectItem value="Both / Not Sure">Both / Not Sure</SelectItem>
+              <SelectItem value="3 BHK Regular">3 BHK Regular</SelectItem>
+              <SelectItem value="3 BHK Royale">3 BHK Royale</SelectItem>
+              <SelectItem value="Not Sure">Not Sure</SelectItem>
             </SelectContent>
           </Select>
           {errors.bhkPreference && (

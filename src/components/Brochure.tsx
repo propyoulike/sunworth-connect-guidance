@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { FileText } from "lucide-react";
 
 interface BrochureProps {
   onCtaClick: () => void;
@@ -7,43 +7,64 @@ interface BrochureProps {
 
 const Brochure = ({ onCtaClick }: BrochureProps) => {
   return (
-    <section className="py-20 lg:py-28 bg-primary text-primary-foreground">
+    <section className="py-20 lg:py-28 bg-background">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-            Download Our Brochure
-          </h2>
-          <p className="text-xl mb-8 opacity-90 leading-relaxed">
-            Get complete details about floor plans, amenities, pricing, and payment plans. Everything you need to make an informed decision.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Button 
-              size="lg" 
-              className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 rounded-full font-semibold"
-              onClick={onCtaClick}
-            >
-              <Download className="mr-2 h-5 w-5" />
-              Download Brochure
-            </Button>
-            <a 
-              href="https://wa.me/919379822010?text=Hi,%20please%20send%20me%20the%20brochure%20for%20Provident%20Sunworth" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-card rounded-2xl p-8 lg:p-12 text-center mb-8" style={{ boxShadow: 'var(--shadow-strong)' }}>
+            <FileText className="w-16 h-16 text-primary mx-auto mb-6" />
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-foreground">
+              Download Brochure & Documents
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              Get detailed information about floor plans, amenities, pricing, and official project documents.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Button 
                 size="lg" 
-                variant="outline"
-                className="text-lg px-8 py-6 rounded-full font-semibold bg-white/10 hover:bg-white/20 border-white text-white"
+                className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
+                onClick={onCtaClick}
               >
-                Get via WhatsApp
+                Get Personalised Guidance
               </Button>
-            </a>
+              <a 
+                href="https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20download%20the%20Provident%20Sunworth%20brochure" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="text-lg px-8 py-6 rounded-full font-semibold"
+                >
+                  Chat on WhatsApp
+                </Button>
+              </a>
+            </div>
+
+            <div className="border-t border-border pt-8 mt-8">
+              <h3 className="text-xl font-bold mb-6 text-foreground">Official Documents</h3>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a 
+                  href="https://www.providenthousing.com/wp-content/uploads/2022/12/Provident-Sunworth-City-RERA-Certificate-1.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary hover:underline font-semibold"
+                >
+                  <FileText className="w-5 h-5" />
+                  RERA Certificate
+                </a>
+                <a 
+                  href="https://www.providenthousing.com/wp-content/uploads/2022/12/MOEF-sunworth-city.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary hover:underline font-semibold"
+                >
+                  <FileText className="w-5 h-5" />
+                  MOEF Certificate
+                </a>
+              </div>
+            </div>
           </div>
-          
-          <p className="text-sm opacity-75">
-            Or speak to an advisor who can guide you through all the details personally
-          </p>
         </div>
       </div>
     </section>

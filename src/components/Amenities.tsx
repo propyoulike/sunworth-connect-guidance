@@ -1,10 +1,22 @@
 import { Button } from "@/components/ui/button";
+import useEmblaCarousel from "embla-carousel-react";
+import AutoScroll from "embla-carousel-auto-scroll";
+import { useEffect } from "react";
 
 interface AmenitiesProps {
   onCtaClick: () => void;
 }
 
 const Amenities = ({ onCtaClick }: AmenitiesProps) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start" },
+    [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 1 })]
+  );
+
+  useEffect(() => {
+    if (!emblaApi) return;
+  }, [emblaApi]);
+
   const amenityImages = [
     { src: "/images/amenities/basketball.jpg", title: "Basketball Court", description: "Professional court for sports enthusiasts" },
     { src: "/images/amenities/gym.jpg", title: "Gymnasium", description: "State-of-the-art fitness equipment" },
@@ -47,22 +59,24 @@ const Amenities = ({ onCtaClick }: AmenitiesProps) => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 max-w-7xl mx-auto">
-          {amenityImages.map((amenity, index) => (
-            <div key={index} className="group relative rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-medium)' }}>
-              <div className="aspect-square overflow-hidden">
-                <img 
-                  src={amenity.src} 
-                  alt={amenity.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
+        <div className="overflow-hidden mb-12" ref={emblaRef}>
+          <div className="flex gap-6">
+            {amenityImages.map((amenity, index) => (
+              <div key={index} className="group relative rounded-2xl overflow-hidden flex-[0_0_85%] md:flex-[0_0_45%] lg:flex-[0_0_30%]" style={{ boxShadow: 'var(--shadow-strong)' }}>
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img 
+                    src={amenity.src} 
+                    alt={amenity.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-6">
+                  <h4 className="text-white font-bold text-xl mb-2">{amenity.title}</h4>
+                  <p className="text-white/90 text-base">{amenity.description}</p>
+                </div>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
-                <h4 className="text-white font-bold text-lg mb-1">{amenity.title}</h4>
-                <p className="text-white/80 text-sm">{amenity.description}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 max-w-7xl mx-auto">

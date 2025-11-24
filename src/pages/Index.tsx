@@ -8,6 +8,7 @@ import Views from "@/components/Views";
 import Location from "@/components/Location";
 import Connectivity from "@/components/Connectivity";
 import Homes from "@/components/Homes";
+import ConstructionStatus from "@/components/ConstructionStatus";
 import CustomerSpeaks from "@/components/CustomerSpeaks";
 import Brochure from "@/components/Brochure";
 import LeadForm from "@/components/LeadForm";
@@ -49,6 +50,9 @@ const Index = () => {
 
       {/* Location & Neighbourhood */}
       <Location onCtaClick={scrollToForm} />
+
+      {/* Construction Status */}
+      <ConstructionStatus onCtaClick={scrollToForm} />
 
       {/* Customer Testimonials */}
       <CustomerSpeaks onCtaClick={scrollToForm} />
