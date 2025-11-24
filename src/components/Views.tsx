@@ -58,13 +58,6 @@ const Views = ({ onCtaClick }: ViewsProps) => {
           </div>
         </div>
 
-        <div className="bg-card rounded-2xl p-8 lg:p-12 max-w-4xl mx-auto text-center mb-12" style={{ boxShadow: 'var(--shadow-medium)' }}>
-          <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-foreground">
-            A Green Sanctuary in South Bengaluru
-          </h3>
-          <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-            With 19 acres dedicated to green covers and 7000+ trees, Provident Sunworth City offers the perfect balance of urban convenience and natural tranquility.
-          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
@@ -87,7 +80,6 @@ const Views = ({ onCtaClick }: ViewsProps) => {
               </Button>
             </a>
           </div>
-        </div>
       </div>
     </section>
   );
