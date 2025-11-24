@@ -30,7 +30,7 @@ interface LeadFormProps {
 const LeadForm = ({ className = "" }: LeadFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  
+
   const {
     register,
     handleSubmit,
@@ -45,35 +45,35 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
     setIsSubmitting(true);
 
     try {
-      // Submit to placeholder API (can be wired later)
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          bhkPreference: data.bhkPreference,
-          project: "Provident Sunworth",
-          source: "Landing Page",
-        }),
-      });
+      // Send lead to your Vercel backend
+      const response = await fetch(
+        "https://sunworth-api.vercel.app/api/leads",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            bhkPreference: data.bhkPreference,
+            project: "Provident Sunworth",
+            source: "Landing Page",
+          }),
+        }
+      );
 
-      // Even if API fails, proceed to WhatsApp (catch will handle)
       if (!response.ok) {
         throw new Error("API submission failed");
       }
 
-      // Open WhatsApp with prefilled message
+      // Open WhatsApp with a prefilled message
       const whatsappMessage = encodeURIComponent(
         `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like personalised guidance on best units and pricing.`
       );
       const whatsappUrl = `https://wa.me/919379822010?text=${whatsappMessage}`;
       
       window.open(whatsappUrl, "_blank");
-      
+
       toast({
         title: "Thank you!",
         description: "Opening WhatsApp to connect you with an advisor.",
@@ -81,7 +81,9 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
 
       reset();
     } catch (error) {
-      // Show fallback even if API fails
+      console.error("Lead form submission error:", error);
+
+      // Fallback: open WhatsApp even if API fails
       const whatsappMessage = encodeURIComponent(
         `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like personalised guidance on best units and pricing.`
       );
@@ -101,7 +103,7 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
           </a>
         ),
       });
-      
+
       window.open(whatsappUrl, "_blank");
     } finally {
       setIsSubmitting(false);
@@ -109,14 +111,19 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
   };
 
   return (
-    <div className={`bg-card rounded-2xl p-6 lg:p-8 ${className}`} style={{ boxShadow: 'var(--shadow-medium)' }}>
+    <div
+      className={`bg-card rounded-2xl p-6 lg:p-8 ${className}`}
+      style={{ boxShadow: "var(--shadow-medium)" }}
+    >
       <h3 className="text-2xl font-bold mb-2 text-foreground">
         Get personalised guidance on best units, views & pricing.
       </h3>
-      
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-6">
         <div>
-          <Label htmlFor="name" className="text-foreground">Name *</Label>
+          <Label htmlFor="name" className="text-foreground">
+            Name *
+          </Label>
           <Input
             id="name"
             {...register("name")}
@@ -124,12 +131,16 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
             className="mt-1.5"
           />
           {errors.name && (
-            <p className="text-sm text-destructive mt-1">{errors.name.message}</p>
+            <p className="text-sm text-destructive mt-1">
+              {errors.name.message}
+            </p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="email" className="text-foreground">Email *</Label>
+          <Label htmlFor="email" className="text-foreground">
+            Email *
+          </Label>
           <Input
             id="email"
             type="email"
@@ -138,12 +149,16 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
             className="mt-1.5"
           />
           {errors.email && (
-            <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+            <p className="text-sm text-destructive mt-1">
+              {errors.email.message}
+            </p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="phone" className="text-foreground">Phone *</Label>
+          <Label htmlFor="phone" className="text-foreground">
+            Phone *
+          </Label>
           <Input
             id="phone"
             type="tel"
@@ -152,12 +167,16 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
             className="mt-1.5"
           />
           {errors.phone && (
-            <p className="text-sm text-destructive mt-1">{errors.phone.message}</p>
+            <p className="text-sm text-destructive mt-1">
+              {errors.phone.message}
+            </p>
           )}
         </div>
 
         <div>
-          <Label htmlFor="bhkPreference" className="text-foreground">BHK Preference *</Label>
+          <Label htmlFor="bhkPreference" className="text-foreground">
+            BHK Preference *
+          </Label>
           <Select onValueChange={(value) => setValue("bhkPreference", value)}>
             <SelectTrigger className="mt-1.5">
               <SelectValue placeholder="Select your preference" />
@@ -170,7 +189,9 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
             </SelectContent>
           </Select>
           {errors.bhkPreference && (
-            <p className="text-sm text-destructive mt-1">{errors.bhkPreference.message}</p>
+            <p className="text-sm text-destructive mt-1">
+              {errors.bhkPreference.message}
+            </p>
           )}
         </div>
 
@@ -183,7 +204,8 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
         </Button>
 
         <p className="text-xs text-muted-foreground text-center leading-relaxed">
-          No spam. A PropYouLike advisor will call or WhatsApp you to understand your plans and guide you to the right unit.
+          No spam. A PropYouLike advisor will call or WhatsApp you to understand
+          your plans and guide you to the right unit.
         </p>
       </form>
     </div>
