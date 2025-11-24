@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, phone, bhkPreference, project, source } = await req.json();
+    const { name, email, phone, bhkPreference, project, source } =
+      await req.json();
 
-    // Ensure required fields
     if (!name || !phone) {
       return NextResponse.json(
         { success: false, message: "Missing required fields" },
@@ -12,7 +12,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Prepare data for Privyr
     const payload = {
       name,
       email,
@@ -20,18 +19,52 @@ export async function POST(req: Request) {
       message: `Project: ${project}\nBHK Preference: ${bhkPreference}\nSource: ${source}`,
     };
 
-    // SEND LEAD TO PRIVYR
-    const privyrResponse = await fetch(
-      "https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/5xrM2juN",
-      {
+    // -----------------------------
+    // 1️⃣ SEND TO PRIVYR
+    // -----------------------------
+    const privyrWebhookUrl = process.env.PRIVYR_WEBHOOK_URL;
+
+    if (privyrWebhookUrl) {
+      const privyrResponse = await fetch(privyrWebhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-      }
-    );
+      });
 
-    if (!privyrResponse.ok) {
-      console.error("Privyr submission failed");
+      if (!privyrResponse.ok) {
+        console.error("Privyr submission failed");
+      }
+    } else {
+      console.error("Privyr webhook missing");
+    }
+
+    // -----------------------------
+    // 2️⃣ SEND EMAIL ALERT (Optional)
+    // -----------------------------
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+
+    if (RESEND_API_KEY) {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "PropYouLike <noreply@propyoulike.com>",
+          to: ["propyoulike@gmail.com"],
+          subject: `New Lead – ${project}`,
+          html: `
+            <h3>New Lead Received</h3>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>BHK Preference:</strong> ${bhkPreference}</p>
+            <p><strong>Project:</strong> ${project}</p>
+            <p><strong>Source:</strong> ${source}</p>
+          `,
+        }),
+      });
     }
 
     return NextResponse.json({ success: true });
