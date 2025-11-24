@@ -30,9 +30,9 @@ const EmotionalUSPs = () => {
         <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-center mb-4 text-foreground">
           Not just a flat. A childhood, a routine, a life you'll love.
         </h2>
-        <h3 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-center mb-4 text-foreground">
+        <p>
 Provident Sunworth City is a 60-acre integrated township off Mysore Road–NICE Junction, offering 2 & 3 BHK homes with excellent connectivity and 19 acres of green landscapes. With 50+ amenities, a school, and retail spaces within the community, it’s designed for convenient, holistic living.
-        </h3>
+        </p>
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
           {usps.map((usp, index) => (
