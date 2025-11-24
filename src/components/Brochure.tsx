@@ -24,7 +24,7 @@ const Brochure = ({ onCtaClick }: BrochureProps) => {
                 className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
                 onClick={onCtaClick}
               >
-                Get Personalised Guidance
+                Get Personalised Guidance with FREE Site Visit
               </Button>
               <a 
                 href="https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20download%20the%20Provident%20Sunworth%20brochure" 
