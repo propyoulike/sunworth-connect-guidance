@@ -47,6 +47,15 @@ const Index = () => {
       {/* Views */}
       <Views onCtaClick={scrollToForm} />
 
+      {/* Location & Neighbourhood */}
+      <Location onCtaClick={scrollToForm} />
+
+      {/* Customer Testimonials */}
+      <CustomerSpeaks onCtaClick={scrollToForm} />
+
+      {/* Brochure Download */}
+      <Brochure onCtaClick={scrollToForm} />
+
       {/* Lead Form - Mid Page */}
       <section ref={formRef} className="py-20 lg:py-28 bg-background">
         <div className="container mx-auto px-4">
@@ -55,22 +64,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Location & Neighbourhood */}
-      <Location onCtaClick={scrollToForm} />
-
-      {/* Connectivity */}
-      <Connectivity onCtaClick={scrollToForm} />
-
-      {/* Homes */}
-      <Homes onCtaClick={scrollToForm} />
-
-      {/* Customer Testimonials */}
-      <CustomerSpeaks onCtaClick={scrollToForm} />
-
-      {/* Brochure Download */}
-      <Brochure onCtaClick={scrollToForm} />
-
+      
       {/* Footer */}
       <footer className="bg-foreground text-background py-12">
         <div className="container mx-auto px-4 text-center">
