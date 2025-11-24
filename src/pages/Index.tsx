@@ -73,7 +73,16 @@ const Index = () => {
       <footer className="bg-foreground text-background py-12">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-2xl font-bold mb-2">Provident Sunworth</h3>
-          <p className="text-background/80 mb-6">Your family's brighter everyday on Mysore Road</p>
+          <p className="text-background/80 mb-6">Your family's brighter everyday</p>
+          <p>
+          Disclaimer: All project information, including availability, pricing, floor plans, and amenities, is subject to change without prior notice. Images and visuals are indicative and may differ from actual delivered products. Visitors are advised to verify all details independently before making any purchase decisions. This website is operated by PropYouLike as an authorized channel partner and is not the official developer website.
+          </p>
+          <p>
+          Privacy Policy: Information submitted through forms or contact channels will be used solely to assist with your enquiry. We do not sell or share your data with third parties except the developer or authorized partners for project-related communication. By submitting your details, you consent to being contacted via call, SMS, WhatsApp, or email. For data deletion requests, contact: propyoulike@gmail.com
+          </p>
+          <p>
+          Cookie Policy: This website may use cookies or similar technologies (including analytics and marketing pixels) to improve user experience and analyze website traffic. You may disable cookies in your browser settings at any time.
+          </p>
           <p className="text-sm text-background/60">
             © 2025 PropYouLike, Authorised Channel Partner. All rights reserved.
           </p>
