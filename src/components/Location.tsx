@@ -205,7 +205,9 @@ const Location = ({ onCtaClick }: LocationProps) => {
                 variant="outline"
                 className="text-lg px-8 py-6 rounded-full font-semibold"
               >
+              <a id="whatsapp-btn" href="https://wa.me/919379822010" target="_blank">
                 Chat on WhatsApp
+              </a>
               </Button>
             </a>
           </div>
