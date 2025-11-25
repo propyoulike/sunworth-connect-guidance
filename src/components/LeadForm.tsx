@@ -62,6 +62,29 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
         }
       );
 
+      // Send email notification via Resend
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer re_P4XDm6qv_NpbRtAMXhABWTKkgbWy3UzVt",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "PropYouLike <noreply@propyoulike.com>",
+          to: ["propyoulike@gmail.com"],
+          subject: `New Lead – Provident Sunworth`,
+          html: `
+            <h3>New Lead Received</h3>
+            <p><strong>Name:</strong> ${data.name}</p>
+            <p><strong>Phone:</strong> ${data.phone}</p>
+            <p><strong>Email:</strong> ${data.email}</p>
+            <p><strong>BHK Preference:</strong> ${data.bhkPreference}</p>
+            <p><strong>Project:</strong> Provident Sunworth</p>
+            <p><strong>Source:</strong> Landing Page</p>
+          `,
+        }),
+      });
+
       // Open WhatsApp with a prefilled message
       const whatsappMessage = encodeURIComponent(
         `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like personalised guidance on best units and pricing.`
