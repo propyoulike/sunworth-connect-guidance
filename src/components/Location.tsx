@@ -1,48 +1,69 @@
 import { Button } from "@/components/ui/button";
-import { MapPin } from "lucide-react";
+import { MapPin, ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
 
 interface LocationProps {
   onCtaClick: () => void;
 }
 
 const Location = ({ onCtaClick }: LocationProps) => {
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+
   const nearbyPlaces = {
-    commute: [
-      "NICE Road - 5 mins",
-      "Mysore Road - Adjacent",
-      "Kengeri Metro Station - 10 mins",
-      "Upcoming Metro Station - Walking distance"
-    ],
-    corporates: [
-      "Global Village Tech Park - 15 mins",
-      "RR Nagar IT Hub - 20 mins",
-      "Peenya Industrial Area - 25 mins",
-      "Electronic City - 40 mins"
-    ],
-    hospitals: [
-      "Columbia Asia Hospital - 10 mins",
-      "Manipal Hospital - 15 mins",
-      "BGS Global Hospital - 20 mins",
-      "Apollo Hospital - 25 mins"
-    ],
-    entertainment: [
-      "Orion Mall - 15 mins",
-      "Mantri Square Mall - 20 mins",
-      "PVR Cinemas - 15 mins",
-      "Wonderla Amusement Park - 20 mins"
-    ],
-    schools: [
-      "Chrysalis High School (On Campus)",
-      "Delhi Public School - 10 mins",
-      "Inventure Academy - 15 mins",
-      "Gear Innovation School - 12 mins"
-    ],
-    colleges: [
-      "PES University - 20 mins",
-      "BMS College of Engineering - 25 mins",
-      "MSRIT - 30 mins",
-      "Christ University - 35 mins"
-    ]
+    commute: {
+      items: [
+        "NICE Road - 5 mins",
+        "Mysore Road - Adjacent",
+        "Kengeri Metro Station - 10 mins",
+        "Upcoming Metro Station - Walking distance"
+      ],
+      details: "Excellent connectivity via NICE Road ensures quick access to all major business districts and IT hubs. The Outer Ring Road connects seamlessly to Electronic City, Whitefield, and Airport. Upcoming metro station will enhance public transport options significantly."
+    },
+    corporates: {
+      items: [
+        "Global Village Tech Park - 15 mins",
+        "RR Nagar IT Hub - 20 mins",
+        "Peenya Industrial Area - 25 mins",
+        "Electronic City - 40 mins"
+      ],
+      details: "Proximity to major IT parks means shorter commutes and better work-life balance. Global Village Tech Park houses 100+ companies including Dell, HP, Cisco, and Tally. Easy access to multiple employment hubs across Bangalore."
+    },
+    hospitals: {
+      items: [
+        "Columbia Asia Hospital - 10 mins",
+        "Manipal Hospital - 15 mins",
+        "BGS Global Hospital - 20 mins",
+        "Apollo Hospital - 25 mins"
+      ],
+      details: "Premium healthcare facilities within easy reach ensure peace of mind for your family's health needs. Multi-specialty hospitals with 24/7 emergency services, advanced diagnostic centers, and specialist consultations available nearby."
+    },
+    entertainment: {
+      items: [
+        "Orion Mall - 15 mins",
+        "Mantri Square Mall - 20 mins",
+        "PVR Cinemas - 15 mins",
+        "Wonderla Amusement Park - 20 mins"
+      ],
+      details: "Weekend entertainment and family outings are just minutes away. From shopping at premium malls to movie experiences and thrilling amusement parks, everything is within comfortable reach for quality family time."
+    },
+    schools: {
+      items: [
+        "Chrysalis High School (On Campus)",
+        "Delhi Public School - 10 mins",
+        "Inventure Academy - 15 mins",
+        "Gear Innovation School - 12 mins"
+      ],
+      details: "Top-rated schools in the vicinity ensure excellent educational opportunities for your children. Chrysalis High on campus means zero commute for primary education. Premium CBSE, ICSE, and IB schools nearby offering world-class education."
+    },
+    colleges: {
+      items: [
+        "PES University - 20 mins",
+        "BMS College of Engineering - 25 mins",
+        "MSRIT - 30 mins",
+        "Christ University - 35 mins"
+      ],
+      details: "Reputed engineering and degree colleges nearby provide seamless educational progression. Access to Bangalore's premier institutions for undergraduate and postgraduate education, ensuring your children's academic future is secure."
+    }
   };
 
   return (
@@ -77,77 +98,62 @@ const Location = ({ onCtaClick }: LocationProps) => {
 
         {/* Nearby Places Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto">
-          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
-            <h3 className="text-xl font-bold mb-4 text-foreground">🚗 Commute</h3>
-            <ul className="space-y-2">
-              {nearbyPlaces.commute.map((place, index) => (
-                <li key={index} className="text-muted-foreground flex items-start">
-                  <span className="text-primary mr-2">•</span>
-                  <span>{place}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
-            <h3 className="text-xl font-bold mb-4 text-foreground">🏢 Corporates</h3>
-            <ul className="space-y-2">
-              {nearbyPlaces.corporates.map((place, index) => (
-                <li key={index} className="text-muted-foreground flex items-start">
-                  <span className="text-primary mr-2">•</span>
-                  <span>{place}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
-            <h3 className="text-xl font-bold mb-4 text-foreground">🏥 Hospitals</h3>
-            <ul className="space-y-2">
-              {nearbyPlaces.hospitals.map((place, index) => (
-                <li key={index} className="text-muted-foreground flex items-start">
-                  <span className="text-primary mr-2">•</span>
-                  <span>{place}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
-            <h3 className="text-xl font-bold mb-4 text-foreground">🎭 Entertainment & Worship</h3>
-            <ul className="space-y-2">
-              {nearbyPlaces.entertainment.map((place, index) => (
-                <li key={index} className="text-muted-foreground flex items-start">
-                  <span className="text-primary mr-2">•</span>
-                  <span>{place}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
-            <h3 className="text-xl font-bold mb-4 text-foreground">🎓 Schools</h3>
-            <ul className="space-y-2">
-              {nearbyPlaces.schools.map((place, index) => (
-                <li key={index} className="text-muted-foreground flex items-start">
-                  <span className="text-primary mr-2">•</span>
-                  <span>{place}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bg-card rounded-xl p-6" style={{ boxShadow: 'var(--shadow-medium)' }}>
-            <h3 className="text-xl font-bold mb-4 text-foreground">🎓 Colleges</h3>
-            <ul className="space-y-2">
-              {nearbyPlaces.colleges.map((place, index) => (
-                <li key={index} className="text-muted-foreground flex items-start">
-                  <span className="text-primary mr-2">•</span>
-                  <span>{place}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {Object.entries(nearbyPlaces).map(([key, data]) => {
+            const isExpanded = expandedCategory === key;
+            const icons: Record<string, string> = {
+              commute: "🚗",
+              corporates: "🏢",
+              hospitals: "🏥",
+              entertainment: "🎭",
+              schools: "🎓",
+              colleges: "🎓"
+            };
+            const titles: Record<string, string> = {
+              commute: "Commute",
+              corporates: "Corporates",
+              hospitals: "Hospitals",
+              entertainment: "Entertainment",
+              schools: "Schools",
+              colleges: "Colleges"
+            };
+            
+            return (
+              <div key={key} className="bg-card rounded-xl overflow-hidden" style={{ boxShadow: 'var(--shadow-medium)' }}>
+                <div className="p-6">
+                  <button
+                    onClick={() => setExpandedCategory(isExpanded ? null : key)}
+                    className="w-full text-left"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-foreground">
+                        {icons[key]} {titles[key]}
+                      </h3>
+                      {isExpanded ? (
+                        <ChevronUp className="w-5 h-5 text-primary flex-shrink-0" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-primary flex-shrink-0" />
+                      )}
+                    </div>
+                  </button>
+                  <ul className="space-y-2">
+                    {data.items.map((place, index) => (
+                      <li key={index} className="text-muted-foreground flex items-start">
+                        <span className="text-primary mr-2">•</span>
+                        <span>{place}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {isExpanded && (
+                    <div className="mt-4 pt-4 border-t border-border animate-accordion-down">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {data.details}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Address & Map */}
