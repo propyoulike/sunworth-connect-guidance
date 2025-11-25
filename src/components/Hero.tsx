@@ -11,7 +11,7 @@ const Hero = ({ onCtaClick }: HeroProps) => {
       <div className="relative w-full h-[60vh] lg:h-[80vh] overflow-hidden">
         <iframe
           className="absolute top-0 left-0 w-full h-full"
-          src="https://www.youtube.com/embed/5PpgqAYGZHo?autoplay=1&mute=1&controls=0&loop=1&playlist=5PpgqAYGZHo&showinfo=0&rel=0"
+          src="https://www.youtube.com/embed/5PpgqAYGZHo?autoplay=1&mute=0&controls=0&loop=1&playlist=5PpgqAYGZHo&showinfo=0&rel=0"
           title="Provident Sunworth City Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
