@@ -12,14 +12,14 @@ const Location = ({ onCtaClick }: LocationProps) => {
   // ---------- TRACKING FUNCTIONS ----------
 
   const trackGA = (eventName: string, params: any = {}) => {
-    if (typeof gtag === "function") {
-      gtag("event", eventName, params);
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", eventName, params);
     }
   };
 
   const trackMeta = (eventName: string) => {
-    if (typeof fbq === "function") {
-      fbq("track", eventName);
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", eventName);
     }
   };
 

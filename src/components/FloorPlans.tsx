@@ -12,11 +12,11 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
 
   // ---------- Tracking Functions ----------
   const trackGA = (eventName: string, params: any = {}) => {
-    if (typeof gtag === "function") gtag("event", eventName, params);
+    if (typeof (window as any).gtag === "function") (window as any).gtag("event", eventName, params);
   };
 
   const trackMeta = (eventName: string) => {
-    if (typeof fbq === "function") fbq("track", eventName);
+    if (typeof (window as any).fbq === "function") (window as any).fbq("track", eventName);
   };
 
   // Track section view
@@ -27,7 +27,7 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
         if (isVisible && !hasTrackedView.current) {
           hasTrackedView.current = true;
           trackGA("section_view", { event_category: "engagement", event_label: "FloorPlans Section" });
-          fbq("trackCustom", "FloorPlansSectionViewed");
+          if (typeof (window as any).fbq === "function") (window as any).fbq("trackCustom", "FloorPlansSectionViewed");
         }
       },
       { threshold: 0.3 }
