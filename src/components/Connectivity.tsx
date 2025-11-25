@@ -11,16 +11,19 @@ const connectivityPoints = [
     icon: MapPin,
     title: "NICE Road — 5 mins",
     description: "Easy access to key parts of the city",
+    details: "The Outer Ring Road (NICE Road) connectivity provides seamless access to major IT hubs, business districts, and entertainment zones across Bangalore. Travel time to Electronic City is just 20 minutes, while Bannerghatta Road and Hosur Road are easily accessible within 15-20 minutes."
   },
   {
     icon: Train,
     title: "Upcoming Metro",
     description: "Easy future connectivity",
+    details: "The upcoming metro station will be within 2 km of the project, connecting you to the entire city's metro network. This will provide hassle-free commuting to major employment hubs like Whitefield, MG Road, and the Airport. Expected completion by 2026."
   },
   {
     icon: Building2,
     title: "Global Village Tech Park",
     description: "Nearby for relaxed commutes",
+    details: "One of Bangalore's premier IT parks is just 10 minutes away, housing over 100+ multinational companies including Dell, HP, Cisco, Tally, and many more. This means minimal commute time, better work-life balance, and more time for what truly matters - your family."
   },
 ];
 
@@ -72,10 +75,11 @@ const Connectivity = ({ onCtaClick }: ConnectivityProps) => {
                       <ChevronDown className="w-4 h-4 text-primary" />
                     )}
                   </div>
+                  <p className="text-sm text-muted-foreground mt-2">{point.description}</p>
                 </button>
                 {isExpanded && (
                   <div className="px-6 pb-6 animate-accordion-down">
-                    <p className="text-sm text-muted-foreground">{point.description}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{point.details}</p>
                   </div>
                 )}
               </div>

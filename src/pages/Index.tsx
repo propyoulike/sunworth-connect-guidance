@@ -13,6 +13,7 @@ import CustomerSpeaks from "@/components/CustomerSpeaks";
 import Brochure from "@/components/Brochure";
 import LeadForm from "@/components/LeadForm";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
+import ProvidentSection from "@/components/ProvidentSection";
 
 const Index = () => {
   const formRef = useRef<HTMLDivElement>(null);
@@ -68,6 +69,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* About Provident */}
+      <ProvidentSection />
       
       {/* Footer */}
       <footer className="bg-foreground text-background py-12">

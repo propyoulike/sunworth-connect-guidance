@@ -45,26 +45,22 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
     setIsSubmitting(true);
 
     try {
-      // Send lead to your Vercel backend
-      const response = await fetch(
-        "https://sunworth-connect-guidance.lovable.app/api/leads",
+      // Send lead to Privyr CRM webhook
+      const privyrPayload = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message: `Project: Provident Sunworth\nBHK Preference: ${data.bhkPreference}\nSource: Landing Page`,
+      };
+
+      await fetch(
+        "https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/5xrM2juN",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: data.name,
-            email: data.email,
-            phone: data.phone,
-            bhkPreference: data.bhkPreference,
-            project: "Provident Sunworth",
-            source: "Landing Page",
-          }),
+          body: JSON.stringify(privyrPayload),
         }
       );
-
-      if (!response.ok) {
-        throw new Error("API submission failed");
-      }
 
       // Open WhatsApp with a prefilled message
       const whatsappMessage = encodeURIComponent(
@@ -83,7 +79,7 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
     } catch (error) {
       console.error("Lead form submission error:", error);
 
-      // Fallback: open WhatsApp even if API fails
+      // Fallback: open WhatsApp even if CRM submission fails
       const whatsappMessage = encodeURIComponent(
         `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like personalised guidance on best units and pricing.`
       );
