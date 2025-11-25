@@ -25,13 +25,17 @@ const Views = ({ onCtaClick }: ViewsProps) => {
           hasTrackedView.current = true;
 
           // GA4
-          gtag("event", "section_view", {
-            event_category: "engagement",
-            event_label: "Views Section",
-          });
+          if (typeof (window as any).gtag === "function") {
+            (window as any).gtag("event", "section_view", {
+              event_category: "engagement",
+              event_label: "Views Section",
+            });
+          }
 
           // Meta Pixel
-          fbq("trackCustom", "ViewsSectionViewed");
+          if (typeof (window as any).fbq === "function") {
+            (window as any).fbq("trackCustom", "ViewsSectionViewed");
+          }
         }
       },
       { threshold: 0.3 }
@@ -53,34 +57,46 @@ const Views = ({ onCtaClick }: ViewsProps) => {
 
   // Track WhatsApp click
   const handleWhatsAppClick = () => {
-    gtag("event", "whatsapp_click", {
-      event_category: "engagement",
-      event_label: "WhatsApp – Views Section",
-    });
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "whatsapp_click", {
+        event_category: "engagement",
+        event_label: "WhatsApp – Views Section",
+      });
+    }
 
-    fbq("track", "Contact");
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "Contact");
+    }
   };
 
   // Track CTA click
   const handleCtaClick = () => {
-    gtag("event", "cta_click", {
-      event_category: "engagement",
-      event_label: "CTA – Views Section",
-    });
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "cta_click", {
+        event_category: "engagement",
+        event_label: "CTA – Views Section",
+      });
+    }
 
-    fbq("track", "Lead");
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "Lead");
+    }
 
     onCtaClick();
   };
 
   // Track Image Click
   const handleImageClick = (title: string) => {
-    gtag("event", "image_click", {
-      event_category: "engagement",
-      event_label: title,
-    });
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "image_click", {
+        event_category: "engagement",
+        event_label: title,
+      });
+    }
 
-    fbq("trackCustom", "ImageClicked", { image: title });
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("trackCustom", "ImageClicked", { image: title });
+    }
   };
 
   return (

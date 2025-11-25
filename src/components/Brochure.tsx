@@ -9,16 +9,16 @@ const Brochure = ({ onCtaClick }: BrochureProps) => {
 
   const handleWhatsappClick = () => {
     // GA4 Event
-    if (typeof gtag === "function") {
-      gtag("event", "whatsapp_click", {
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "whatsapp_click", {
         event_category: "engagement",
         event_label: "Whatsapp Chat Button",
       });
     }
 
     // Meta Pixel
-    if (typeof fbq === "function") {
-      fbq("track", "Contact");
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "Contact");
     }
   };
 
