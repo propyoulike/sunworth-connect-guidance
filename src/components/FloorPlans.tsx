@@ -99,7 +99,9 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
                 variant="outline"
                 className="text-lg px-8 py-6 rounded-full font-semibold"
               >
-                Chat on WhatsApp
+                <a id="whatsapp-btn" href="https://wa.me/919379822010" target="_blank">
+                    Chat on WhatsApp
+                </a>
               </Button>
             </a>
           </div>
