@@ -15,8 +15,16 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Main Home */}
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+          {/* 👉 Alias route for your landing page folder */}
+          <Route path="/provident-sunworth-city" element={<Index />} />
+
+          {/* For trailing slash support */}
+          <Route path="/provident-sunworth-city/" element={<Index />} />
+
+          {/* Catch all */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
