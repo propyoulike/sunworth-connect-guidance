@@ -1,31 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
+import CTAButtons from "./CTAButtons";
 import { useRef, useState, useEffect } from "react";
-
-interface CTAButtonsProps {
-  onFormOpen: () => void;
-  variant?: "default" | "compact";
-}
-
-const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
-  return (
-    <div className={`inline-flex items-center justify-center gap-3 ${variant === "compact" ? "text-sm" : "text-base"}`}>
-      <button
-        type="button"
-        onClick={onFormOpen}
-        className="inline-flex items-center justify-center rounded-md px-4 py-2 bg-primary text-white font-semibold shadow-sm hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-primary/50"
-      >
-        Request Floorplan
-      </button>
-      <a
-        href="#contact"
-        className="inline-flex items-center justify-center rounded-md px-4 py-2 border border-primary text-primary font-semibold hover:bg-primary/5"
-      >
-        Contact
-      </a>
-    </div>
-  );
-};
 
 interface FloorPlansTabsProps {
   onCtaClick: () => void;
@@ -81,7 +57,8 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {unitPlansVideos.map((video, i) => (
                 <Card key={i} className="p-6 hover:shadow-xl transition-shadow">
-                  <div className="w-full rounded-lg overflow-hidden mb-6 bg-muted cursor-pointer" onClick={() => { trackGA?.("video_click", { title: video.title }); trackFB?.("VideoView", { title: video.title }); }}>
+                  <div className="w-full rounded-lg overflow-hidden mb-6 bg-muted cursor-pointer"
+                    onClick={() => { trackGA?.("video_click", { title: video.title }); trackFB?.("VideoView", { title: video.title }); }}>
                     <div className="relative" style={{ paddingTop: '56.25%' }}>
                       <iframe src={convertToEmbed(video.url)} title={video.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope" allowFullScreen className="absolute inset-0 w-full h-full" />
                     </div>
