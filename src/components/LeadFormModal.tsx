@@ -9,12 +9,14 @@ interface LeadFormModalProps {
 const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto p-6">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">
             Request for Guidance
           </DialogTitle>
         </DialogHeader>
+
+        {/* LeadForm closes modal on success */}
         <LeadForm onSuccess={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
