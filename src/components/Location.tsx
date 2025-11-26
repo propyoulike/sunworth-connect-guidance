@@ -66,7 +66,7 @@ export default function Location({ onCtaClick }: LocationProps) {
           >
             {videoVisible && (
               <iframe
-                src="https://www.youtube.com/embed/1MkdQ3HbV0U"
+                src="https://www.youtube.com/embed/CY-IwT0sCv0"
                 className="w-full h-full rounded-xl shadow-lg"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 title="Location Video"
