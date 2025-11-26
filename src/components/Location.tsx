@@ -27,20 +27,51 @@ export default function Location({ onCtaClick }: LocationProps) {
   const videoRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const handleIntersection = (ref: React.RefObject<HTMLDivElement>, setVisible: (value: boolean) => void) => {
-      if (!ref.current) return;
-      const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
+  // ---------- GA / Meta Tracking ----------
+  const trackView = (sectionName: string) => {
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "section_view", {
+        event_category: "engagement",
+        event_label: sectionName,
       });
+    }
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("trackCustom", `${sectionName}Viewed`);
+    }
+  };
+
+  const handleCtaClick = () => {
+    if (typeof (window as any).gtag === "function")
+      (window as any).gtag("event", "cta_click_location", { section: "Location" });
+
+    if (typeof (window as any).fbq === "function")
+      (window as any).fbq("track", "Lead");
+
+    onCtaClick();
+  };
+
+  useEffect(() => {
+    const handleIntersection = (
+      ref: React.RefObject<HTMLDivElement>,
+      setVisible: (value: boolean) => void,
+      sectionName: string
+    ) => {
+      if (!ref.current) return;
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setVisible(true);
+            trackView(sectionName);
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.3 }
+      );
       observer.observe(ref.current);
     };
 
-    handleIntersection(videoRef, setVideoVisible);
-    handleIntersection(mapRef, setMapVisible);
+    handleIntersection(videoRef, setVideoVisible, "LocationVideo");
+    handleIntersection(mapRef, setMapVisible, "LocationMap");
   }, []);
 
   return (
@@ -116,7 +147,7 @@ export default function Location({ onCtaClick }: LocationProps) {
         </div>
 
         {/* CTA Buttons */}
-        <CTAButtons onFormOpen={onCtaClick} />
+        <CTAButtons onFormOpen={handleCtaClick} />
       </div>
     </section>
   );
