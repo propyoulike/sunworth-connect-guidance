@@ -46,12 +46,11 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
 
           <p className="mt-3">
             View detailed pricing & unit details in the{" "}
-            <button
-              onClick={() => scrollToSection("floorplans")}
-              className="text-blue-600 underline"
-            >
-              Floor Plans & Pricing section
-            </button>.
+<button onClick={() => {
+  document.getElementById("floorplans")?.scrollIntoView({ behavior: "smooth" });
+}}>
+  Floor Plans
+</button>
           </p>
         </div>
       ),
