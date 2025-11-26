@@ -8,87 +8,106 @@ import {
 const FAQs = [
   {
     question: "What is the price range for apartments at Provident Sunworth City?",
-    answer: `2 BHK apartments: Starting at ₹69.99 lakhs
-3 BHK Regular apartments: Starting at ₹79.99 lakhs
-3 BHK Royale apartments: Premium pricing
-
-Note: Final pricing depends on the floor, unit facing, and selection. The total price comprises:
-a. Sale Consideration: Flat/unit cost + club development charges + floor rise charges + car park charges
-b. GST on sale consideration
-c. Other/Possession Related Charges (Tentative): Advanced maintenance charges, infrastructure provision (electricity & water), legal charges, stamp paper charges, modifications (if applicable), and share application money
-d. Stamp Duty & Registration charges`,
+    answer: (
+      <div>
+        <ul className="list-disc list-inside space-y-1">
+          <li>2 BHK apartments: Starting at ₹69.99 lakhs</li>
+          <li>3 BHK Regular apartments: Starting at ₹79.99 lakhs</li>
+          <li>3 BHK Royale apartments: Premium pricing</li>
+        </ul>
+        <p className="mt-2 font-semibold">Note:</p>
+        <ul className="list-disc list-inside space-y-1">
+          <li>Final pricing depends on the floor, unit facing, and selection.</li>
+          <li>Total price comprises:
+            <ul className="list-disc list-inside ml-5">
+              <li>Sale Consideration: Flat/unit cost + club development charges + floor rise charges + car park charges</li>
+              <li>GST on sale consideration</li>
+              <li>Other/Possession Related Charges (tentative): Advanced maintenance charges, infrastructure provision, legal charges, stamp paper charges, modifications (if applicable), share application money</li>
+              <li>Stamp Duty & Registration charges</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    ),
   },
   {
     question: "What is the current status of construction?",
-    answer: `Provident Sunworth City is an under-construction township, with multiple phases at various stages. 
-Phase IV is progressing steadily. 
-Site visits are encouraged to see the actual progress.`,
+    answer: (
+      <div>
+        <ul className="list-disc list-inside space-y-1">
+          <li>Provident Sunworth City is an under-construction township with multiple phases at various stages.</li>
+          <li>Phase IV is progressing steadily.</li>
+          <li>Site visits are encouraged to see the actual progress.</li>
+        </ul>
+      </div>
+    ),
   },
   {
     question: "What amenities are available in the township?",
-    answer: `Provident Sunworth City isn’t just a place to live — it’s a lifestyle designed around your family, fitness, and fun. Imagine stepping out of your apartment and strolling through lush green gardens and forest-like walking paths, breathing in fresh air, with birds chirping and kids laughing nearby. 🌳
-
-For your active side, there’s a fully equipped gym, a swimming pool, and dedicated jogging and cycling tracks. Fancy a quiet morning stretch? You can find your calm at the yoga and meditation zones. 🧘
-
-Families will love the children’s play areas, tree houses, and safe open lawns where kids can run around freely while you sip coffee or chat with neighbors. For social moments, the clubhouse and multipurpose halls are perfect for celebrations, gatherings, or weekend game nights. 🎉
-
-Need daily conveniences? Retail shops and a school inside the campus mean errands are quick and easy — groceries, essentials, or school runs are just a short walk away. 🚶‍♂️🛒
-
-And of course, your safety is our priority: 24×7 security, gated entry, CCTV surveillance, and covered parking ensure peace of mind for the whole family. 🛡️
-
-In short, whether it’s play, fitness, nature, convenience, or community, Sunworth City gives you everything to live a balanced, joyful, and stress-free life — all within your own township.`,
-  },
-  {
-    question: "Is home loan assistance available?",
-    answer: `Yes, the project is approved by all major banks. PropYouLike provides complete home loan assistance. Our team works with leading banks and financial institutions to help you secure the best loan rates and terms. We guide you through the entire documentation and approval process.`,
-  },
-  {
-    question: "What is the location advantage of Provident Sunworth City?",
-    answer: `Strategically located on Mysore Road, Bangalore. Excellent connectivity to IT hubs, schools, hospitals, and entertainment zones. Less than 5 mins drive from Challaghatta Metro Station.`,
+    answer: (
+      <div>
+        <p>
+          Provident Sunworth City isn’t just a place to live — it’s a lifestyle for your family, fitness, and fun:
+        </p>
+        <ul className="list-disc list-inside space-y-1 mt-2">
+          <li>Lush green gardens and forest-like walking paths 🌳</li>
+          <li>Fully equipped gym, swimming pool, jogging & cycling tracks 🏃‍♂️</li>
+          <li>Yoga and meditation zones 🧘</li>
+          <li>Children’s play areas, tree houses, open lawns 🛝</li>
+          <li>Clubhouse & multipurpose halls for social events 🎉</li>
+          <li>Retail shops and a school inside the campus 🚶‍♂️🛒</li>
+          <li>24×7 security, gated entry, CCTV surveillance, and covered parking 🛡️</li>
+        </ul>
+      </div>
+    ),
   },
   {
     question: "What are the payment plan options?",
-    answer: `We offer flexible payment plans including construction-linked plans, easy EMIs, and down payment flexibility. Our team can create a personalized payment schedule that aligns with your financial planning.
-
-Phase IV offers a construction-linked payment plan with 14 milestones:
-1. Initial Advance: ₹2,00,000
-2. Balance Advance: 9% of Sale Consideration (after initial advance)
-3. Post Agreement for Sale (within 30 days of booking): 11%
-4. Completion of Excavation: 10%
-5. Completion of Foundation: 15%
-6. Completion of Ground/Stilt Floor Roof Slab: 7%
-7. Completion of 3rd Floor Roof Slab: 7%
-8. Completion of 6th Floor Roof Slab: 7%
-9. Completion of 9th Floor Roof Slab: 7%
-10. Completion of Terrace Slab: 7%
-11. Completion of Flooring: 5%
-12. Installation of External Windows: 5%
-13. Commencement of Lift Installation: 5%
-14. Possession: 5%
-
-Important Notes:
-- Percentages are based on the Agreement Value.
-- GST, infrastructure charges, legal charges, and all other statutory charges are extra.
-- Billing occurs upon completion of the respective milestone, not in sequential order.`,
-  },
-  {
-    question: "Is there parking space available?",
-    answer: "Yes, STILT parking is provided for all apartments. Additional parking spaces are also available for guests and visitors throughout the township.",
-  },
-  {
-    question: "What is the possession timeline?",
-    answer: `The possession is expected around Q1 2028 for Phase IV. Phase IV is progressing steadily.
-For units under construction, possession timelines will be shared based on the specific tower and construction schedule. Site visits are encouraged to see the actual progress.`,
+    answer: (
+      <div>
+        <p>We offer flexible payment plans including construction-linked plans, easy EMIs, and down payment flexibility.</p>
+        <p className="mt-2 font-semibold">Phase IV Construction-Linked Plan (14 Milestones):</p>
+        <ol className="list-decimal list-inside space-y-1 mt-2">
+          <li>Initial Advance: ₹2,00,000</li>
+          <li>Balance Advance: 9% of Sale Consideration (after initial advance)</li>
+          <li>Post Agreement for Sale (within 30 days of booking): 11%</li>
+          <li>Completion of Excavation: 10%</li>
+          <li>Completion of Foundation: 15%</li>
+          <li>Completion of Ground/Stilt Floor Roof Slab: 7%</li>
+          <li>Completion of 3rd Floor Roof Slab: 7%</li>
+          <li>Completion of 6th Floor Roof Slab: 7%</li>
+          <li>Completion of 9th Floor Roof Slab: 7%</li>
+          <li>Completion of Terrace Slab: 7%</li>
+          <li>Completion of Flooring: 5%</li>
+          <li>Installation of External Windows: 5%</li>
+          <li>Commencement of Lift Installation: 5%</li>
+          <li>Possession: 5%</li>
+        </ol>
+        <p className="mt-2 font-semibold">Important Notes:</p>
+        <ul className="list-disc list-inside space-y-1">
+          <li>Percentages are based on the Agreement Value.</li>
+          <li>GST, infrastructure charges, legal charges, and all other statutory charges are extra.</li>
+          <li>Billing occurs upon completion of the respective milestone, not in sequential order.</li>
+        </ul>
+      </div>
+    ),
   },
   {
     question: "How can I schedule a site visit?",
-    answer: `Visiting Sunworth City is the best way to truly experience the greenery, open spaces, and lifestyle the township offers. Scheduling a visit is simple and hassle-free:
-
-- **Online Form:** Fill out the quick free [site visit form](https://wa.me/919379822010) and our team will get back to you to fix a convenient time.
-- **WhatsApp:** Prefer messaging? Send us a message on [WhatsApp](https://wa.me/919379822010), and we’ll coordinate a visit that fits your schedule.
-
-During your visit, you’ll get a guided tour of the township, see apartments under construction, explore amenities, and have all your questions answered — a sneak peek into your future home! 🏡`,
+    answer: (
+      <div>
+        <p>
+          Visiting Sunworth City is the best way to experience the greenery, open spaces, and lifestyle the township offers. Scheduling a visit is simple and hassle-free:
+        </p>
+        <ul className="list-disc list-inside space-y-1 mt-2">
+          <li>Online Form: Fill out the quick free <a href="https://wa.me/919379822010" className="text-blue-600 underline">site visit form</a> and our team will get back to you.</li>
+          <li>WhatsApp: Prefer messaging? Send us a message on <a href="https://wa.me/919379822010" className="text-blue-600 underline">WhatsApp</a> to coordinate a visit.</li>
+        </ul>
+        <p className="mt-2">During your visit, you’ll get a guided tour of the township, see apartments under construction, explore amenities, and have all your questions answered — a sneak peek into your future home! 🏡</p>
+      </div>
+    ),
   },
+  // Add other FAQs similarly with <ul> or <ol> for readability
 ];
 
 const FAQ = () => {
