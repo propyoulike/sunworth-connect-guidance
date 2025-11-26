@@ -110,7 +110,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
 
       // Fallback: open WhatsApp even if CRM submission fails
       const whatsappMessage = encodeURIComponent(
-        `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like personalised guidance on best units and pricing.`
+        `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like guidance on best units and pricing.`
       );
       const whatsappUrl = `https://wa.me/919379822010?text=${whatsappMessage}`;
       
