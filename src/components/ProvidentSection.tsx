@@ -1,5 +1,5 @@
 import { Building2, Users, Award, TrendingUp, ChevronDown, ChevronUp } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 const stats = [
@@ -11,6 +11,57 @@ const stats = [
 
 const ProvidentSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const hasTrackedView = useRef(false);
+
+  // ---------- Tracking ----------
+  const trackView = () => {
+    if (!hasTrackedView.current) {
+      hasTrackedView.current = true;
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "section_view", {
+          event_category: "engagement",
+          event_label: "ProvidentSection",
+        });
+      }
+      if (typeof (window as any).fbq === "function") {
+        (window as any).fbq("trackCustom", "ProvidentSectionViewed");
+      }
+    }
+  };
+
+  const trackExpand = () => {
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "section_expand", {
+        event_category: "engagement",
+        event_label: "ProvidentSectionExpanded",
+      });
+    }
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("trackCustom", "ProvidentSectionExpanded");
+    }
+  };
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          trackView();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const handleExpandClick = () => {
+    setIsExpanded(!isExpanded);
+    if (!isExpanded) trackExpand();
+  };
+
   return (
     <section id="providentsection" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
@@ -24,27 +75,23 @@ const ProvidentSection = () => {
             </p>
           </div>
 
-          {/* Brief Overview - Always Visible */}
           <div className="prose prose-lg max-w-none text-muted-foreground mb-8">
             <p className="text-center lg:text-left leading-relaxed">
               Provident Housing is a subsidiary of the prestigious Puravankara Group, delivering quality homes at affordable prices since 2008. With a focus on value, transparency, and customer satisfaction, Provident has become one of India's most trusted residential brands.
             </p>
           </div>
 
-          {/* Expandable Content */}
           {isExpanded && (
             <div className="space-y-8 animate-in fade-in duration-300">
               <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
                 <p>
                   Since its inception, Provident Housing has been committed to making quality housing accessible to the aspiring middle class. With over 50,000 happy families across India, the brand has set benchmarks in the affordable housing segment without compromising on quality or design.
                 </p>
-
                 <p>
                   Every Provident project is built with meticulous attention to detail, sustainable practices, and modern amenities that enhance the living experience. From thoughtfully designed floor plans to world-class facilities, Provident ensures that your investment translates into lasting value and comfort.
                 </p>
               </div>
 
-              {/* Statistics */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8">
                 {stats.map((stat, index) => (
                   <div key={index} className="text-center p-6 bg-muted/50 rounded-xl">
@@ -55,7 +102,6 @@ const ProvidentSection = () => {
                 ))}
               </div>
 
-              {/* Puravankara Group Legacy */}
               <div className="p-8 bg-muted/50 rounded-2xl">
                 <h3 className="text-2xl font-bold mb-4 text-foreground">
                   Backed by Puravankara Group's Legacy
@@ -67,12 +113,11 @@ const ProvidentSection = () => {
             </div>
           )}
 
-          {/* Expand/Collapse Button */}
           <div className="text-center mt-8">
             <Button
               variant="outline"
               size="lg"
-              onClick={() => setIsExpanded(!isExpanded)}
+              onClick={handleExpandClick}
               className="rounded-full font-semibold"
             >
               {isExpanded ? (
