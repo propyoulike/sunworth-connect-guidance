@@ -44,7 +44,7 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
           className="flex-1 btn-gradient text-base sm:text-lg px-6 py-5 rounded-full font-semibold"
           onClick={() => handleFormClick("Personalised Guidance")}
         >
-          Get Personalised Guidance
+          Personalised Guidance
         </Button>
         <Button
           size="lg"
@@ -65,7 +65,7 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
         className="w-full sm:w-auto btn-gradient text-lg px-8 py-6 rounded-full font-semibold shadow-lg"
         onClick={() => handleFormClick("Personalised Guidance")}
       >
-        Get Personalised Guidance
+        Personalised Guidance
       </Button>
       <Button
         size="lg"
