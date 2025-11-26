@@ -1,8 +1,17 @@
-const handleSubmit = async (data: any) => {
-  try {
-    // Send to your existing backend (if any)
-    // await sendToBackend(data);
+interface FormData {
+  name: string;
+  phone: string;
+  email?: string;
+  message?: string;
+}
 
+interface HandleSubmitOptions {
+  data: FormData;
+  onSuccess?: () => void;
+}
+
+const handleSubmit = async ({ data, onSuccess }: HandleSubmitOptions) => {
+  try {
     // ---------- SEND TO PRIVYR ----------
     await fetch("https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/5xrM2juN", {
       method: "POST",
@@ -32,8 +41,7 @@ const handleSubmit = async (data: any) => {
     }
 
     // Close modal after success
-    if (onSuccess) onSuccess();
-
+    onSuccess?.();
   } catch (error) {
     console.error("Privyr submission failed:", error);
   }
