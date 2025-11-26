@@ -13,7 +13,7 @@ const FAQ = () => {
     },
     {
       question: "What is the current status of construction?",
-      answer: "Provident Sunworth City is a ready-to-move-in township with multiple phases completed. Phase IV construction is progressing well with several towers nearing completion. You can visit the site to see the actual progress.",
+      answer: "Provident Sunworth City is under construction township with multiple phases in various states of completion. Phase IV construction is progressing well. You can visit the site to see the actual progress.",
     },
     {
       question: "What amenities are available in the township?",
@@ -28,10 +28,6 @@ const FAQ = () => {
       answer: "Located on Mysore Road, the township offers excellent connectivity to key areas of Bangalore. It's close to major IT parks, educational institutions, hospitals, and entertainment zones. The upcoming metro connectivity will further enhance accessibility.",
     },
     {
-      question: "Can I customize my apartment?",
-      answer: "Yes, depending on the construction stage, customization options are available. Our team can discuss specific requirements and possibilities based on your selected unit.",
-    },
-    {
       question: "What are the payment plan options?",
       answer: "We offer flexible payment plans including construction-linked plans, easy EMIs, and down payment flexibility. Our team can create a personalized payment schedule that aligns with your financial planning.",
     },
@@ -41,7 +37,7 @@ const FAQ = () => {
     },
     {
       question: "What is the possession timeline?",
-      answer: "As this is a ready-to-move-in project, immediate possession is available for completed phases. For units under construction, possession timelines will be shared based on the specific tower and construction schedule.",
+      answer: "The possession is expected around Q1 2028 for Phase IV. For units under construction, possession timelines will be shared based on the specific tower and construction schedule.",
     },
     {
       question: "How can I schedule a site visit?",
