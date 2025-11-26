@@ -27,18 +27,9 @@ const FAQs = [
             </ul>
           </li>
         </ul>
-      </div>
-    ),
-  },
-  {
-    question: "What is the current status of construction?",
-    answer: (
-      <div>
-        <ul className="list-disc list-inside space-y-1">
-          <li>Provident Sunworth City is an under-construction township with multiple phases at various stages.</li>
-          <li>Phase IV is progressing steadily.</li>
-          <li>Site visits are encouraged to see the actual progress.</li>
-        </ul>
+        <p className="mt-2">
+          Want to see detailed pricing and floor plans? Jump to the <a href="#floorplans" className="text-blue-600 underline">Floor Plans & Pricing section</a>.
+        </p>
       </div>
     ),
   },
@@ -47,17 +38,20 @@ const FAQs = [
     answer: (
       <div>
         <p>
-          Provident Sunworth City isn’t just a place to live — it’s a lifestyle for your family, fitness, and fun:
+          Provident Sunworth City isn’t just a place to live — it’s a lifestyle:
         </p>
         <ul className="list-disc list-inside space-y-1 mt-2">
-          <li>Lush green gardens and forest-like walking paths 🌳</li>
-          <li>Fully equipped gym, swimming pool, jogging & cycling tracks 🏃‍♂️</li>
-          <li>Yoga and meditation zones 🧘</li>
+          <li>Lush green gardens & walking paths 🌳</li>
+          <li>Gym, swimming pool, jogging & cycling tracks 🏃‍♂️</li>
+          <li>Yoga & meditation zones 🧘</li>
           <li>Children’s play areas, tree houses, open lawns 🛝</li>
-          <li>Clubhouse & multipurpose halls for social events 🎉</li>
-          <li>Retail shops and a school inside the campus 🚶‍♂️🛒</li>
-          <li>24×7 security, gated entry, CCTV surveillance, and covered parking 🛡️</li>
+          <li>Clubhouse & multipurpose halls 🎉</li>
+          <li>Retail shops & school inside the campus 🚶‍♂️🛒</li>
+          <li>24×7 security, gated entry, CCTV, covered parking 🛡️</li>
         </ul>
+        <p className="mt-2">
+          See full list of <a href="#amenities" className="text-blue-600 underline">Amenities & Features</a>.
+        </p>
       </div>
     ),
   },
@@ -65,12 +59,12 @@ const FAQs = [
     question: "What are the payment plan options?",
     answer: (
       <div>
-        <p>We offer flexible payment plans including construction-linked plans, easy EMIs, and down payment flexibility.</p>
-        <p className="mt-2 font-semibold">Phase IV Construction-Linked Plan (14 Milestones):</p>
+        <p>Flexible payment plans including construction-linked, EMIs, and down payment options.</p>
+        <p className="mt-2 font-semibold">Phase IV Milestones:</p>
         <ol className="list-decimal list-inside space-y-1 mt-2">
           <li>Initial Advance: ₹2,00,000</li>
           <li>Balance Advance: 9% of Sale Consideration (after initial advance)</li>
-          <li>Post Agreement for Sale (within 30 days of booking): 11%</li>
+          <li>Post Agreement for Sale (within 30 days): 11%</li>
           <li>Completion of Excavation: 10%</li>
           <li>Completion of Foundation: 15%</li>
           <li>Completion of Ground/Stilt Floor Roof Slab: 7%</li>
@@ -83,12 +77,15 @@ const FAQs = [
           <li>Commencement of Lift Installation: 5%</li>
           <li>Possession: 5%</li>
         </ol>
-        <p className="mt-2 font-semibold">Important Notes:</p>
+        <p className="mt-2 font-semibold">Notes:</p>
         <ul className="list-disc list-inside space-y-1">
-          <li>Percentages are based on the Agreement Value.</li>
-          <li>GST, infrastructure charges, legal charges, and all other statutory charges are extra.</li>
-          <li>Billing occurs upon completion of the respective milestone, not in sequential order.</li>
+          <li>Percentages are based on Agreement Value.</li>
+          <li>GST, infrastructure, legal, and statutory charges are extra.</li>
+          <li>Billing occurs upon completion of the milestone, not sequential order.</li>
         </ul>
+        <p className="mt-2">
+          For a personalized payment plan, fill out the <a href="#leadform" className="text-blue-600 underline">Lead Form</a>.
+        </p>
       </div>
     ),
   },
@@ -97,17 +94,19 @@ const FAQs = [
     answer: (
       <div>
         <p>
-          Visiting Sunworth City is the best way to experience the greenery, open spaces, and lifestyle the township offers. Scheduling a visit is simple and hassle-free:
+          Experiencing Sunworth City in person is the best way to feel the greenery, open spaces, and lifestyle.
         </p>
         <ul className="list-disc list-inside space-y-1 mt-2">
-          <li>Online Form: Fill out the quick free <a href="https://wa.me/919379822010" className="text-blue-600 underline">site visit form</a> and our team will get back to you.</li>
-          <li>WhatsApp: Prefer messaging? Send us a message on <a href="https://wa.me/919379822010" className="text-blue-600 underline">WhatsApp</a> to coordinate a visit.</li>
+          <li>Online Form: Fill out the quick <a href="#leadform" className="text-blue-600 underline">Site Visit Form</a> and our team will schedule a visit.</li>
+          <li>WhatsApp: Message us on <a href="https://wa.me/919379822010" className="text-blue-600 underline">WhatsApp</a> to coordinate a convenient time.</li>
         </ul>
-        <p className="mt-2">During your visit, you’ll get a guided tour of the township, see apartments under construction, explore amenities, and have all your questions answered — a sneak peek into your future home! 🏡</p>
+        <p className="mt-2">
+          During your visit, get a guided tour, see apartments under construction, explore amenities, and have all your questions answered. 🏡
+        </p>
       </div>
     ),
   },
-  // Add other FAQs similarly with <ul> or <ol> for readability
+  // Add other FAQs similarly
 ];
 
 const FAQ = () => {
