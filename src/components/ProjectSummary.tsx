@@ -1,11 +1,61 @@
+import { useEffect, useRef } from "react";
 import { Home, MapPin, TreePine, Award } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import CTAButtons from "./CTAButtons";
 
 interface ProjectSummaryProps {
   onCtaClick: () => void;
 }
 
 const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const hasTrackedView = useRef(false);
+
+  // ---------- GA / Meta Tracking ----------
+  const trackView = () => {
+    if (!hasTrackedView.current) {
+      hasTrackedView.current = true;
+
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "section_view", {
+          event_category: "engagement",
+          event_label: "ProjectSummary Section",
+        });
+      }
+      if (typeof (window as any).fbq === "function") {
+        (window as any).fbq("trackCustom", "ProjectSummaryViewed");
+      }
+    }
+  };
+
+  const handleCtaClick = () => {
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "cta_click_projectsummary", { section: "ProjectSummary" });
+    }
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "Lead");
+    }
+    onCtaClick();
+  };
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          trackView();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   const highlights = [
     { icon: Home, label: "2 & 3 BHK Apartments", value: "Ready to Move" },
     { icon: MapPin, label: "Prime Location", value: "Mysore Road, Bangalore" },
@@ -71,6 +121,11 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
                 Starting at just ₹69.99 lakhs*, your dream home is more affordable than you think. Contact us today to explore personalized payment options.
               </p>
             </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="mt-12 text-center">
+            <CTAButtons onFormOpen={handleCtaClick} />
           </div>
         </div>
       </div>
