@@ -1,7 +1,7 @@
 import useEmblaCarousel from "embla-carousel-react";
 import CTAButtons from "./CTAButtons";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface AmenitiesProps {
@@ -9,15 +9,52 @@ interface AmenitiesProps {
 }
 
 const Amenities = ({ onCtaClick }: AmenitiesProps) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const hasTrackedView = useRef(false);
+
+  // ----------- Embla Carousel -----------
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start" },
     [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 1 })]
   );
-  const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
 
   useEffect(() => {
     if (!emblaApi) return;
   }, [emblaApi]);
+
+  // ----------- Tracking -----------
+  const trackGA = (eventName: string, params: any = {}) => {
+    if (typeof (window as any).gtag === "function")
+      (window as any).gtag("event", eventName, params);
+  };
+
+  const trackMeta = (eventName: string) => {
+    if (typeof (window as any).fbq === "function")
+      (window as any).fbq("trackCustom", eventName);
+  };
+
+  // Track section view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries[0].isIntersecting;
+        if (visible && !hasTrackedView.current) {
+          hasTrackedView.current = true;
+          trackGA("section_view", {
+            event_category: "engagement",
+            event_label: "Amenities Section",
+          });
+          trackMeta("AmenitiesSectionViewed");
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
 
   const amenityImages = [
     { src: "/images/amenities/basketball.jpg", title: "Basketball Court", description: "Professional court for sports enthusiasts" },
@@ -50,14 +87,19 @@ const Amenities = ({ onCtaClick }: AmenitiesProps) => {
   ];
 
   return (
-    <section id="amenities" className="py-20 lg:py-28 scroll-mt-32 bg-background">
+    <section
+      id="amenities"
+      ref={sectionRef}
+      className="py-20 lg:py-28 scroll-mt-32 bg-background"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
             50+ World-Class Amenities
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            From sports to leisure, wellness to education—everything your family needs is right here. Your weekends stay inside the community.
+            From sports to leisure, wellness to education—everything your family needs is right here.
+            Your weekends stay inside the community.
           </p>
         </div>
 
@@ -99,6 +141,7 @@ const Amenities = ({ onCtaClick }: AmenitiesProps) => {
                     )}
                   </div>
                 </button>
+
                 {isExpanded && (
                   <div className="px-6 pb-6 animate-accordion-down">
                     <ul className="space-y-2">
