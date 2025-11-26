@@ -81,7 +81,11 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
   ];
 
   return (
-    <section id="floorplans" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-24 bg-muted/30">
+<section
+  id="floorplans"
+  ref={sectionRef}
+  className="py-20 lg:py-28 scroll-mt-32 bg-muted/30"
+>
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="text-center max-w-3xl mx-auto mb-16">
