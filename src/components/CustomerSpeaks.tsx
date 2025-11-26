@@ -100,7 +100,7 @@ const CustomerSpeaks = ({ onCtaClick }: CustomerSpeaksProps) => {
             className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
             onClick={onCtaClick}
           >
-            Get Personalised Guidance with FREE Site Visit
+            Book FREE Site Visit
           </Button>
         </div>
       </div>
