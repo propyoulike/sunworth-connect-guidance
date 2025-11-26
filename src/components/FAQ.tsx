@@ -83,7 +83,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
             View detailed pricing & unit details in the{" "}
             <button
               onClick={() => {
-                scrollToSection("floorplans");
+                scrollToSection("floorplanstabs");
                 trackCtaClick("Floor Plans Button");
               }}
               className="text-blue-600 underline"
@@ -236,3 +236,4 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
 };
 
 export default FAQ;
+
