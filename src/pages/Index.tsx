@@ -78,8 +78,8 @@ const Index = () => {
         </div>
       </footer>
 
-      {/* Sticky Mobile CTA */}
-      <StickyMobileCTA onCtaClick={openForm} />
+      {/* Sticky Mobile CTA 
+      <StickyMobileCTA onCtaClick={openForm} /> */}
     </div>
   );
 };
