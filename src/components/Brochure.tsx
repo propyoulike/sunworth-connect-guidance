@@ -9,7 +9,7 @@ const Brochure = ({ onCtaClick }: BrochureProps) => {
 
 
   return (
-    <section className="py-20 lg:py-28 bg-background">
+    <section id="brochure" className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div
