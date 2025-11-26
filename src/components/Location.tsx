@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 import CTAButtons from "./CTAButtons";
 
 interface LocationProps {
@@ -43,22 +48,28 @@ export default function Location({ onCtaClick }: LocationProps) {
   };
 
   const handleCtaClick = () => {
-    if (typeof (window as any).gtag === "function")
-      (window as any).gtag("event", "cta_click_location", { section: "Location" });
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "cta_click_location", {
+        section: "Location",
+      });
+    }
 
-    if (typeof (window as any).fbq === "function")
+    if (typeof (window as any).fbq === "function") {
       (window as any).fbq("track", "Lead");
+    }
 
     onCtaClick();
   };
 
+  // ---------- Lazy Load Video + Map Without PiP Violation ----------
   useEffect(() => {
-    const handleIntersection = (
+    const observeSection = (
       ref: React.RefObject<HTMLDivElement>,
       setVisible: (value: boolean) => void,
       sectionName: string
     ) => {
       if (!ref.current) return;
+
       const observer = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
@@ -67,14 +78,14 @@ export default function Location({ onCtaClick }: LocationProps) {
             observer.disconnect();
           }
         },
-        { threshold: 0.3 }
+        { threshold: 0.25 }
       );
+
       observer.observe(ref.current);
     };
 
-    handleIntersection(videoRef, setVideoVisible, "LocationVideo");
-    handleIntersection(mapRef, setMapVisible, "LocationMap");
-    handleIntersection(sectionRef, () => {}, "LocationSection");
+    observeSection(videoRef, setVideoVisible, "LocationVideo");
+    observeSection(mapRef, setMapVisible, "LocationMap");
   }, []);
 
   return (
@@ -84,35 +95,42 @@ export default function Location({ onCtaClick }: LocationProps) {
       className="w-full py-16 bg-muted/30 scroll-mt-32"
     >
       <div className="container mx-auto px-4">
+        {/* Heading */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             The Perfect <span className="text-primary">Setting</span>
           </h2>
+
           <p className="mt-3 text-muted-foreground text-lg">
-            Everything you need within easy reach — schools, hospitals, connectivity & more.
+            Everything you need within easy reach — schools, hospitals,
+            connectivity & more.
           </p>
+
           <p className="mt-1 text-muted-foreground text-base italic">
-            Life. Convenience. Future‑ready.
+            Life. Convenience. Future-ready.
           </p>
         </div>
 
+        {/* Video + Map Grid */}
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {/* Video */}
+          {/* ---- VIDEO ---- */}
           <div
             ref={videoRef}
             className="w-full h-[300px] md:h-[450px] animate-in fade-in slide-in-from-bottom-4 duration-700"
           >
             {videoVisible && (
               <iframe
-                src="https://www.youtube.com/embed/CY-IwT0sCv0?autoplay=1&mute=1&controls=0&loop=1&playlist=CY-IwT0sCv0&showinfo=0&rel=0"
+                src="https://www.youtube.com/embed/CY-IwT0sCv0?autoplay=1&mute=1&controls=0&loop=1&playlist=CY-IwT0sCv0&rel=0&modestbranding=1"
                 className="w-full h-full rounded-xl shadow-lg"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 title="Location Video"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             )}
           </div>
 
-          {/* Map */}
+          {/* ---- MAP ---- */}
           <div
             ref={mapRef}
             className="w-full h-[300px] md:h-[450px] animate-in fade-in slide-in-from-bottom-4 duration-700"
@@ -123,6 +141,8 @@ export default function Location({ onCtaClick }: LocationProps) {
                 className="w-full h-full rounded-xl shadow-lg"
                 loading="lazy"
                 title="Location Map"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             )}
           </div>
