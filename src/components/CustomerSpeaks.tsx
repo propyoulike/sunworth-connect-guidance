@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import useEmblaCarousel from "embla-carousel-react";
+import CTAButtons from "./CTAButtons";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useEffect, useState } from "react";
 import { Play } from "lucide-react";
@@ -94,15 +94,7 @@ const CustomerSpeaks = ({ onCtaClick }: CustomerSpeaksProps) => {
           </div>
         </div>
 
-        <div className="text-center">
-          <Button 
-            size="lg" 
-            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-            onClick={onCtaClick}
-          >
-            Book FREE Site Visit
-          </Button>
-        </div>
+        <CTAButtons onFormOpen={onCtaClick} />
       </div>
     </section>
   );

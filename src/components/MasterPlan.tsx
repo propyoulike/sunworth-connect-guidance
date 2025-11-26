@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import CTAButtons from "./CTAButtons";
 
 interface MasterPlanProps {
   onCtaClick: () => void;
@@ -45,15 +45,7 @@ const MasterPlan = ({ onCtaClick }: MasterPlanProps) => {
           </div>
         </div>
 
-        <div className="text-center">
-          <Button 
-            size="lg" 
-            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-            onClick={onCtaClick}
-          >
-            Book FREE Site Visit
-          </Button>
-        </div>
+        <CTAButtons onFormOpen={onCtaClick} />
       </div>
     </section>
   );

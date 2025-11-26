@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import CTAButtons from "./CTAButtons";
 import { useEffect, useRef } from "react";
 
 interface FloorPlansProps {
@@ -41,11 +41,6 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
     trackGA("cta_click_floorplans", { section: "FloorPlans" });
     trackMeta("Lead");
     onCtaClick();
-  };
-
-  const handleWhatsAppClick = () => {
-    trackGA("whatsapp_click_floorplans", { section: "FloorPlans" });
-    trackMeta("Contact");
   };
 
   const handleVideoPlay = (title: string) => {
@@ -121,45 +116,17 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
               <p className="text-muted-foreground mb-4">{plan.description}</p>
               <p className="text-xl font-bold text-primary mb-4">{plan.price}</p>
 
-              <Button 
-                className="w-full btn-gradient rounded-full font-semibold"
-                onClick={handleCtaClick}
-              >
-                View Details & Pricing
-              </Button>
+              <CTAButtons onFormOpen={handleCtaClick} variant="compact" />
             </Card>
           ))}
         </div>
 
-        {/* CTA & WhatsApp Buttons */}
+        {/* CTA Buttons */}
         <div className="text-center">
           <p className="text-sm text-muted-foreground mb-6">
             Get detailed floor plans and availability for your preferred configuration
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-              onClick={handleCtaClick}
-            >
-              Book FREE Site Visit
-            </Button>
-
-            <a
-              href="https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20see%20floor%20plans%20for%20Provident%20Sunworth"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleWhatsAppClick}
-            >
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-lg px-8 py-6 rounded-full font-semibold"
-              >
-                Chat on WhatsApp
-              </Button>
-            </a>
-          </div>
+          <CTAButtons onFormOpen={handleCtaClick} />
         </div>
       </div>
     </section>

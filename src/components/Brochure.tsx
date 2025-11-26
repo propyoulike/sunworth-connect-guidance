@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
+import CTAButtons from "./CTAButtons";
 
 interface BrochureProps {
   onCtaClick: () => void;
@@ -7,20 +7,6 @@ interface BrochureProps {
 
 const Brochure = ({ onCtaClick }: BrochureProps) => {
 
-  const handleWhatsappClick = () => {
-    // GA4 Event
-    if (typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "whatsapp_click", {
-        event_category: "engagement",
-        event_label: "Whatsapp Chat Button",
-      });
-    }
-
-    // Meta Pixel
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "Contact");
-    }
-  };
 
   return (
     <section className="py-20 lg:py-28 bg-background">
@@ -38,30 +24,8 @@ const Brochure = ({ onCtaClick }: BrochureProps) => {
               Get detailed information about floor plans, amenities, pricing, and official project documents.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button
-                size="lg"
-                className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-                onClick={onCtaClick}
-              >
-                Book FREE Site Visit
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-lg px-8 py-6 rounded-full font-semibold"
-                asChild
-              >
-                <a
-                  href="https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20download%20the%20Provident%20Sunworth%20brochure"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleWhatsappClick}
-                >
-                  Chat on WhatsApp
-                </a>
-              </Button>
+            <div className="mb-8">
+              <CTAButtons onFormOpen={onCtaClick} />
             </div>
 
             <div className="border-t border-border pt-8 mt-8">

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Building2, CheckCircle2, Clock, ChevronDown, ChevronUp } from "lucide-react";
+import CTAButtons from "./CTAButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useEffect, useState } from "react";
@@ -184,15 +184,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
           </div>
         </div>
 
-        <div className="text-center">
-          <Button 
-            size="lg" 
-            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-            onClick={onCtaClick}
-          >
-            Book FREE Site Visit
-          </Button>
-        </div>
+        <CTAButtons onFormOpen={onCtaClick} />
       </div>
     </section>
   );
