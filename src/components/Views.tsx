@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import useEmblaCarousel from "embla-carousel-react";
+import CTAButtons from "./CTAButtons";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useEffect, useRef } from "react";
 
@@ -55,35 +55,6 @@ const Views = ({ onCtaClick }: ViewsProps) => {
     { src: "/images/views/clubhouse.webp", title: "Clubhouse Aerial View" },
   ];
 
-  // Track WhatsApp click
-  const handleWhatsAppClick = () => {
-    if (typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "whatsapp_click", {
-        event_category: "engagement",
-        event_label: "WhatsApp – Views Section",
-      });
-    }
-
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "Contact");
-    }
-  };
-
-  // Track CTA click
-  const handleCtaClick = () => {
-    if (typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "cta_click", {
-        event_category: "engagement",
-        event_label: "CTA – Views Section",
-      });
-    }
-
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "Lead");
-    }
-
-    onCtaClick();
-  };
 
   // Track Image Click
   const handleImageClick = (title: string) => {
@@ -136,30 +107,7 @@ const Views = ({ onCtaClick }: ViewsProps) => {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            size="lg"
-            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-            onClick={handleCtaClick}
-          >
-            Book FREE Site Visit
-          </Button>
-
-          <a
-            href="https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20know%20about%20available%20views%20at%20Provident%20Sunworth"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleWhatsAppClick}
-          >
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-lg px-8 py-6 rounded-full font-semibold"
-            >
-              Chat on WhatsApp
-            </Button>
-          </a>
-        </div>
+        <CTAButtons onFormOpen={onCtaClick} />
       </div>
     </section>
   );

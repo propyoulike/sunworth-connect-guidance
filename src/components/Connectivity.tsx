@@ -1,5 +1,5 @@
 import { MapPin, Train, Building2, ChevronDown, ChevronUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import CTAButtons from "./CTAButtons";
 import { useState } from "react";
 
 interface ConnectivityProps {
@@ -87,15 +87,7 @@ const Connectivity = ({ onCtaClick }: ConnectivityProps) => {
           })}
         </div>
 
-        <div className="text-center mt-12">
-          <Button 
-            size="lg" 
-            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-            onClick={onCtaClick}
-          >
-            Book FREE Site Visit
-          </Button>
-        </div>
+        <CTAButtons onFormOpen={onCtaClick} />
       </div>
     </section>
   );

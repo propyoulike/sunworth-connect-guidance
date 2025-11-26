@@ -13,7 +13,7 @@ const homes = [
   },
 ];
 
-import { Button } from "@/components/ui/button";
+import CTAButtons from "./CTAButtons";
 
 interface HomesProps {
   onCtaClick: () => void;
@@ -62,15 +62,7 @@ const Homes = ({ onCtaClick }: HomesProps) => {
           *Exact price and availability shared by your advisor based on current inventory.
         </p>
 
-        <div className="text-center">
-          <Button 
-            size="lg" 
-            className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-            onClick={onCtaClick}
-          >
-            Book FREE Site Visit
-          </Button>
-        </div>
+        <CTAButtons onFormOpen={onCtaClick} />
       </div>
     </section>
   );
