@@ -91,7 +91,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-background">
+    <section id="constructionstatus" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-4">
