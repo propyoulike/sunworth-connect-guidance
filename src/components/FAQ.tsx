@@ -91,6 +91,7 @@ During your visit, you’ll get a guided tour of the township, see apartments un
   },
 ];
 
+const FAQ = () => {
   return (
     <section className="py-20 lg:py-28 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -105,7 +106,7 @@ During your visit, you’ll get a guided tour of the township, see apartments un
           </div>
 
           <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
+            {FAQs.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
