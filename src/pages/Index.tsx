@@ -28,20 +28,20 @@ const Index = () => {
       {/* Project Summary with Payment Flexibility */}
       <ProjectSummary onCtaClick={openForm} />
 
-      {/* Construction Status */}
-      <ConstructionStatus onCtaClick={openForm} />
+      {/* Floor Plans with Tabs */}
+      <FloorPlansTabs onCtaClick={openForm} />
 
       {/* Location & Neighbourhood */}
       <Location onCtaClick={openForm} />
-
-      {/* Floor Plans with Tabs */}
-      <FloorPlansTabs onCtaClick={openForm} />
 
       {/* Amenities */}
       <Amenities onCtaClick={openForm} />
 
       {/* Views */}
       <Views onCtaClick={openForm} />
+
+      {/* Construction Status */}
+      <ConstructionStatus onCtaClick={openForm} />
 
       {/* Customer Testimonials */}
       <CustomerSpeaks onCtaClick={openForm} />
