@@ -17,7 +17,9 @@ import { useToast } from "@/hooks/use-toast";
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  phone: z.string().min(10, "Please enter a valid phone number"),
+  phone: z
+    .string()
+    .regex(/^\d{10}$/, "Please enter a valid 10-digit phone number"),
   bhkPreference: z.string().min(1, "Please select a preference"),
 });
 
@@ -42,24 +44,44 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
     resolver: zodResolver(formSchema),
   });
 
+  // ----- GA / Meta Tracking -----
+  const trackConversion = () => {
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "conversion", {
+        send_to: "AW-17754016716/abcd1234", // Replace with your conversion ID
+        event_category: "lead_form",
+        event_label: "Provident_Sunworth_Lead",
+      });
+    }
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "Lead");
+    }
+  };
+
+  // ----- WhatsApp URL Helper -----
+  const generateWhatsAppUrl = (data: FormData) =>
+    `https://wa.me/919379822010?text=${encodeURIComponent(
+      `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like best units and pricing.`
+    )}`;
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
 
     try {
-      // Send lead to Privyr CRM webhook
-      const privyrPayload = {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        message: `Project: Provident Sunworth\nBHK Preference: ${data.bhkPreference}\nSource: Landing Page`,
-      };
+      trackConversion();
 
+      // Send lead to Privyr CRM
       await fetch(
         "https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/5xrM2juN",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(privyrPayload),
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            message: `Project: Provident Sunworth\nBHK Preference: ${data.bhkPreference}\nSource: Landing Page`,
+          }),
         }
       );
 
@@ -86,12 +108,8 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
         }),
       });
 
-      // Open WhatsApp with a prefilled message
-      const whatsappMessage = encodeURIComponent(
-        `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like best units and pricing.`
-      );
-      const whatsappUrl = `https://wa.me/919379822010?text=${whatsappMessage}`;
-      
+      // Open WhatsApp
+      const whatsappUrl = generateWhatsAppUrl(data);
       window.open(whatsappUrl, "_blank");
 
       toast({
@@ -100,20 +118,15 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
       });
 
       reset();
-      
-      // Call onSuccess if provided
-      if (onSuccess) {
-        onSuccess();
-      }
+      if (onSuccess) onSuccess();
     } catch (error) {
       console.error("Lead form submission error:", error);
 
-      // Fallback: open WhatsApp even if CRM submission fails
-      const whatsappMessage = encodeURIComponent(
-        `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like guidance on best units and pricing.`
-      );
-      const whatsappUrl = `https://wa.me/919379822010?text=${whatsappMessage}`;
-      
+      const whatsappUrl = generateWhatsAppUrl({
+        ...data,
+        bhkPreference: data.bhkPreference || "Not Sure",
+      });
+
       toast({
         title: "Opening WhatsApp",
         description: "We'll connect you directly with an advisor.",
@@ -188,7 +201,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
             id="phone"
             type="tel"
             {...register("phone")}
-            placeholder="Your phone number"
+            placeholder="Your 10-digit phone number"
             className="mt-1.5"
           />
           {errors.phone && (
