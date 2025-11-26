@@ -14,7 +14,7 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
   ];
 
   return (
-    <section className="py-16 lg:py-20 bg-background">
+    <section id="projectsummary" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           {/* Heading */}
