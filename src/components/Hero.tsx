@@ -1,12 +1,15 @@
 import CTAButtons from "./CTAButtons";
+import { useRef } from "react";
 
 interface HeroProps {
   onCtaClick: () => void;
 }
 
 const Hero = ({ onCtaClick }: HeroProps) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+
   return (
-    <section id="hero" ref={sectionRef} className="relative w-full  scroll-mt-32">
+    <section id="hero" ref={sectionRef} className="relative w-full scroll-mt-32">
 
       {/* --- Full Screen Hero Video --- */}
       <div className="relative w-full h-screen overflow-hidden">
