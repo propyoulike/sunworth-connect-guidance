@@ -142,7 +142,7 @@ const Views = ({ onCtaClick }: ViewsProps) => {
             className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
             onClick={handleCtaClick}
           >
-            Get Personalised Guidance with FREE Site Visit
+            Book FREE Site Visit
           </Button>
 
           <a
