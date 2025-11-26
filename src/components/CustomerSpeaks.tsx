@@ -38,7 +38,7 @@ const CustomerSpeaks = ({ onCtaClick }: CustomerSpeaksProps) => {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-muted/30">
+    <section id="customerspeaks" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
