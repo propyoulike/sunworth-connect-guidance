@@ -24,6 +24,8 @@ export default function Location({ onCtaClick }: LocationProps) {
 
   const [videoVisible, setVideoVisible] = useState(false);
   const [mapVisible, setMapVisible] = useState(false);
+
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
 
@@ -72,10 +74,15 @@ export default function Location({ onCtaClick }: LocationProps) {
 
     handleIntersection(videoRef, setVideoVisible, "LocationVideo");
     handleIntersection(mapRef, setMapVisible, "LocationMap");
+    handleIntersection(sectionRef, () => {}, "LocationSection");
   }, []);
 
   return (
-    <section id="location" ref={sectionRef} className="w-full py-16 bg-muted/30 scroll-mt-32">
+    <section
+      id="location"
+      ref={sectionRef}
+      className="w-full py-16 bg-muted/30 scroll-mt-32"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">

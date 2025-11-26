@@ -8,6 +8,70 @@ interface ConstructionStatusProps {
   onCtaClick: () => void;
 }
 
+const towers = [
+  {
+    name: "Tower 4J",
+    image: "/images/construction/tower-4j.png",
+    status: [
+      "2nd floor roof slab completed",
+      "3rd floor roof slab shuttering & reinforcements work in progress",
+    ],
+    achieved: ["Completion of GF/Stilt floor roof slab"],
+    upcoming: ["Completion of 3rd floor roof slab"],
+  },
+  {
+    name: "Tower 4H",
+    image: "/images/construction/tower-4h.png",
+    status: [
+      "1st floor Roof slab shuttering work in progress",
+      "1st floor Roof slab reinforcement, work in progress",
+    ],
+    achieved: ["Completion of Ground/stilt floor roof slab"],
+    upcoming: ["Completion of 3rd floor Roof slab"],
+  },
+  {
+    name: "Tower 4G",
+    image: "/images/construction/tower-4g.png",
+    status: [
+      "Completion of Ground/stilt floor roof slab",
+      "1st floor roof slab shuttering & Reinforcements work in progress",
+    ],
+    achieved: ["Completion of Ground/stilt floor roof slab"],
+    upcoming: ["Completion of 3rd floor roof slab"],
+  },
+  {
+    name: "Tower 4F",
+    image: "/images/construction/tower-4f.png",
+    status: [
+      "Basement slab concreting completed",
+      "Ground floor Shear wall concreting work in progress",
+    ],
+    achieved: ["Completion of Foundation"],
+    upcoming: ["Completion of ground / stilt roof slab"],
+  },
+  {
+    name: "Tower 4E",
+    image: "/images/construction/tower-4e.png",
+    status: ["Basement shuttering & reinforcement work in progress"],
+    achieved: ["Completion of Foundation"],
+    upcoming: ["Completion of Ground /stilt floor roof slab"],
+  },
+  {
+    name: "Tower 4D",
+    image: "/images/construction/tower-4d.png",
+    status: ["Foundation completed", "Plinth beam work in progress"],
+    achieved: ["Completion of foundation"],
+    upcoming: ["Completion of Ground /stilt floor roof slab"],
+  },
+  {
+    name: "Tower 4C",
+    image: "/images/construction/tower-4c.png",
+    status: ["Excavation work completed"],
+    achieved: ["Completion of foundation"],
+    upcoming: ["Completion of Ground /stilt floor roof slab"],
+  },
+];
+
 const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start" },
@@ -15,84 +79,46 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
   );
 
   const [expandedTower, setExpandedTower] = useState<number | null>(null);
-
-  // ✅ FIX: Add missing ref
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const hasTrackedView = useRef(false);
 
+  // ---------- Track Section View ----------
   useEffect(() => {
-    if (!emblaApi) return;
-  }, [emblaApi]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasTrackedView.current) {
+          hasTrackedView.current = true;
+          if (typeof (window as any).gtag === "function") {
+            (window as any).gtag("event", "section_view", {
+              event_category: "engagement",
+              event_label: "Construction Status Section",
+            });
+          }
+          if (typeof (window as any).fbq === "function") {
+            (window as any).fbq("trackCustom", "ConstructionStatusViewed");
+          }
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-  const towers = [
-    {
-      name: "Tower 4J",
-      image: "/images/construction/tower-4j.png",
-      status: [
-        "2nd floor roof slab completed",
-        "3rd floor roof slab shuttering & reinforcements work in progress"
-      ],
-      achieved: ["Completion of GF/Stilt floor roof slab"],
-      upcoming: ["Completion of 3rd floor roof slab"]
-    },
-    {
-      name: "Tower 4H",
-      image: "/images/construction/tower-4h.png",
-      status: [
-        "1st floor Roof slab shuttering work in progress",
-        "1st floor Roof slab reinforcement, work in progress"
-      ],
-      achieved: ["Completion of Ground/stilt floor roof slab"],
-      upcoming: ["Completion of 3rd floor Roof slab"]
-    },
-    {
-      name: "Tower 4G",
-      image: "/images/construction/tower-4g.png",
-      status: [
-        "Completion of Ground/stilt floor roof slab",
-        "1st floor roof slab shuttering & Reinforcements work in progress"
-      ],
-      achieved: ["Completion of Ground/stilt floor roof slab"],
-      upcoming: ["Completion of 3rd floor roof slab"]
-    },
-    {
-      name: "Tower 4F",
-      image: "/images/construction/tower-4f.png",
-      status: [
-        "Basement slab concreting completed",
-        "Ground floor Shear wall concreting work in progress"
-      ],
-      achieved: ["Completion of Foundation"],
-      upcoming: ["Completion of ground / stilt roof slab"]
-    },
-    {
-      name: "Tower 4E",
-      image: "/images/construction/tower-4e.png",
-      status: [
-        "Basement shuttering & reinforcement work in progress"
-      ],
-      achieved: ["Completion of Foundation"],
-      upcoming: ["Completion of Ground /stilt floor roof slab"]
-    },
-    {
-      name: "Tower 4D",
-      image: "/images/construction/tower-4d.png",
-      status: [
-        "Foundation completed",
-        "Plinth beam work in progress"
-      ],
-      achieved: ["Completion of foundation"],
-      upcoming: ["Completion of Ground /stilt floor roof slab"]
-    },
-    {
-      name: "Tower 4C",
-      image: "/images/construction/tower-4c.png",
-      status: [
-        "Excavation work completed"
-      ],
-      achieved: ["Completion of foundation"],
-      upcoming: ["Completion of Ground /stilt floor roof slab"]
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Track tower expand click
+  const handleTowerClick = (name: string) => {
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "tower_click", {
+        event_category: "engagement",
+        event_label: name,
+      });
     }
-  ];
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("trackCustom", "TowerExpanded", { tower: name });
+    }
+  };
 
   return (
     <section
@@ -120,10 +146,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
 
               return (
                 <div key={index} className="flex-[0_0_90%] md:flex-[0_0_60%] lg:flex-[0_0_45%]">
-                  <div
-                    className="bg-card rounded-2xl overflow-hidden h-full"
-                    style={{ boxShadow: "var(--shadow-strong)" }}
-                  >
+                  <div className="bg-card rounded-2xl overflow-hidden h-full" style={{ boxShadow: "var(--shadow-strong)" }}>
                     <div className="aspect-video overflow-hidden bg-muted">
                       <img
                         src={tower.image}
@@ -140,14 +163,14 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
                         </div>
 
                         <button
-                          onClick={() => setExpandedTower(isExpanded ? null : index)}
-                          className="p-2 hover:bg-muted rounded-full transition-colors"
+                          onClick={() => {
+                            setExpandedTower(isExpanded ? null : index);
+                            handleTowerClick(tower.name);
+                          }}
+                          aria-expanded={isExpanded}
+                          className="p-2 hover:bg-muted rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                         >
-                          {isExpanded ? (
-                            <ChevronUp className="w-5 h-5 text-primary" />
-                          ) : (
-                            <ChevronDown className="w-5 h-5 text-primary" />
-                          )}
+                          {isExpanded ? <ChevronUp className="w-5 h-5 text-primary" /> : <ChevronDown className="w-5 h-5 text-primary" />}
                         </button>
                       </div>
 
@@ -197,7 +220,6 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
                         </div>
                       )}
                     </div>
-
                   </div>
                 </div>
               );
