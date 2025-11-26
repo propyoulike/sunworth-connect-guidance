@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import CTAButtons from "./CTAButtons";
 
 interface MasterPlanProps {
@@ -5,6 +6,54 @@ interface MasterPlanProps {
 }
 
 const MasterPlan = ({ onCtaClick }: MasterPlanProps) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const hasTrackedView = useRef(false);
+
+  // ---------- GA / Meta Tracking ----------
+  const trackView = () => {
+    if (!hasTrackedView.current) {
+      hasTrackedView.current = true;
+
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "section_view", {
+          event_category: "engagement",
+          event_label: "MasterPlan Section",
+        });
+      }
+      if (typeof (window as any).fbq === "function") {
+        (window as any).fbq("trackCustom", "MasterPlanSectionViewed");
+      }
+    }
+  };
+
+  const handleCtaClick = () => {
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "cta_click_masterplan", { section: "MasterPlan" });
+    }
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("track", "Lead");
+    }
+    onCtaClick();
+  };
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          trackView();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="masterplan" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
@@ -45,7 +94,7 @@ const MasterPlan = ({ onCtaClick }: MasterPlanProps) => {
           </div>
         </div>
 
-        <CTAButtons onFormOpen={onCtaClick} />
+        <CTAButtons onFormOpen={handleCtaClick} />
       </div>
     </section>
   );
