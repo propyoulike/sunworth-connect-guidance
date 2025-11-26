@@ -100,7 +100,7 @@ const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
                       src={convertToEmbed(video.url)}
                       title={video.title}
                       frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
                       allowFullScreen
                       className="w-full h-full"
                     />
@@ -171,3 +171,4 @@ const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
 };
 
 export default FloorPlansTabs;
+
