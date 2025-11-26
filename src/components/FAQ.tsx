@@ -16,25 +16,31 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
       answer: (
         <div>
           <ul className="list-disc list-inside space-y-1">
-            <li>2 BHK apartments: Starting at ₹69.99 lakhs</li>
-            <li>3 BHK Regular apartments: Starting at ₹79.99 lakhs</li>
-            <li>3 BHK Royale apartments: Premium pricing</li>
+            <li>2 BHK: Starting at ₹69.99 Lakhs*</li>
+            <li>3 BHK Regular: Starting at ₹79.99 Lakhs*</li>
+            <li>3 BHK Royale: Premium pricing</li>
           </ul>
-          <p className="mt-2 font-semibold">Note:</p>
+
+          <p className="mt-3 font-semibold">Price Includes:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>Final pricing depends on the floor, unit facing, and selection.</li>
-            <li>Total price comprises:
-              <ul className="list-disc list-inside ml-5">
-                <li>Sale Consideration: Flat/unit cost + club development charges + floor rise charges + car park charges</li>
-                <li>GST on sale consideration</li>
-                <li>Other/Possession Related Charges (tentative): Advanced maintenance charges, infrastructure provision, legal charges, stamp paper charges, modifications (if applicable), share application money</li>
-                <li>Stamp Duty & Registration charges</li>
+            <li>Sale consideration (unit + club + floor rise + car park)</li>
+            <li>GST on sale consideration</li>
+            <li>
+              Possession & Other Charges:
+              <ul className="list-disc list-inside ml-5 space-y-1">
+                <li>Maintenance</li>
+                <li>Infrastructure + Legal charges</li>
+                <li>Stamp paper & Registration</li>
+                <li>Modifications (if any)</li>
               </ul>
             </li>
           </ul>
-          <p className="mt-2">
-            Want to see detailed pricing and floor plans? Jump to the{" "}
-            <a href="#floorplans" className="text-blue-600 underline">Floor Plans & Pricing section</a>.
+
+          <p className="mt-3">
+            View detailed Pricing & Floor Plans in the{" "}
+            <a href="#floorplans" className="text-blue-600 underline">
+              Floor Plans & Pricing section
+            </a>.
           </p>
         </div>
       ),
@@ -43,20 +49,24 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
       question: "What amenities are available in the township?",
       answer: (
         <div>
-          <p>
-            Provident Sunworth City isn’t just a place to live — it’s a lifestyle:
-          </p>
+          <p>Provident Sunworth City offers lifestyle-focused amenities for all age groups:</p>
+
           <ul className="list-disc list-inside space-y-1 mt-2">
-            <li>Lush green gardens & walking paths 🌳</li>
-            <li>Gym, swimming pool, jogging & cycling tracks 🏃‍♂️</li>
-            <li>Yoga & meditation zones 🧘</li>
-            <li>Children’s play areas, tree houses, open lawns 🛝</li>
-            <li>Clubhouse & multipurpose halls 🎉</li>
-            <li>Retail shops & school inside the campus 🚶‍♂️🛒</li>
-            <li>24×7 security, gated entry, CCTV, covered parking 🛡️</li>
+            <li>Over 19 acres of open green spaces 🌳</li>
+            <li>Swimming pool, gym & indoor games 🎯</li>
+            <li>Jogging, cycling & walking tracks 🚴‍♂️</li>
+            <li>Tree-house themed kids zone, play areas & open lawns 🛝</li>
+            <li>Yoga & meditation decks 🧘</li>
+            <li>Clubhouse, multipurpose courts & senior-friendly areas 🧑‍🦳</li>
+            <li>Retail shops + school inside the township 🏫🛒</li>
+            <li>24×7 security, CCTV & gated access 🛡️</li>
           </ul>
-          <p className="mt-2">
-            See full list of <a href="#amenities" className="text-blue-600 underline">Amenities & Features</a>.
+
+          <p className="mt-3">
+            Explore the complete{" "}
+            <a href="#amenities" className="text-blue-600 underline">
+              Amenities Section
+            </a>.
           </p>
         </div>
       ),
@@ -65,32 +75,35 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
       question: "What are the payment plan options?",
       answer: (
         <div>
-          <p>Flexible payment plans including construction-linked, EMIs, and down payment options.</p>
-          <p className="mt-2 font-semibold">Phase IV Milestones:</p>
+          <p>Sunworth City offers flexible and construction-linked payment plans.</p>
+
+          <p className="mt-3 font-semibold">Phase IV Payment Milestones:</p>
+
           <ol className="list-decimal list-inside space-y-1 mt-2">
             <li>Initial Advance: ₹2,00,000</li>
-            <li>Balance Advance: 9% of Sale Consideration (after initial advance)</li>
-            <li>Post Agreement for Sale (within 30 days): 11%</li>
-            <li>Completion of Excavation: 10%</li>
-            <li>Completion of Foundation: 15%</li>
-            <li>Completion of Ground/Stilt Floor Roof Slab: 7%</li>
-            <li>Completion of 3rd Floor Roof Slab: 7%</li>
-            <li>Completion of 6th Floor Roof Slab: 7%</li>
-            <li>Completion of 9th Floor Roof Slab: 7%</li>
-            <li>Completion of Terrace Slab: 7%</li>
-            <li>Completion of Flooring: 5%</li>
-            <li>Installation of External Windows: 5%</li>
-            <li>Commencement of Lift Installation: 5%</li>
+            <li>Balance Advance: 9% of Sale Consideration</li>
+            <li>Post Agreement (within 30 days): 11%</li>
+            <li>Excavation: 10%</li>
+            <li>Foundation: 15%</li>
+            <li>Ground / Stilt Floor Slab: 7%</li>
+            <li>3rd Floor Slab: 7%</li>
+            <li>6th Floor Slab: 7%</li>
+            <li>9th Floor Slab: 7%</li>
+            <li>Terrace Slab: 7%</li>
+            <li>Flooring: 5%</li>
+            <li>External Windows: 5%</li>
+            <li>Lift Installation Start: 5%</li>
             <li>Possession: 5%</li>
           </ol>
-          <p className="mt-2 font-semibold">Notes:</p>
+
+          <p className="mt-3 font-semibold">Notes:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>Percentages are based on Agreement Value.</li>
-            <li>GST, infrastructure, legal, and statutory charges are extra.</li>
-            <li>Billing occurs upon completion of the milestone, not sequential order.</li>
+            <li>GST & statutory charges extra</li>
+            <li>Milestones billed upon completion</li>
           </ul>
-          <p className="mt-2">
-            For a personalized payment plan, fill out the{" "}
+
+          <p className="mt-3">
+            Get a custom payment plan by filling out the{" "}
             <button className="text-blue-600 underline" onClick={openLeadForm}>
               Lead Form
             </button>.
@@ -102,32 +115,32 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
       question: "How can I schedule a site visit?",
       answer: (
         <div>
-          <p>
-            Experiencing Sunworth City in person is the best way to feel the greenery, open spaces, and lifestyle.
-          </p>
+          <p>Visiting Sunworth City is the best way to understand the township.</p>
+
           <ul className="list-disc list-inside space-y-1 mt-2">
             <li>
-              Online Form: Fill out the quick{" "}
+              Fill the{" "}
               <button className="text-blue-600 underline" onClick={openLeadForm}>
                 Site Visit Form
               </button>{" "}
-              and our team will schedule a visit.
+              and we will call you back.
             </li>
+
             <li>
-              WhatsApp: Message us on{" "}
+              WhatsApp us at{" "}
               <a href="https://wa.me/919379822010" className="text-blue-600 underline">
-                WhatsApp
+                wa.me/919379822010
               </a>{" "}
-              to coordinate a convenient time.
+              to pick a slot instantly.
             </li>
           </ul>
-          <p className="mt-2">
-            During your visit, get a guided tour, see apartments under construction, explore amenities, and have all your questions answered. 🏡
+
+          <p className="mt-3">
+            You’ll get a guided tour, see construction progress, explore amenities, and get all your questions answered.
           </p>
         </div>
       ),
     },
-    // Add other FAQs similarly
   ];
 
   return (
