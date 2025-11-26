@@ -1,7 +1,7 @@
 import useEmblaCarousel from "embla-carousel-react";
-import CTAButtons from "./CTAButtons";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import CTAButtons from "./CTAButtons";
 
 interface ViewsProps {
   onCtaClick: () => void;
@@ -20,22 +20,24 @@ const Views = ({ onCtaClick }: ViewsProps) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        const isVisible = entries[0].isIntersecting;
-        if (isVisible && !hasTrackedView.current) {
+        if (entries[0].isIntersecting && !hasTrackedView.current) {
           hasTrackedView.current = true;
 
-          // GA4
-          if (typeof (window as any).gtag === "function") {
-            (window as any).gtag("event", "section_view", {
-              event_category: "engagement",
-              event_label: "Views Section",
-            });
-          }
+          // Delay slightly to ensure visibility
+          setTimeout(() => {
+            // GA4
+            if (typeof (window as any).gtag === "function") {
+              (window as any).gtag("event", "section_view", {
+                event_category: "engagement",
+                event_label: "Views Section",
+              });
+            }
 
-          // Meta Pixel
-          if (typeof (window as any).fbq === "function") {
-            (window as any).fbq("trackCustom", "ViewsSectionViewed");
-          }
+            // Meta Pixel
+            if (typeof (window as any).fbq === "function") {
+              (window as any).fbq("trackCustom", "ViewsSectionViewed");
+            }
+          }, 300);
         }
       },
       { threshold: 0.3 }
@@ -55,7 +57,6 @@ const Views = ({ onCtaClick }: ViewsProps) => {
     { src: "/images/views/clubhouse.webp", title: "Clubhouse Aerial View" },
   ];
 
-
   // Track Image Click
   const handleImageClick = (title: string) => {
     if (typeof (window as any).gtag === "function") {
@@ -64,14 +65,32 @@ const Views = ({ onCtaClick }: ViewsProps) => {
         event_label: title,
       });
     }
-
     if (typeof (window as any).fbq === "function") {
       (window as any).fbq("trackCustom", "ImageClicked", { image: title });
     }
   };
 
+  // Track CTA Click
+  const handleCtaClick = () => {
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag("event", "cta_click", {
+        event_category: "engagement",
+        event_label: "Views Section CTA",
+      });
+    }
+    if (typeof (window as any).fbq === "function") {
+      (window as any).fbq("trackCustom", "ViewsCTAClicked");
+    }
+
+    onCtaClick();
+  };
+
   return (
-    <section id="views" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
+    <section
+      id="views"
+      ref={sectionRef}
+      className="py-20 lg:py-28 scroll-mt-32 bg-background"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
@@ -96,6 +115,7 @@ const Views = ({ onCtaClick }: ViewsProps) => {
                   <img
                     src={view.src}
                     alt={view.title}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 cursor-pointer"
                   />
                 </div>
@@ -107,7 +127,7 @@ const Views = ({ onCtaClick }: ViewsProps) => {
           </div>
         </div>
 
-        <CTAButtons onFormOpen={onCtaClick} />
+        <CTAButtons onFormOpen={handleCtaClick} />
       </div>
     </section>
   );
