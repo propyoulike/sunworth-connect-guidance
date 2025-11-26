@@ -2,7 +2,7 @@ import { Building2, CheckCircle2, Clock, ChevronDown, ChevronUp } from "lucide-r
 import CTAButtons from "./CTAButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface ConstructionStatusProps {
   onCtaClick: () => void;
@@ -13,7 +13,11 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
     { loop: true, align: "start" },
     [AutoScroll({ playOnInit: true, stopOnInteraction: true, speed: 0.5 })]
   );
+
   const [expandedTower, setExpandedTower] = useState<number | null>(null);
+
+  // ✅ FIX: Add missing ref
+  const sectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -91,7 +95,11 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
   ];
 
   return (
-    <section id="constructionstatus" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
+    <section
+      id="constructionstatus"
+      ref={sectionRef}
+      className="py-20 lg:py-28 scroll-mt-32 bg-background"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-4">
@@ -109,22 +117,28 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
           <div className="flex gap-6">
             {towers.map((tower, index) => {
               const isExpanded = expandedTower === index;
+
               return (
                 <div key={index} className="flex-[0_0_90%] md:flex-[0_0_60%] lg:flex-[0_0_45%]">
-                  <div className="bg-card rounded-2xl overflow-hidden h-full" style={{ boxShadow: 'var(--shadow-strong)' }}>
+                  <div
+                    className="bg-card rounded-2xl overflow-hidden h-full"
+                    style={{ boxShadow: "var(--shadow-strong)" }}
+                  >
                     <div className="aspect-video overflow-hidden bg-muted">
-                      <img 
-                        src={tower.image} 
+                      <img
+                        src={tower.image}
                         alt={`${tower.name} Construction Progress`}
                         className="w-full h-full object-cover"
                       />
                     </div>
+
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <Building2 className="w-8 h-8 text-primary" />
                           <h3 className="text-xl font-bold text-foreground">{tower.name}</h3>
                         </div>
+
                         <button
                           onClick={() => setExpandedTower(isExpanded ? null : index)}
                           className="p-2 hover:bg-muted rounded-full transition-colors"
@@ -140,7 +154,9 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
                       {isExpanded && (
                         <div className="animate-accordion-down space-y-4">
                           <div>
-                            <h4 className="text-sm font-semibold text-muted-foreground mb-3 uppercase">Tower Status</h4>
+                            <h4 className="text-sm font-semibold text-muted-foreground mb-3 uppercase">
+                              Tower Status
+                            </h4>
                             <ul className="space-y-2">
                               {tower.status.map((item, i) => (
                                 <li key={i} className="text-foreground flex items-start gap-2">
@@ -154,7 +170,9 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
                           <div className="border-t border-border pt-4">
                             <div className="flex items-center gap-2 mb-2">
                               <CheckCircle2 className="w-4 h-4 text-green-600" />
-                              <h4 className="text-xs font-semibold text-muted-foreground uppercase">Milestones Achieved</h4>
+                              <h4 className="text-xs font-semibold text-muted-foreground uppercase">
+                                Milestones Achieved
+                              </h4>
                             </div>
                             <ul className="space-y-1">
                               {tower.achieved.map((item, i) => (
@@ -166,7 +184,9 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
                           <div className="border-t border-border pt-4">
                             <div className="flex items-center gap-2 mb-2">
                               <Clock className="w-4 h-4 text-orange-600" />
-                              <h4 className="text-xs font-semibold text-muted-foreground uppercase">Upcoming Milestones</h4>
+                              <h4 className="text-xs font-semibold text-muted-foreground uppercase">
+                                Upcoming Milestones
+                              </h4>
                             </div>
                             <ul className="space-y-1">
                               {tower.upcoming.map((item, i) => (
@@ -177,6 +197,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
                         </div>
                       )}
                     </div>
+
                   </div>
                 </div>
               );
