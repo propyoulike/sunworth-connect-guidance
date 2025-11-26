@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import CTAButtons from "./CTAButtons";
 import { useEffect, useState } from "react";
 
 interface StickyMobileCTAProps {
@@ -21,13 +21,8 @@ const StickyMobileCTA = ({ onCtaClick }: StickyMobileCTAProps) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-card border-t border-border p-4 animate-in slide-in-from-bottom-2">
-      <Button
-        onClick={onCtaClick}
-        className="w-full btn-gradient text-base py-6 rounded-full font-semibold"
-      >
-        Get Personalised Guidance with FREE Site Visit
-      </Button>
+    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-card border-t border-border p-3 animate-in slide-in-from-bottom-2">
+      <CTAButtons onFormOpen={onCtaClick} variant="compact" />
     </div>
   );
 };

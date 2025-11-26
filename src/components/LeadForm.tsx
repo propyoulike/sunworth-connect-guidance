@@ -25,9 +25,10 @@ type FormData = z.infer<typeof formSchema>;
 
 interface LeadFormProps {
   className?: string;
+  onSuccess?: () => void;
 }
 
-const LeadForm = ({ className = "" }: LeadFormProps) => {
+const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -99,6 +100,11 @@ const LeadForm = ({ className = "" }: LeadFormProps) => {
       });
 
       reset();
+      
+      // Call onSuccess if provided
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       console.error("Lead form submission error:", error);
 

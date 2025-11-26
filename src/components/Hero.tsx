@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import CTAButtons from "./CTAButtons";
 
 interface HeroProps {
   onCtaClick: () => void;
@@ -35,31 +35,9 @@ const Hero = ({ onCtaClick }: HeroProps) => {
               </p>
                */}
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="btn-gradient text-lg px-8 py-6 rounded-full font-semibold"
-                  onClick={onCtaClick}
-                >
-                  Get Personalised Guidance with FREE Site Visit
-                </Button>
+              <CTAButtons onFormOpen={onCtaClick} variant="default" />
                 
-               {/* 
-                <a 
-                  href="https://wa.me/919379822010?text=Hi,%20I%27m%20interested%20in%20Provident%20Sunworth%20City" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  <Button 
-                    size="lg" 
-                    variant="outline"
-                    className="text-lg px-8 py-6 rounded-full font-semibold bg-white/90 hover:bg-white text-foreground border-white"
-                  >
-                    Chat on WhatsApp
-                  </Button>
-                </a>
-               */}
-              </div>
+               {/* Commented content */}
             </div>
           </div>
         </div>

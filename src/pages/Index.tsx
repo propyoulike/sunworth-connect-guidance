@@ -1,77 +1,62 @@
-import { useRef } from "react";
+import { useState } from "react";
 import Hero from "@/components/Hero";
-import EmotionalUSPs from "@/components/EmotionalUSPs";
-import MasterPlan from "@/components/MasterPlan";
-import FloorPlans from "@/components/FloorPlans";
+import ProjectSummary from "@/components/ProjectSummary";
+import ConstructionStatus from "@/components/ConstructionStatus";
+import Location from "@/components/Location";
+import FloorPlansTabs from "@/components/FloorPlansTabs";
 import Amenities from "@/components/Amenities";
 import Views from "@/components/Views";
-import Location from "@/components/Location";
-import Connectivity from "@/components/Connectivity";
-import Homes from "@/components/Homes";
-import ConstructionStatus from "@/components/ConstructionStatus";
 import CustomerSpeaks from "@/components/CustomerSpeaks";
 import Brochure from "@/components/Brochure";
-import LeadForm from "@/components/LeadForm";
-import StickyMobileCTA from "@/components/StickyMobileCTA";
 import ProvidentSection from "@/components/ProvidentSection";
+import FAQ from "@/components/FAQ";
+import LeadFormModal from "@/components/LeadFormModal";
+import StickyMobileCTA from "@/components/StickyMobileCTA";
 
 const Index = () => {
-  const formRef = useRef<HTMLDivElement>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  const openForm = () => {
+    setIsFormOpen(true);
   };
 
   return (
     <div className="min-h-screen smooth-scroll">
       {/* Hero Section */}
-      <Hero onCtaClick={scrollToForm} />
+      <Hero onCtaClick={openForm} />
 
-      {/* Lead Form - Top (visible on mobile after hero) */}
-      <section className="py-12 bg-muted/30 lg:hidden">
-        <div className="container mx-auto px-4">
-          <LeadForm />
-        </div>
-      </section>
-
-      {/* Emotional USPs 
-      <EmotionalUSPs /> */}
-
-      {/* Master Plan */}
-      <MasterPlan onCtaClick={scrollToForm} />
-
-      {/* Floor Plans */}
-      <FloorPlans onCtaClick={scrollToForm} />
-
-      {/* Amenities */}
-      <Amenities onCtaClick={scrollToForm} />
-
-      {/* Views */}
-      <Views onCtaClick={scrollToForm} />
-
-      {/* Location & Neighbourhood */}
-      <Location onCtaClick={scrollToForm} />
+      {/* Project Summary with Payment Flexibility */}
+      <ProjectSummary onCtaClick={openForm} />
 
       {/* Construction Status */}
-      <ConstructionStatus onCtaClick={scrollToForm} />
+      <ConstructionStatus onCtaClick={openForm} />
+
+      {/* Location & Neighbourhood */}
+      <Location onCtaClick={openForm} />
+
+      {/* Floor Plans with Tabs */}
+      <FloorPlansTabs onCtaClick={openForm} />
+
+      {/* Amenities */}
+      <Amenities onCtaClick={openForm} />
+
+      {/* Views */}
+      <Views onCtaClick={openForm} />
 
       {/* Customer Testimonials */}
-      <CustomerSpeaks onCtaClick={scrollToForm} />
+      <CustomerSpeaks onCtaClick={openForm} />
 
       {/* Brochure Download */}
-      <Brochure onCtaClick={scrollToForm} />
+      <Brochure onCtaClick={openForm} />
 
-      {/* Lead Form - Mid Page */}
-      <section ref={formRef} className="py-20 lg:py-28 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <LeadForm />
-          </div>
-        </div>
-      </section>
-
-      {/* About Provident */}
+      {/* About Provident (Expandable) */}
       <ProvidentSection />
+
+      {/* FAQ Section */}
+      <FAQ />
+
+      {/* Lead Form Modal */}
+      <LeadFormModal open={isFormOpen} onOpenChange={setIsFormOpen} />
       
       {/* Footer */}
       <footer className="bg-foreground text-background py-12">
@@ -94,7 +79,7 @@ const Index = () => {
       </footer>
 
       {/* Sticky Mobile CTA */}
-      <StickyMobileCTA onCtaClick={scrollToForm} />
+      <StickyMobileCTA onCtaClick={openForm} />
     </div>
   );
 };
