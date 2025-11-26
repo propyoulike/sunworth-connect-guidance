@@ -1,12 +1,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import CTAButtons from "./CTAButtons";
+import { useRef } from "react";
 
 interface FloorPlansTabsProps {
   onCtaClick: () => void;
 }
 
 const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+
   const modelFlatVideos = [
     {
       title: "2 BHK Model Flat Walkthrough",
@@ -46,6 +49,20 @@ const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
     },
   ];
 
+  // ---- Convert ANY YouTube URL → Embed URL ----
+  const convertToEmbed = (url: string) => {
+    if (url.includes("shorts")) {
+      return url.replace("shorts/", "embed/");
+    }
+    if (url.includes("youtu.be")) {
+      return url.replace("youtu.be/", "youtube.com/embed/");
+    }
+    if (url.includes("watch?v=")) {
+      return url.replace("watch?v=", "embed/");
+    }
+    return url;
+  };
+
   return (
     <section id="floorplanstabs" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
@@ -71,6 +88,7 @@ const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
             </TabsTrigger>
           </TabsList>
 
+          {/* ---------------- Model Flat Videos Tab ---------------- */}
           <TabsContent value="model-flat" className="space-y-8">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {modelFlatVideos.map((video, index) => (
@@ -79,9 +97,7 @@ const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
                     <iframe
                       width="100%"
                       height="100%"
-                      src={video.url
-                        .replace("youtu.be/", "youtube.com/embed/")
-                        .replace("shorts/", "embed/")}
+                      src={convertToEmbed(video.url)}
                       title={video.title}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -98,6 +114,7 @@ const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
             </div>
           </TabsContent>
 
+          {/* ---------------- Unit Plans Tab ---------------- */}
           <TabsContent value="unit-plans" className="space-y-8">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {unitPlans.map((plan, index) => (
@@ -119,6 +136,7 @@ const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
             </div>
           </TabsContent>
 
+          {/* ---------------- Master Plan Tab ---------------- */}
           <TabsContent value="master-plan" className="space-y-8">
             <Card className="p-8">
               <div className="rounded-xl overflow-hidden mb-6">
@@ -133,9 +151,8 @@ const FloorPlansTabs = ({ onCtaClick }: FloorPlansTabsProps) => {
                   Complete Township Layout
                 </h3>
                 <p className="text-muted-foreground max-w-3xl mx-auto">
-                  A meticulously planned 60-acre township with dedicated zones for residential towers, 
-                  recreational facilities, green spaces, and community amenities. Every aspect designed 
-                  to enhance your living experience.
+                  A meticulously planned 60-acre township with dedicated zones for residential towers,
+                  recreational facilities, green spaces, and community amenities.
                 </p>
               </div>
             </Card>
