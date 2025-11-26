@@ -6,7 +6,7 @@ interface HeroProps {
 
 const Hero = ({ onCtaClick }: HeroProps) => {
   return (
-    <section className="relative w-full">
+    <section id="hero" ref={sectionRef} className="relative w-full  scroll-mt-32">
 
       {/* --- Full Screen Hero Video --- */}
       <div className="relative w-full h-screen overflow-hidden">
