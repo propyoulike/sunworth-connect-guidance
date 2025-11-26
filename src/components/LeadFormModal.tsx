@@ -12,7 +12,7 @@ const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">
-            Get Personalised Guidance
+            Request for Guidance
           </DialogTitle>
         </DialogHeader>
         <LeadForm onSuccess={() => onOpenChange(false)} />
