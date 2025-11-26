@@ -21,6 +21,26 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
       (window as any).fbq("track", eventName);
   };
 
+  // ---------- Convert ANY YouTube link → Embed ----------
+  const convertToEmbed = (url: string) => {
+    try {
+      if (url.includes("shorts/")) {
+        return url
+          .replace("youtube.com/shorts/", "youtube.com/embed/")
+          .replace("youtu.be/shorts/", "youtube.com/embed/");
+      }
+      if (url.includes("youtu.be/")) {
+        return url.replace("youtu.be/", "youtube.com/embed/");
+      }
+      if (url.includes("watch?v=")) {
+        return url.replace("watch?v=", "embed/");
+      }
+      return url;
+    } catch {
+      return url;
+    }
+  };
+
   // Track section view
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,7 +48,11 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
         const isVisible = entries[0].isIntersecting;
         if (isVisible && !hasTrackedView.current) {
           hasTrackedView.current = true;
-          trackGA("section_view", { event_category: "engagement", event_label: "FloorPlans Section" });
+          trackGA("section_view", {
+            event_category: "engagement",
+            event_label: "FloorPlans Section",
+          });
+
           if (typeof (window as any).fbq === "function")
             (window as any).fbq("trackCustom", "FloorPlansSectionViewed");
         }
@@ -53,7 +77,8 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
   const plans = [
     {
       title: "2 BHK",
-      image: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
+      image:
+        "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
       video: "https://www.youtube.com/shorts/z6-d5uB4rRA",
       sba: 883,
       carpet: 628,
@@ -62,7 +87,8 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
     },
     {
       title: "3 BHK Regular",
-      image: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
+      image:
+        "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
       video: "https://youtube.com/shorts/QEtUBt1Ac3U",
       sba: 1082,
       carpet: 779,
@@ -71,7 +97,8 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
     },
     {
       title: "3 BHK Royale",
-      image: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
+      image:
+        "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
       video: "https://youtu.be/B2izuPDFLak",
       sba: 1779,
       carpet: 1287,
@@ -81,11 +108,11 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
   ];
 
   return (
-<section
-  id="floorplans"
-  ref={sectionRef}
-  className="py-20 lg:py-28 scroll-mt-32 bg-muted/30"
->
+    <section
+      id="floorplans"
+      ref={sectionRef}
+      className="py-20 lg:py-28 scroll-mt-32 bg-muted/30"
+    >
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -93,7 +120,9 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
             Floor Plans
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Every home at Provident Sunworth City is designed with attention to detail and functionality. Choose the plan that fits your family's needs.
+            Every home at Provident Sunworth City is designed with attention to
+            detail and functionality. Choose the plan that fits your family's
+            needs.
           </p>
         </div>
 
@@ -115,7 +144,7 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
                 <iframe
                   width="100%"
                   height="100%"
-                  src={plan.video.replace('youtu.be/', 'youtube.com/embed/').replace('shorts/', 'embed/')}
+                  src={convertToEmbed(plan.video)}
                   title={`${plan.title} Walkthrough`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -126,13 +155,25 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
               </div>
 
               {/* Unit Details */}
-              <h3 className="text-2xl font-bold mb-3 text-foreground">{plan.title}</h3>
-              <p className="text-muted-foreground mb-1">SBA (SFT): {plan.sba}</p>
-              <p className="text-muted-foreground mb-1">Carpet (SFT): {plan.carpet}</p>
-              <p className="text-muted-foreground mb-1">Usable Area (SFT): {plan.usable}</p>
-              <p className="text-xl font-bold text-primary mb-4">Pricing: {plan.price}</p>
+              <h3 className="text-2xl font-bold mb-3 text-foreground">
+                {plan.title}
+              </h3>
+              <p className="text-muted-foreground mb-1">
+                SBA (SFT): {plan.sba}
+              </p>
+              <p className="text-muted-foreground mb-1">
+                Carpet (SFT): {plan.carpet}
+              </p>
+              <p className="text-muted-foreground mb-1">
+                Usable Area (SFT): {plan.usable}
+              </p>
+              <p className="text-xl font-bold text-primary mb-4">
+                Pricing: {plan.price}
+              </p>
+
               <p className="text-xs text-muted-foreground mb-4">
-                * The imagery used is indicative of style only. The photographs of the interiors, surrounding views and location may have been digitally enhanced or altered and do not represent actual views or surrounding views. Prices are indicative only. Floor plans are in accordance with the last approved sanctioned plan and may be subject to change mandated by governmental authorities and/or applicable law.
+                * The imagery used is indicative. Floor plans and pricing are
+                subject to approvals & updates.
               </p>
 
               <CTAButtons onFormOpen={handleCtaClick} variant="compact" />
@@ -143,7 +184,8 @@ const FloorPlans = ({ onCtaClick }: FloorPlansProps) => {
         {/* CTA Buttons */}
         <div className="text-center">
           <p className="text-sm text-muted-foreground mb-6">
-            Get detailed floor plans and availability for your preferred configuration
+            Get detailed floor plans and availability for your preferred
+            configuration
           </p>
           <CTAButtons onFormOpen={handleCtaClick} />
         </div>
