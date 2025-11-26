@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { motion } from "framer-motion";
 import CTAButtons from "./CTAButtons";
 
 interface LocationProps {
@@ -61,12 +60,9 @@ export default function Location({ onCtaClick }: LocationProps) {
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Video */}
-          <motion.div
+          <div
             ref={videoRef}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="w-full h-[300px] md:h-[450px]"
+            className="w-full h-[300px] md:h-[450px] animate-in fade-in slide-in-from-bottom-4 duration-700"
           >
             {videoVisible && (
               <iframe
@@ -76,15 +72,12 @@ export default function Location({ onCtaClick }: LocationProps) {
                 title="Location Video"
               />
             )}
-          </motion.div>
+          </div>
 
           {/* Map */}
-          <motion.div
+          <div
             ref={mapRef}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="w-full h-[300px] md:h-[450px]"
+            className="w-full h-[300px] md:h-[450px] animate-in fade-in slide-in-from-bottom-4 duration-700"
           >
             {mapVisible && (
               <iframe
@@ -94,7 +87,7 @@ export default function Location({ onCtaClick }: LocationProps) {
                 title="Location Map"
               />
             )}
-          </motion.div>
+          </div>
         </div>
 
         {/* Accordion */}
@@ -111,16 +104,11 @@ export default function Location({ onCtaClick }: LocationProps) {
                 </AccordionTrigger>
 
                 <AccordionContent>
-                  <motion.ul
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="list-disc ml-6 mb-4 text-muted-foreground space-y-1"
-                  >
+                  <ul className="list-disc ml-6 mb-4 text-muted-foreground space-y-1 animate-in fade-in slide-in-from-top-2 duration-300">
                     {section.items.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
-                  </motion.ul>
+                  </ul>
                 </AccordionContent>
               </AccordionItem>
             ))}
