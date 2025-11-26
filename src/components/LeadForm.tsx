@@ -88,7 +88,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
 
       // Open WhatsApp with a prefilled message
       const whatsappMessage = encodeURIComponent(
-        `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like personalised guidance on best units and pricing.`
+        `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like best units and pricing.`
       );
       const whatsappUrl = `https://wa.me/919379822010?text=${whatsappMessage}`;
       
@@ -141,7 +141,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
       style={{ boxShadow: "var(--shadow-medium)" }}
     >
       <h3 className="text-2xl font-bold mb-2 text-foreground">
-        Get personalised guidance on best units, views & pricing.
+        Best units, views & pricing.
       </h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-6">
@@ -225,7 +225,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
           className="w-full btn-gradient text-lg py-6 rounded-full font-semibold"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Get Personalised Guidance"}
+          {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
 
         <p className="text-xs text-muted-foreground text-center leading-relaxed">
