@@ -84,8 +84,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
                   <button onClick={() => setZoomImage(plan.image)} className="w-full p-0 bg-transparent border-0 text-left" type="button" aria-label={`Open ${plan.title} plan`}>
                     <img src={plan.image} alt={plan.title} className="w-full h-auto rounded-lg cursor-zoom-in" />
                   </button>
-                  <h3 className="text-2xl font-bold my-3 text-foreground">{plan.title}</h3>
-                  <p className="text-muted-foreground mb-2">{plan.description}</p>
+                  <h3 className="text-2xl font-bold my-3 text-foreground">{plan.description}</h3>
                 </Card>
               ))}
             </div>
@@ -119,4 +118,5 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 };
 
 export default FloorPlansTabs;
+
 
