@@ -124,7 +124,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-            Floor Plans & Unit Details
+            Meticulously Designed Homes
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             Explore our thoughtfully designed homes with virtual walkthroughs and detailed
@@ -314,5 +314,6 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 };
 
 export default FloorPlansTabs;
+
 
 
