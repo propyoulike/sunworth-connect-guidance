@@ -203,7 +203,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-              Frequently Asked Questions
+              Got Questions? <span className="text-primary">We’ve Got Answers.</span>
             </h2>
             <p className="text-lg text-muted-foreground">
               Find answers to common questions about Provident Sunworth City
@@ -236,4 +236,5 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
 };
 
 export default FAQ;
+
 
