@@ -95,7 +95,7 @@ const Amenities = ({ onCtaClick }: AmenitiesProps) => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-            Your Leisure Adorned <span className="text-primary">With Opulence</span>
+            Your Leisure <span className="text-primary">Adorned With Opulence</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             From sports to leisure, wellness to education—everything your family needs is right here.
@@ -166,5 +166,6 @@ const Amenities = ({ onCtaClick }: AmenitiesProps) => {
 };
 
 export default Amenities;
+
 
 
