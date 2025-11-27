@@ -26,7 +26,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       ca: "628 sq.ft",
       usable: "655 sq.ft",
       price: "₹69.99 L*",
-      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
+      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/2_bhk_plan.webp",
     },
     {
       title: "3 BHK Regular Flat",
@@ -36,7 +36,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       ca: "779 sq.ft",
       usable: "805 sq.ft",
       price: "₹79.99 L*",
-      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
+      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/3_bhk_plan.webp",
     },
     {
       title: "3 BHK Royale Flat",
@@ -46,7 +46,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       ca: "1287 sq.ft",
       usable: "1351 sq.ft",
       price: "149.99 L*",
-      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-2.webp",
+      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/3bhk_royale.webp",
     },
   ];
 
@@ -314,4 +314,5 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 };
 
 export default FloorPlansTabs;
+
 
