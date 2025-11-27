@@ -66,7 +66,7 @@ export default function BrochureSection({ onCtaClick }: BrochureProps) {
               and get complete project insights delivered instantly.
             </p>
 
-            <div className="mb-8 flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 w-full">
               <CTAButtons onFormOpen={onCtaClick} />
             </div>
 
@@ -98,3 +98,4 @@ export default function BrochureSection({ onCtaClick }: BrochureProps) {
     </section>
   );
 }
+
