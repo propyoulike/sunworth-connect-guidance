@@ -57,7 +57,7 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
   }, []);
 
   const highlights = [
-    { icon: Home, label: "2 & 3 BHK Apartments", value: "Ready to Move" },
+    { icon: Home, label: "2 & 3 BHK Apartments", value: "Possession by Q1 2028" },
     { icon: MapPin, label: "Prime Location", value: "Mysore Road, Bangalore" },
     { icon: TreePine, label: "Township Size", value: "60 Acres" },
     { icon: Award, label: "Amenities", value: "50+ Premium Facilities" },
@@ -106,4 +106,5 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
 };
 
 export default ProjectSummary;
+
 
