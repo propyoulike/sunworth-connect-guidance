@@ -4,12 +4,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import CTAButtons from "@/components/CTAButtons"; // ✅ FIXED import
 
 interface FAQProps {
-  openLeadForm: () => void;
+  openLeadForm: () => void; // comes from parent component
 }
 
 const FAQ = ({ openLeadForm }: FAQProps) => {
+
   // -------- Smooth Scroll Helper --------
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -53,6 +55,15 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
     }
   };
 
+  // ----------------------------------------------------
+  // ❗ CTA HANDLER — Correct function passed to CTAButtons
+  // ----------------------------------------------------
+  const handleCTA = () => {
+    trackCtaClick("FAQ CTA Button");
+    openLeadForm();            // ← use the correct prop
+  };
+  // ----------------------------------------------------
+
   const FAQs = [
     {
       question: "What is the price range for apartments at Provident Sunworth City?",
@@ -83,7 +94,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
             View detailed pricing & unit details in the{" "}
             <button
               onClick={() => {
-                scrollToSection("floorplanstabs");
+                scrollToSection("floor-plans");
                 trackCtaClick("Floor Plans Button");
               }}
               className="text-blue-600 underline"
@@ -99,17 +110,16 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
       question: "What amenities are available in the township?",
       answer: (
         <div>
-          <p>Provident Sunworth City offers lifestyle-focused amenities for all age groups:</p>
-
+          <p>Provident Sunworth City offers lifestyle-focused amenities:</p>
           <ul className="list-disc list-inside space-y-1 mt-2">
-            <li>Over 19 acres of open green spaces 🌳</li>
-            <li>Swimming pool, gym & indoor games 🎯</li>
-            <li>Jogging, cycling & walking tracks 🚴‍♂️</li>
-            <li>Tree-house themed kids zone, play areas & open lawns 🛝</li>
-            <li>Yoga & meditation decks 🧘</li>
-            <li>Clubhouse, multipurpose courts & senior-friendly areas 🧑‍🦳</li>
-            <li>Retail shops + school inside the township 🏫🛒</li>
-            <li>24×7 security, CCTV & gated access 🛡️</li>
+            <li>19+ acres of green spaces</li>
+            <li>Swimming pool, gym & indoor games</li>
+            <li>Jogging & cycling tracks</li>
+            <li>Kids’ zones & open lawns</li>
+            <li>Yoga decks</li>
+            <li>Clubhouse & multipurpose courts</li>
+            <li>Retail + school inside township</li>
+            <li>24×7 security & gated entry</li>
           </ul>
 
           <p className="mt-3">
@@ -133,12 +143,10 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
       question: "What are the payment plan options?",
       answer: (
         <div>
-          <p>Sunworth City offers flexible and construction-linked payment plans.</p>
+          <p>Flexible & construction-linked payment plans available.</p>
 
-          <p className="mt-3 font-semibold">Phase IV Payment Milestones:</p>
-          {/* ...list omitted for brevity */}
           <p className="mt-3">
-            Get a custom payment plan by filling out the{" "}
+            Get a custom plan by filling the{" "}
             <button
               className="text-blue-600 underline"
               onClick={() => {
@@ -158,7 +166,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
       question: "How can I schedule a site visit?",
       answer: (
         <div>
-          <p>Visiting Sunworth City is the best way to experience the township.</p>
+          <p>Experience the township firsthand.</p>
 
           <ul className="list-disc list-inside space-y-1 mt-2">
             <li>
@@ -171,34 +179,28 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
                 }}
               >
                 Site Visit Form
-              </button>{" "}
-              and we will call you to confirm.
+              </button>
             </li>
 
             <li>
-              Message us on{" "}
+              Message on{" "}
               <a
                 href="https://wa.me/919379822010"
-                target="_blank"
                 className="text-blue-600 underline"
+                target="_blank"
                 onClick={() => trackCtaClick("WhatsApp Site Visit")}
               >
                 WhatsApp
-              </a>{" "}
-              to book instantly.
+              </a>
             </li>
           </ul>
-
-          <p className="mt-3">
-            You’ll get a guided tour, see construction progress, explore amenities, and get all your questions answered.
-          </p>
         </div>
       ),
     },
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-muted/30">
+    <section id="faq" className="py-20 lg:py-28 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -229,10 +231,10 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
               </AccordionItem>
             ))}
           </Accordion>
-          
+
           {/* CTA Buttons */}
           <div className="mt-12 text-center">
-            <CTAButtons onFormOpen={handleCtaClick} />
+            <CTAButtons onFormOpen={handleCTA} /> {/* ✅ FIXED */}
           </div>
 
         </div>
@@ -242,6 +244,3 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
 };
 
 export default FAQ;
-
-
-
