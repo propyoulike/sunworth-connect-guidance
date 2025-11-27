@@ -22,7 +22,7 @@ export default function Location({ onCtaClick }: LocationProps) {
       items: ["Global Village Tech Park", "Bidadi Industrial Estate", "Hindustan Coca Cola Beverages Ltd", "Toyota Kirloskar Motor Pvt. Ltd."],
     },
     {
-      title: "Hospitals",
+      title: "HOSPITALS",
       items: ["Raja Rajeshwari Medical College and Hospital", "Raja Rajeshwari Dental College and Hospital", "BGS Hospital", "Medisol Hospital"],
     },
     {
@@ -30,7 +30,7 @@ export default function Location({ onCtaClick }: LocationProps) {
       items: ["Good Earth Eco Tourism", "Grips Gokarting and Clubbing", "Decathalon", "The Garden Asia Resort", "Gopalan Arcade Mall", "Wonderla"],
     },
     {
-      title: "Schools",
+      title: "SCHOOLS",
       items: ["National Public School", "Marigold International School", "Gurukula Vidya Peetha School", "Gopalan National School", "Tattva School"],
     },
     {
@@ -191,5 +191,6 @@ export default function Location({ onCtaClick }: LocationProps) {
     </section>
   );
 }
+
 
 
