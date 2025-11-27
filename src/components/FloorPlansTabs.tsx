@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import CTAButtons from "./CTAButtons";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 
 interface FloorPlansTabsProps {
   onCtaClick: () => void;
@@ -18,18 +18,15 @@ interface UnitVideo {
   ca: string;
   usable: string;
   price: string;
+  floorPlanImage: string;
 }
 
 const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const thumbsRef = useRef<HTMLDivElement | null>(null);
-  const thumbElementsRef = useRef<Array<HTMLDivElement | null>>([]);
-  const [zoomImage, setZoomImage] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [scrollActiveIndex, setScrollActiveIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // ------------------- DATA -------------------
   const unitPlansVideos: UnitVideo[] = [
     {
       id: "z6-d5uB4rRA",
@@ -40,6 +37,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       ca: "628 sq.ft",
       usable: "655 sq.ft",
       price: "₹69.99 L*",
+      floorPlanImage: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
     },
     {
       id: "QEtUBt1Ac3U",
@@ -50,6 +48,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       ca: "779 sq.ft",
       usable: "805 sq.ft",
       price: "₹79.99 L*",
+      floorPlanImage: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
     },
     {
       id: "B2izuPDFLak",
@@ -60,6 +59,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       ca: "1287 sq.ft",
       usable: "1351 sq.ft",
       price: "149.99 L*",
+      floorPlanImage: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_2.webp",
     },
   ];
 
@@ -78,36 +78,13 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
     },
   ];
 
-  // ------------------- EFFECTS -------------------
-  // ESC to close zoom image
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => { if (e.key === "Escape") setZoomImage(null); };
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsFullscreen(false);
+    };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
-
-  // Intersection observer for thumbnails
-  useEffect(() => {
-    if (!thumbsRef.current) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const index = Number(entry.target.getAttribute("data-index"));
-          if (entry.isIntersecting) setScrollActiveIndex(index);
-        });
-      },
-      { root: thumbsRef.current, threshold: 0.5 }
-    );
-
-    thumbElementsRef.current.forEach((el) => el && observer.observe(el));
-    return () => thumbElementsRef.current.forEach((el) => el && observer.unobserve(el));
-  }, []);
-
-  const switchActiveVideo = (index: number) => {
-    setActiveIndex(index);
-    trackGA?.("unit_plan_video_switch", { category: "Unit Plan", label: unitPlansVideos[index].title });
-    trackFB?.("VideoView", { title: unitPlansVideos[index].title });
-  };
 
   const toggleExpand = (index: number) => {
     setExpanded(expanded === index ? null : index);
@@ -117,8 +94,15 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
     }
   };
 
+  const openFullscreenVideo = (index: number) => {
+    setActiveIndex(index);
+    setIsFullscreen(true);
+    trackGA?.("unit_plan_video_fullscreen", { category: "Unit Plan", label: unitPlansVideos[index].title });
+    trackFB?.("VideoView", { title: unitPlansVideos[index].title });
+  };
+
   return (
-    <section id="floorplanstabs" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
+    <section ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
@@ -138,42 +122,22 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 
           {/* ------------------- UNIT PLANS ------------------- */}
           <TabsContent value="unit-plans" className="space-y-8">
-            {/* Active Video */}
-            <Card className="p-6 hover:shadow-xl transition-shadow">
-              <div className="relative" style={{ paddingTop: "56.25%" }}>
-                <iframe
-                  src={unitPlansVideos[activeIndex].url}
-                  title={unitPlansVideos[activeIndex].title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mt-3">{unitPlansVideos[activeIndex].title}</h3>
-              <p className="text-muted-foreground">{unitPlansVideos[activeIndex].description}</p>
-            </Card>
-
             {/* Thumbnails */}
-            <div ref={thumbsRef} className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory">
+            <div className="flex overflow-x-auto gap-6 pb-4">
               {unitPlansVideos.map((video, index) => (
                 <div
                   key={video.id}
-                  data-index={index}
-                  ref={(el) => (thumbElementsRef.current[index] = el)}
-                  className={`min-w-[260px] flex-shrink-0 rounded-xl border p-4 cursor-pointer snap-start
-                    ${index === activeIndex ? "border-primary shadow-lg scale-[1.02] bg-card" : "border-border bg-white"}`}
-                  onClick={() => switchActiveVideo(index)}
-                  aria-current={index === activeIndex}
+                  className={`min-w-[260px] flex-shrink-0 rounded-xl border p-4 cursor-pointer
+                    ${index === activeIndex ? "border-primary shadow-lg bg-card" : "border-border bg-white"}`}
                 >
                   <div className="w-full rounded-lg overflow-hidden mb-3">
                     <img
                       src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
                       alt={video.title}
                       className="w-full h-40 object-cover"
+                      onClick={() => openFullscreenVideo(index)}
                     />
                   </div>
-
-                  {/* Expandable */}
                   <button
                     onClick={(e) => { e.stopPropagation(); toggleExpand(index); }}
                     className="flex items-center justify-between w-full text-left"
@@ -181,26 +145,35 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
                     <span className="font-semibold text-sm text-foreground">Unit Details</span>
                     <span className={`transition-transform duration-300 text-xl ${expanded === index ? "rotate-90" : "rotate-0"}`}>&gt;</span>
                   </button>
-                  <div className={`overflow-hidden transition-all duration-300 ${expanded === index ? "max-h-96 mt-3" : "max-h-0"}`}>
-                    <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
-                      <div>
-                        <p className="font-semibold">SBA</p>
-                        <p>{video.sba}</p>
+                  {expanded === index && (
+                    <div className="mt-3">
+                      <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
+                        <div>
+                          <p className="font-semibold">SBA</p>
+                          <p>{video.sba}</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold">Carpet Area</p>
+                          <p>{video.ca}</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold">Usable Area</p>
+                          <p>{video.usable}</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold">Price</p>
+                          <p className="text-primary font-semibold">{video.price}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold">Carpet Area</p>
-                        <p>{video.ca}</p>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Usable Area</p>
-                        <p>{video.usable}</p>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Price</p>
-                        <p className="text-primary font-semibold">{video.price}</p>
+                      <div className="mt-4">
+                        <img
+                          src={video.floorPlanImage}
+                          alt={`${video.title} Floor Plan`}
+                          className="w-full h-auto rounded-lg"
+                        />
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -242,6 +215,22 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
           <CTAButtons onFormOpen={onCtaClick} />
         </div>
       </div>
+
+      {/* Fullscreen Video Modal */}
+      {isFullscreen && (
+        <div
+          className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
+          onClick={() => setIsFullscreen(false)}
+        >
+          <iframe
+            src={unitPlansVideos[activeIndex].url}
+            title={unitPlansVideos[activeIndex].title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full max-w-6xl max-h-[90%]"
+          />
+        </div>
+      )}
 
       {/* Image Zoom Modal */}
       {zoomImage && (
