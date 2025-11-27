@@ -70,7 +70,7 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
           {/* Heading */}
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-5xl font-bold mb-4 text-foreground">
-              Welcome to Provident Sunworth City
+              Provident <span className="text-primary">Sunworth City</span>
             </h2>
             <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto">
               Experience the perfect blend of modern living and nature in Bangalore's most promising residential township.
@@ -106,5 +106,6 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
 };
 
 export default ProjectSummary;
+
 
 
