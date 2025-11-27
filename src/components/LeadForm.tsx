@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
+// ---------- Validation Schema ----------
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
@@ -37,18 +38,19 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
   const {
     register,
     handleSubmit,
-    setValue,
+    control,
     formState: { errors },
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: { bhkPreference: "" },
   });
 
-  // ----- GA / Meta Tracking -----
+  // ---------- GA / Meta Tracking ----------
   const trackConversion = () => {
     if (typeof (window as any).gtag === "function") {
       (window as any).gtag("event", "conversion", {
-        send_to: "AW-17754016716/abcd1234", // Replace with your conversion ID
+        send_to: "AW-17754016716/abcd1234",
         event_category: "lead_form",
         event_label: "Provident_Sunworth_Lead",
       });
@@ -58,12 +60,13 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
     }
   };
 
-  // ----- WhatsApp URL Helper -----
+  // ---------- WhatsApp Message Builder ----------
   const generateWhatsAppUrl = (data: FormData) =>
     `https://wa.me/919379822010?text=${encodeURIComponent(
       `Hi, I just filled the form for Provident Sunworth. My name is ${data.name}, I'm looking for ${data.bhkPreference} and would like best units and pricing.`
     )}`;
 
+  // ---------- Submit ----------
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
 
@@ -85,11 +88,11 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
         }
       );
 
-      // Send email notification via Resend
+      // Send email (Resend)
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer re_P4XDm6qv_NpbRtAMXhABWTKkgbWy3UzVt",
+          Authorization: "Bearer re_P4XDm6qv_NpbRtAMXhABWTKkgbWy3UzVt",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -118,11 +121,11 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
       });
 
       reset();
-      if (onSuccess) onSuccess();
+      onSuccess?.();
     } catch (error) {
-      console.error("Lead form submission error:", error);
+      console.error("Lead form error:", error);
 
-      const whatsappUrl = generateWhatsAppUrl({
+      const whatsappFallback = generateWhatsAppUrl({
         ...data,
         bhkPreference: data.bhkPreference || "Not Sure",
       });
@@ -132,7 +135,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
         description: "We'll connect you directly with an advisor.",
         action: (
           <a
-            href={whatsappUrl}
+            href={whatsappFallback}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary underline text-sm"
@@ -142,7 +145,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
         ),
       });
 
-      window.open(whatsappUrl, "_blank");
+      window.open(whatsappFallback, "_blank");
     } finally {
       setIsSubmitting(false);
     }
@@ -158,10 +161,9 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
       </h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-6">
+        {/* NAME */}
         <div>
-          <Label htmlFor="name" className="text-foreground">
-            Name *
-          </Label>
+          <Label htmlFor="name">Name *</Label>
           <Input
             id="name"
             {...register("name")}
@@ -175,15 +177,14 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
           )}
         </div>
 
+        {/* EMAIL */}
         <div>
-          <Label htmlFor="email" className="text-foreground">
-            Email *
-          </Label>
+          <Label htmlFor="email">Email *</Label>
           <Input
             id="email"
             type="email"
             {...register("email")}
-            placeholder="Your email address"
+            placeholder="Your email"
             className="mt-1.5"
           />
           {errors.email && (
@@ -193,10 +194,9 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
           )}
         </div>
 
+        {/* PHONE */}
         <div>
-          <Label htmlFor="phone" className="text-foreground">
-            Phone *
-          </Label>
+          <Label htmlFor="phone">Phone *</Label>
           <Input
             id="phone"
             type="tel"
@@ -211,21 +211,28 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
           )}
         </div>
 
+        {/* BHK PREFERENCE (FIXED) */}
         <div>
-          <Label htmlFor="bhkPreference" className="text-foreground">
-            BHK Preference *
-          </Label>
-          <Select onValueChange={(value) => setValue("bhkPreference", value)}>
-            <SelectTrigger className="mt-1.5">
-              <SelectValue placeholder="Select your preference" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="2 BHK">2 BHK</SelectItem>
-              <SelectItem value="3 BHK Regular">3 BHK Regular</SelectItem>
-              <SelectItem value="3 BHK Royale">3 BHK Royale</SelectItem>
-              <SelectItem value="Not Sure">Not Sure</SelectItem>
-            </SelectContent>
-          </Select>
+          <Label>BHK Preference *</Label>
+
+          <Controller
+            name="bhkPreference"
+            control={control}
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger className="mt-1.5">
+                  <SelectValue placeholder="Select your preference" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="2 BHK">2 BHK</SelectItem>
+                  <SelectItem value="3 BHK Regular">3 BHK Regular</SelectItem>
+                  <SelectItem value="3 BHK Royale">3 BHK Royale</SelectItem>
+                  <SelectItem value="Not Sure">Not Sure</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+
           {errors.bhkPreference && (
             <p className="text-sm text-destructive mt-1">
               {errors.bhkPreference.message}
@@ -233,6 +240,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
           )}
         </div>
 
+        {/* SUBMIT */}
         <Button
           type="submit"
           className="w-full btn-gradient text-lg py-6 rounded-full font-semibold"
@@ -251,4 +259,3 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
 };
 
 export default LeadForm;
-

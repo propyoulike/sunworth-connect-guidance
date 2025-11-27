@@ -68,11 +68,11 @@ const Index = () => {
 </div>
 
 <div id="about-provident">
-  <ProvidentSection />
+  <ProvidentSection onCtaClick={openForm}/>
 </div>
 
 <div id="faq">
-  <FAQ />
+  <FAQ openLeadForm={openForm}/>
 </div>
 
       {/* Lead Form Modal */}
