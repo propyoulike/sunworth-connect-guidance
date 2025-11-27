@@ -24,14 +24,15 @@ const Index = () => {
   return (
     <div className="min-h-screen smooth-scroll">
 
-      {/* ✅ Sticky Navbar */}
-      <Navbar onCtaClick={openForm} />
 
 {/* Hero Section */}
 <div id="hero-section">
   <Hero onCtaClick={openForm} />
 </div>
 
+      {/* ✅ Sticky Navbar */}
+      <Navbar onCtaClick={openForm} />
+      
 <div id="project-summary">
   <ProjectSummary onCtaClick={openForm} />
 </div>
