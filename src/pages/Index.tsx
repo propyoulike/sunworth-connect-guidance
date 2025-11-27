@@ -27,40 +27,50 @@ const Index = () => {
       {/* ✅ Sticky Navbar */}
       <Navbar onCtaClick={openForm} />
 
-      {/* Hero Section */}
-      <div id="hero-section">
-        <Hero onCtaClick={openForm} />
-      </div>
+{/* Hero Section */}
+<div id="hero-section">
+  <Hero onCtaClick={openForm} />
+</div>
 
-      {/* Project Summary with Payment Flexibility */}
-      <ProjectSummary onCtaClick={openForm} />
+<div id="project-summary">
+  <ProjectSummary onCtaClick={openForm} />
+</div>
 
-      {/* Floor Plans with Tabs */}
-      <FloorPlansTabs onCtaClick={openForm} />
+<div id="floor-plans">
+  <FloorPlansTabs onCtaClick={openForm} />
+</div>
 
-      {/* Location & Neighbourhood */}
-      <Location onCtaClick={openForm} />
+<div id="location">
+  <Location onCtaClick={openForm} />
+</div>
 
-      {/* Amenities */}
-      <Amenities onCtaClick={openForm} />
+<div id="amenities">
+  <Amenities onCtaClick={openForm} />
+</div>
 
-      {/* Views */}
-      <Views onCtaClick={openForm} />
+<div id="views">
+  <Views onCtaClick={openForm} />
+</div>
 
-      {/* Construction Status */}
-      <ConstructionStatus onCtaClick={openForm} />
+<div id="construction-status">
+  <ConstructionStatus onCtaClick={openForm} />
+</div>
 
-      {/* Customer Testimonials */}
-      <CustomerSpeaks onCtaClick={openForm} />
+<div id="testimonials">
+  <CustomerSpeaks onCtaClick={openForm} />
+</div>
 
-      {/* Brochure Download */}
-      <Brochure onCtaClick={openForm} />
+<div id="brochure">
+  <Brochure onCtaClick={openForm} />
+</div>
 
-      {/* About Provident (Expandable) */}
-      <ProvidentSection />
+<div id="about-provident">
+  <ProvidentSection />
+</div>
 
-      {/* FAQ Section */}
-      <FAQ />
+<div id="faq">
+  <FAQ />
+</div>
 
       {/* Lead Form Modal */}
       <LeadFormModal open={isFormOpen} onOpenChange={setIsFormOpen} />
