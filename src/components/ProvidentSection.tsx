@@ -133,6 +133,12 @@ const ProvidentSection = () => {
               )}
             </Button>
           </div>
+          
+          {/* CTA Buttons */}
+          <div className="mt-12 text-center">
+            <CTAButtons onFormOpen={handleCtaClick} />
+          </div>
+
         </div>
       </div>
     </section>
@@ -140,4 +146,5 @@ const ProvidentSection = () => {
 };
 
 export default ProvidentSection;
+
 
