@@ -20,7 +20,7 @@ const handleSubmit = async ({ data, onSuccess }: HandleSubmitOptions) => {
       },
       body: JSON.stringify({
         name: data.name,
-        phone: data.phone,
+        phone_number: data.phone,          // FIXED
         email: data.email || "",
         message: data.message || "Landing page enquiry",
         source: "Provident Sunworth Landing Page",
@@ -40,7 +40,7 @@ const handleSubmit = async ({ data, onSuccess }: HandleSubmitOptions) => {
       (window as any).fbq("track", "Lead");
     }
 
-    // Close modal after success
+    // ---------- Close modal / UI callback ----------
     onSuccess?.();
   } catch (error) {
     console.error("Privyr submission failed:", error);
