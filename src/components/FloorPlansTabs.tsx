@@ -14,9 +14,9 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
   const [zoomImage, setZoomImage] = useState<string | null>(null);
 
   const unitPlansVideos = [
-    { title: "2 BHK Model Flat Walkthrough", url: "https://www.youtube.com/shorts/z6-d5uB4rRA", description: "Experience the thoughtful design and smart use of space", sba: "883 – 1000 sq.ft", ca: "680 – 720 sq.ft", usable: "760 – 840 sq.ft", price: "₹69.99 L – ₹74.99 L*" },
-    { title: "3 BHK Model Flat Walkthrough", url: "https://youtube.com/shorts/QEtUBt1Ac3U", description: "Explore premium homes designed for growing families", sba: "1106 – 1300 sq.ft", ca: "820 – 900 sq.ft", usable: "940 – 1060 sq.ft", price: "₹79.99 L – ₹89.99 L*" },
-    { title: "3 BHK Royale Walkthrough", url: "https://youtu.be/B2izuPDFLak", description: "Discover luxurious living with premium finishes", sba: "1400 – 1500 sq.ft", ca: "1020 – 1080 sq.ft", usable: "1200 – 1300 sq.ft", price: "Premium Pricing" },
+    { title: "2 BHK Model Flat", url: "https://www.youtube.com/shorts/z6-d5uB4rRA", description: "Experience the thoughtful design and smart use of space", sba: "883 sq.ft", ca: "628 sq.ft", usable: "655 sq.ft", price: "₹69.99 L*" },
+    { title: "3 BHK Regular Model Flat", url: "https://youtube.com/shorts/QEtUBt1Ac3U", description: "Explore premium homes designed for growing families", sba: "1082 sq.ft", ca: "779 sq.ft", usable: "805 sq.ft", price: "₹79.99 L*" },
+    { title: "3 BHK Royale Model Flat", url: "https://youtu.be/B2izuPDFLak", description: "Discover luxurious living with premium finishes", sba: "1779 sq.ft", ca: "1287 sq.ft", usable: "1351 sq.ft", price: "149.99L*" },
   ];
 
   const floorPlans = [
@@ -118,5 +118,6 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 };
 
 export default FloorPlansTabs;
+
 
 
