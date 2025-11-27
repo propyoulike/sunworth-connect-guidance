@@ -47,7 +47,7 @@ const Brochure = ({ onCtaClick }: BrochureProps) => {
           <div className="bg-card rounded-2xl p-8 lg:p-12 text-center mb-8" style={{ boxShadow: "var(--shadow-strong)" }}>
             <FileText className="w-16 h-16 text-primary mx-auto mb-6" />
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-foreground">
-              Download Brochure & Documents
+              A lifestyle project that suits your needs.
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               Get detailed information about floor plans, amenities, pricing, and official project documents.
@@ -88,3 +88,4 @@ const Brochure = ({ onCtaClick }: BrochureProps) => {
 };
 
 export default Brochure;
+
