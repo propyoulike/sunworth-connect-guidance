@@ -6,6 +6,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import CTAButtons from "./CTAButtons";
+import { ChevronDown } from "lucide-react";
 
 interface LocationProps {
   onCtaClick: () => void;
@@ -15,27 +16,62 @@ export default function Location({ onCtaClick }: LocationProps) {
   const sections = [
     {
       title: "COMMUTE",
-      items: ["Challaghatta Metro Station", "NICE Road Junction", "Kengeri Metro Station", "Kengeri Railway Station", "Kengeri Bus Terminal"],
+      items: [
+        "Challaghatta Metro Station",
+        "NICE Road Junction",
+        "Kengeri Metro Station",
+        "Kengeri Railway Station",
+        "Kengeri Bus Terminal",
+      ],
     },
     {
       title: "OFFICES",
-      items: ["Global Village Tech Park", "Bidadi Industrial Estate", "Hindustan Coca Cola Beverages Ltd", "Toyota Kirloskar Motor Pvt. Ltd."],
+      items: [
+        "Global Village Tech Park",
+        "Bidadi Industrial Estate",
+        "Hindustan Coca Cola Beverages Ltd",
+        "Toyota Kirloskar Motor Pvt. Ltd.",
+      ],
     },
     {
       title: "HOSPITALS",
-      items: ["Raja Rajeshwari Medical College and Hospital", "Raja Rajeshwari Dental College and Hospital", "BGS Hospital", "Medisol Hospital"],
+      items: [
+        "Raja Rajeshwari Medical College and Hospital",
+        "Raja Rajeshwari Dental College and Hospital",
+        "BGS Hospital",
+        "Medisol Hospital",
+      ],
     },
     {
       title: "ENTERTAINMENT",
-      items: ["Good Earth Eco Tourism", "Grips Gokarting and Clubbing", "Decathalon", "The Garden Asia Resort", "Gopalan Arcade Mall", "Wonderla"],
+      items: [
+        "Good Earth Eco Tourism",
+        "Grips Gokarting and Clubbing",
+        "Decathalon",
+        "The Garden Asia Resort",
+        "Gopalan Arcade Mall",
+        "Wonderla",
+      ],
     },
     {
       title: "SCHOOLS",
-      items: ["National Public School", "Marigold International School", "Gurukula Vidya Peetha School", "Gopalan National School", "Tattva School"],
+      items: [
+        "National Public School",
+        "Marigold International School",
+        "Gurukula Vidya Peetha School",
+        "Gopalan National School",
+        "Tattva School",
+      ],
     },
     {
       title: "COLLEGES",
-      items: ["ACS College of Engineering", "RR College of Engineering", "Don-Bosco Institute of Technology", "RV College of Engineering", "Bangalore University"],
+      items: [
+        "ACS College of Engineering",
+        "RR College of Engineering",
+        "Don-Bosco Institute of Technology",
+        "RV College of Engineering",
+        "Bangalore University",
+      ],
     },
   ];
 
@@ -65,15 +101,13 @@ export default function Location({ onCtaClick }: LocationProps) {
         section: "Location",
       });
     }
-
     if (typeof (window as any).fbq === "function") {
       (window as any).fbq("track", "Lead");
     }
-
     onCtaClick();
   };
 
-  // ---------- Lazy Load Video + Map Without PiP Violation ----------
+  // ---------- Lazy Load Video + Map ----------
   useEffect(() => {
     const observeSection = (
       ref: React.RefObject<HTMLDivElement>,
@@ -104,11 +138,11 @@ export default function Location({ onCtaClick }: LocationProps) {
     <section
       id="location"
       ref={sectionRef}
-      className="w-full py-16 bg-muted/30 scroll-mt-32"
+      className="w-full py-14 md:py-20 bg-muted/30 scroll-mt-32"
     >
       <div className="container mx-auto px-4">
         {/* Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             The Perfect <span className="text-primary">Setting</span>
           </h2>
@@ -128,7 +162,7 @@ export default function Location({ onCtaClick }: LocationProps) {
           {/* ---- VIDEO ---- */}
           <div
             ref={videoRef}
-            className="w-full h-[300px] md:h-[450px] animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="w-full h-[260px] sm:h-[300px] md:h-[420px] rounded-xl overflow-hidden"
           >
             {videoVisible && (
               <iframe
@@ -145,7 +179,7 @@ export default function Location({ onCtaClick }: LocationProps) {
           {/* ---- MAP ---- */}
           <div
             ref={mapRef}
-            className="w-full h-[300px] md:h-[450px] animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="w-full h-[260px] sm:h-[300px] md:h-[420px] rounded-xl overflow-hidden"
           >
             {mapVisible && (
               <iframe
@@ -162,19 +196,22 @@ export default function Location({ onCtaClick }: LocationProps) {
 
         {/* Accordion */}
         <div className="max-w-4xl mx-auto mb-12">
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion type="single" collapsible className="space-y-3">
             {sections.map((section, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="border border-border rounded-xl shadow-md bg-card"
+                className="border border-border rounded-2xl bg-card shadow-sm"
               >
-                <AccordionTrigger className="px-4 py-3 text-lg font-semibold">
-                  {section.title}
+                <AccordionTrigger className="px-4 py-3 flex justify-between items-center text-base md:text-lg font-semibold hover:no-underline">
+                  <span>{section.title}</span>
+
+                  {/* Slim Animated Chevron */}
+                  <ChevronDown className="h-4 w-4 transition-transform duration-300 accordion-trigger-rotate" />
                 </AccordionTrigger>
 
                 <AccordionContent>
-                  <ul className="list-disc ml-6 mb-4 text-muted-foreground space-y-1 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <ul className="list-disc ml-6 mb-4 mt-1 text-sm md:text-base text-muted-foreground space-y-1 animate-in fade-in slide-in-from-top-1 duration-300">
                     {section.items.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
@@ -185,12 +222,11 @@ export default function Location({ onCtaClick }: LocationProps) {
           </Accordion>
         </div>
 
-        {/* CTA Buttons */}
-        <CTAButtons onFormOpen={handleCtaClick} />
+        {/* CTA */}
+        <div className="max-w-3xl mx-auto">
+          <CTAButtons onFormOpen={handleCtaClick} />
+        </div>
       </div>
     </section>
   );
 }
-
-
-
