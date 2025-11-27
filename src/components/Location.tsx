@@ -14,16 +14,28 @@ interface LocationProps {
 export default function Location({ onCtaClick }: LocationProps) {
   const sections = [
     {
-      title: "Schools",
-      items: ["National Public School", "RV School", "BGS Public School"],
+      title: "COMMUTE",
+      items: ["Challaghatta Metro Station", "NICE Road Junction", "Kengeri Metro Station", "Kengeri Railway Station", "Kengeri Bus Terminal"],
+    },
+    {
+      title: "OFFICES",
+      items: ["Global Village Tech Park", "Bidadi Industrial Estate", "Hindustan Coca Cola Beverages Ltd", "Toyota Kirloskar Motor Pvt. Ltd."],
     },
     {
       title: "Hospitals",
-      items: ["BGS Global Hospital", "Fortis Hospital", "Apollo Clinic"],
+      items: ["Raja Rajeshwari Medical College and Hospital", "Raja Rajeshwari Dental College and Hospital", "BGS Hospital", "Medisol Hospital"],
     },
     {
-      title: "Connectivity",
-      items: ["NICE Road", "Mysore Road Metro", "RR Nagar Junction"],
+      title: "ENTERTAINMENT",
+      items: ["Good Earth Eco Tourism", "Grips Gokarting and Clubbing", "Decathalon", "The Garden Asia Resort", "Gopalan Arcade Mall", "Wonderla"],
+    },
+    {
+      title: "Schools",
+      items: ["National Public School", "Marigold International School", "Gurukula Vidya Peetha School", "Gopalan National School", "Tattva School"],
+    },
+    {
+      title: "COLLEGES",
+      items: ["ACS College of Engineering", "RR College of Engineering", "Don-Bosco Institute of Technology", "RV College of Engineering", "Bangalore University"],
     },
   ];
 
@@ -179,4 +191,5 @@ export default function Location({ onCtaClick }: LocationProps) {
     </section>
   );
 }
+
 
