@@ -1,6 +1,7 @@
 import { Building2, Users, Award, TrendingUp, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import CTAButtons from "@/components/CTAButtons";  // ✅ Added import
 
 const stats = [
   { icon: TrendingUp, label: "Years Experience", value: "16+" },
@@ -9,7 +10,11 @@ const stats = [
   { icon: Award, label: "Cities", value: "9" },
 ];
 
-const ProvidentSection = () => {
+interface ProvidentSectionProps {
+  onCtaClick?: () => void;  // ✅ Accept CTA function from parent
+}
+
+const ProvidentSection = ({ onCtaClick }: ProvidentSectionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const hasTrackedView = useRef(false);
@@ -63,7 +68,7 @@ const ProvidentSection = () => {
   };
 
   return (
-    <section id="providentsection" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
+    <section id="about-provident" ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
@@ -77,7 +82,10 @@ const ProvidentSection = () => {
 
           <div className="prose prose-lg max-w-none text-muted-foreground mb-8">
             <p className="text-center lg:text-left leading-relaxed">
-              Provident Housing is a subsidiary of the prestigious Puravankara Group, delivering quality homes at affordable prices since 2008. With a focus on value, transparency, and customer satisfaction, Provident has become one of India's most trusted residential brands.
+              Provident Housing is a subsidiary of the prestigious Puravankara Group, delivering
+              quality homes at affordable prices since 2008. With a focus on value, transparency,
+              and customer satisfaction, Provident has become one of India's most trusted residential
+              brands.
             </p>
           </div>
 
@@ -85,10 +93,16 @@ const ProvidentSection = () => {
             <div className="space-y-8 animate-in fade-in duration-300">
               <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
                 <p>
-                  Since its inception, Provident Housing has been committed to making quality housing accessible to the aspiring middle class. With over 50,000 happy families across India, the brand has set benchmarks in the affordable housing segment without compromising on quality or design.
+                  Since its inception, Provident Housing has been committed to making quality housing
+                  accessible to the aspiring middle class. With over 50,000 happy families across India,
+                  the brand has set benchmarks in the affordable housing segment without compromising
+                  on quality or design.
                 </p>
                 <p>
-                  Every Provident project is built with meticulous attention to detail, sustainable practices, and modern amenities that enhance the living experience. From thoughtfully designed floor plans to world-class facilities, Provident ensures that your investment translates into lasting value and comfort.
+                  Every Provident project is built with meticulous attention to detail, sustainable
+                  practices, and modern amenities that enhance the living experience. From thoughtfully
+                  designed floor plans to world-class facilities, Provident ensures that your investment
+                  translates into lasting value and comfort.
                 </p>
               </div>
 
@@ -107,7 +121,10 @@ const ProvidentSection = () => {
                   Backed by Puravankara Group's Legacy
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Provident Housing is the value homes brand under the prestigious Puravankara Group, which has been building landmark properties since 1975. With over 48 years of excellence, Puravankara Group is known for its commitment to quality, timely delivery, and customer satisfaction. This rich legacy ensures that every Provident home meets the highest standards of construction and design.
+                  Provident Housing is the value homes brand under the prestigious Puravankara Group,
+                  which has been building landmark properties since 1975. With over 48 years of excellence,
+                  Puravankara Group is known for its commitment to quality, timely delivery, and customer
+                  satisfaction.
                 </p>
               </div>
             </div>
@@ -133,12 +150,11 @@ const ProvidentSection = () => {
               )}
             </Button>
           </div>
-          
+
           {/* CTA Buttons */}
           <div className="mt-12 text-center">
-            <CTAButtons onFormOpen={handleCtaClick} />
+            <CTAButtons onFormOpen={onCtaClick} />  {/* ✅ Now works */}
           </div>
-
         </div>
       </div>
     </section>
@@ -146,5 +162,3 @@ const ProvidentSection = () => {
 };
 
 export default ProvidentSection;
-
-
