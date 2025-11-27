@@ -30,8 +30,10 @@ const Index = () => {
   <Hero onCtaClick={openForm} />
 </div>
 
-      {/* ✅ Sticky Navbar */}
-      <Navbar onCtaClick={openForm} />
+{/* Sticky Navbar below Hero */}
+<div id="navbar-anchor">
+  <Navbar onCtaClick={openForm} />
+</div>
       
 <div id="project-summary">
   <ProjectSummary onCtaClick={openForm} />
