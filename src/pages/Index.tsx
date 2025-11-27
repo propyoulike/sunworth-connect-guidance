@@ -28,7 +28,7 @@ const Index = () => {
       <Navbar onCtaClick={openForm} />
 
       {/* Hero Section */}
-      <div id="hero">
+      <div id="hero-section">
         <Hero onCtaClick={openForm} />
       </div>
 
