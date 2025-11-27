@@ -154,7 +154,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
       style={{ boxShadow: "var(--shadow-medium)" }}
     >
       <h3 className="text-2xl font-bold mb-2 text-foreground">
-        Best units, views & pricing.
+        Best units, <span className="text-primary">views & pricing.</span>
       </h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-6">
@@ -251,3 +251,4 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
 };
 
 export default LeadForm;
+
