@@ -60,7 +60,7 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
           className="flex-1 text-base sm:text-lg px-6 py-5 rounded-full font-semibold border-2"
           onClick={() => handleFormClick("Free Site Visit")}
         >
-          Book FREE Site Visit
+          Site Visit
         </Button>
       </div>
     );
@@ -83,7 +83,7 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
         className="w-full sm:w-auto text-lg px-8 py-6 rounded-full font-semibold border-2"
         onClick={() => handleFormClick("Free Site Visit")}
       >
-        Book FREE Site Visit
+        Site Visit
       </Button>
 
       <Button
@@ -93,7 +93,7 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
         onClick={handleWhatsAppClick}
       >
         <Phone className="mr-2 h-5 w-5" />
-        Chat on WhatsApp
+        WhatsApp
       </Button>
     </div>
   );
