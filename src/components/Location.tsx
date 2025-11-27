@@ -137,7 +137,7 @@ export default function Location({ onCtaClick }: LocationProps) {
           >
             {mapVisible && (
               <iframe
-                src="https://www.google.com/maps/d/embed?mid=1R_qhSGztiUmFoQY8idXKpXjU-kF60pQ&ehbc=2E312F"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.320637874632!2d77.46611847358743!3d12.887092216728457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae398a15854881%3A0xd22d0d3f18b5ebb4!2sProvident%20Sunworth%20City!5e0!3m2!1sen!2sin!4v1764218094401!5m2!1sen!2sin"
                 className="w-full h-full rounded-xl shadow-lg"
                 loading="lazy"
                 title="Location Map"
@@ -179,3 +179,4 @@ export default function Location({ onCtaClick }: LocationProps) {
     </section>
   );
 }
+
