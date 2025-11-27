@@ -4,21 +4,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import CTAButtons from "@/components/CTAButtons"; // ✅ FIXED import
+import CTAButtons from "@/components/CTAButtons";
 
 interface FAQProps {
-  openLeadForm: () => void; // comes from parent component
+  openLeadForm: () => void; // Required from parent (Index)
 }
 
 const FAQ = ({ openLeadForm }: FAQProps) => {
-
   // -------- Smooth Scroll Helper --------
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
 
-      // Track scroll-to event
       if (typeof (window as any).gtag === "function") {
         (window as any).gtag("event", "scroll_to_section", {
           event_category: "engagement",
@@ -55,15 +53,13 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
     }
   };
 
-  // ----------------------------------------------------
-  // ❗ CTA HANDLER — Correct function passed to CTAButtons
-  // ----------------------------------------------------
+  // -------- CTA handler passed into CTAButtons --------
   const handleCTA = () => {
     trackCtaClick("FAQ CTA Button");
-    openLeadForm();            // ← use the correct prop
+    openLeadForm();
   };
-  // ----------------------------------------------------
 
+  // -------- FAQ Data --------
   const FAQs = [
     {
       question: "What is the price range for apartments at Provident Sunworth City?",
@@ -76,6 +72,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
           </ul>
 
           <p className="mt-3 font-semibold">Price Includes:</p>
+
           <ul className="list-disc list-inside space-y-1">
             <li>Sale consideration (unit + club + floor rise + car park)</li>
             <li>GST on sale consideration</li>
@@ -111,6 +108,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
       answer: (
         <div>
           <p>Provident Sunworth City offers lifestyle-focused amenities:</p>
+
           <ul className="list-disc list-inside space-y-1 mt-2">
             <li>19+ acres of green spaces</li>
             <li>Swimming pool, gym & indoor games</li>
@@ -203,6 +201,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
     <section id="faq" className="py-20 lg:py-28 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
+
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
               Got Questions? <span className="text-primary">We’ve Got Answers.</span>
@@ -225,6 +224,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
                     {faq.question}
                   </span>
                 </AccordionTrigger>
+
                 <AccordionContent className="text-muted-foreground pb-6">
                   {faq.answer}
                 </AccordionContent>
@@ -234,7 +234,7 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
 
           {/* CTA Buttons */}
           <div className="mt-12 text-center">
-            <CTAButtons onFormOpen={handleCTA} /> {/* ✅ FIXED */}
+            <CTAButtons onFormOpen={handleCTA} />
           </div>
 
         </div>
