@@ -18,7 +18,7 @@ const Hero = ({ onCtaClick }: HeroProps) => {
           src="https://www.youtube.com/embed/5PpgqAYGZHo?autoplay=1&mute=0&controls=0&loop=1&playlist=5PpgqAYGZHo&showinfo=0&rel=0&modestbranding=1"
           title="Provident Sunworth City Video"
           frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
           allowFullScreen
         />
       </div>
@@ -59,3 +59,4 @@ const Hero = ({ onCtaClick }: HeroProps) => {
 };
 
 export default Hero;
+

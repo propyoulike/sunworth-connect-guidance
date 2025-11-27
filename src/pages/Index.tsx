@@ -12,6 +12,7 @@ import ProvidentSection from "@/components/ProvidentSection";
 import FAQ from "@/components/FAQ";
 import LeadFormModal from "@/components/LeadFormModal";
 import StickyMobileCTA from "@/components/StickyMobileCTA";
+import Navbar from "@/components/Navbar"; // ✅ Added
 
 const Index = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -22,55 +23,91 @@ const Index = () => {
 
   return (
     <div className="min-h-screen smooth-scroll">
-      {/* Hero Section */}
-      <Hero onCtaClick={openForm} />
 
-      {/* Project Summary with Payment Flexibility */}
-      <ProjectSummary onCtaClick={openForm} />
 
-      {/* Floor Plans with Tabs */}
-      <FloorPlansTabs onCtaClick={openForm} />
+{/* Hero Section */}
+<div id="hero-section">
+  <Hero onCtaClick={openForm} />
+</div>
 
-      {/* Location & Neighbourhood */}
-      <Location onCtaClick={openForm} />
+{/* Sticky Navbar below Hero */}
+<div id="navbar-anchor">
+  <Navbar onCtaClick={openForm} />
+</div>
+      
+<div id="project-summary">
+  <ProjectSummary onCtaClick={openForm} />
+</div>
 
-      {/* Amenities */}
-      <Amenities onCtaClick={openForm} />
+<div id="floor-plans">
+  <FloorPlansTabs onCtaClick={openForm} />
+</div>
 
-      {/* Views */}
-      <Views onCtaClick={openForm} />
+<div id="location">
+  <Location onCtaClick={openForm} />
+</div>
 
-      {/* Construction Status */}
-      <ConstructionStatus onCtaClick={openForm} />
+<div id="amenities">
+  <Amenities onCtaClick={openForm} />
+</div>
 
-      {/* Customer Testimonials */}
-      <CustomerSpeaks onCtaClick={openForm} />
+<div id="views">
+  <Views onCtaClick={openForm} />
+</div>
 
-      {/* Brochure Download */}
-      <Brochure onCtaClick={openForm} />
+<div id="construction-status">
+  <ConstructionStatus onCtaClick={openForm} />
+</div>
 
-      {/* About Provident (Expandable) */}
-      <ProvidentSection />
+<div id="testimonials">
+  <CustomerSpeaks onCtaClick={openForm} />
+</div>
 
-      {/* FAQ Section */}
-      <FAQ />
+<div id="brochure">
+  <Brochure onCtaClick={openForm} />
+</div>
+
+<div id="about-provident">
+  <ProvidentSection />
+</div>
+
+<div id="faq">
+  <FAQ />
+</div>
 
       {/* Lead Form Modal */}
       <LeadFormModal open={isFormOpen} onOpenChange={setIsFormOpen} />
-      
+
       {/* Footer */}
       <footer className="bg-foreground text-background py-12">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-2xl font-bold mb-2">Provident Sunworth</h3>
-          <p className="text-background/80 mb-6">Your family's brighter everyday</p>
-          <p  className="text-sm text-background/60">
-          Disclaimer: All project information, including availability, pricing, floor plans, and amenities, is subject to change without prior notice. Images and visuals are indicative and may differ from actual delivered products. Visitors are advised to verify all details independently before making any purchase decisions. This website is operated by PropYouLike as an authorized channel partner and is not the official developer website.
+          <p className="text-background/80 mb-6">
+            Your family's brighter everyday
           </p>
-          <p  className="text-sm text-background/60">
-          Privacy Policy: Information submitted through forms or contact channels will be used solely to assist with your enquiry. We do not sell or share your data with third parties except the developer or authorized partners for project-related communication. By submitting your details, you consent to being contacted via call, SMS, WhatsApp, or email. For data deletion requests, contact: propyoulike@gmail.com
+          <p className="text-sm text-background/60">
+            Disclaimer: All project information, including availability,
+            pricing, floor plans, and amenities, is subject to change without
+            prior notice. Images and visuals are indicative and may differ from
+            actual delivered products. Visitors are advised to verify all
+            details independently before making any purchase decisions. This
+            website is operated by PropYouLike as an authorized channel partner
+            and is not the official developer website.
           </p>
-          <p  className="text-sm text-background/60">
-          Cookie Policy: This website may use cookies or similar technologies (including analytics and marketing pixels) to improve user experience and analyze website traffic. You may disable cookies in your browser settings at any time.
+          <p className="text-sm text-background/60">
+            Privacy Policy: Information submitted through forms or contact
+            channels will be used solely to assist with your enquiry. We do not
+            sell or share your data with third parties except the developer or
+            authorized partners for project-related communication. By submitting
+            your details, you consent to being contacted via call, SMS,
+            WhatsApp, or email. For data deletion requests, contact:
+            propyoulike@gmail.com
+          </p>
+          <p className="text-sm text-background/60">
+            Cookie Policy: This website may use cookies or similar technologies
+            (including analytics and marketing pixels) to improve user
+            experience and analyze website traffic. You may disable cookies in
+            your browser settings at any time.
           </p>
           <p className="text-sm text-background/60">
             © 2025 PropYouLike, Authorised Channel Partner. All rights reserved.

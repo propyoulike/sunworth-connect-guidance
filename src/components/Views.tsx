@@ -94,7 +94,7 @@ const Views = ({ onCtaClick }: ViewsProps) => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-            Mesmerizing Views
+            Mesmerizing <span className="text-primary">Views</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             Wake up to views of 19 acres of lush greenery. Watch your children play
@@ -134,3 +134,4 @@ const Views = ({ onCtaClick }: ViewsProps) => {
 };
 
 export default Views;
+

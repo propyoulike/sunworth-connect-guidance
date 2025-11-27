@@ -57,7 +57,7 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
   }, []);
 
   const highlights = [
-    { icon: Home, label: "2 & 3 BHK Apartments", value: "Ready to Move" },
+    { icon: Home, label: "2 & 3 BHK Apartments", value: "Possession by Q1 2028" },
     { icon: MapPin, label: "Prime Location", value: "Mysore Road, Bangalore" },
     { icon: TreePine, label: "Township Size", value: "60 Acres" },
     { icon: Award, label: "Amenities", value: "50+ Premium Facilities" },
@@ -70,7 +70,7 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
           {/* Heading */}
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-5xl font-bold mb-4 text-foreground">
-              Welcome to Provident Sunworth City
+              Provident <span className="text-primary">Sunworth City</span>
             </h2>
             <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto">
               Experience the perfect blend of modern living and nature in Bangalore's most promising residential township.
@@ -93,34 +93,6 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
             <p className="text-center lg:text-left">
               Provident Sunworth City is a thoughtfully planned 60-acre township that brings together everything your family needs for a wholesome lifestyle. With over 50 world-class amenities, lush green landscapes, and spacious 2 & 3 BHK homes, this is where memories are made and dreams come true.
             </p>
-            
-            <div className="bg-muted/50 p-8 rounded-2xl mt-8">
-              <h3 className="text-2xl font-bold mb-4 text-foreground">Flexible Payment Plans</h3>
-              <p className="mb-4">
-                We understand that your dream home is a significant investment. That's why we offer flexible payment options designed to make homeownership accessible and stress-free:
-              </p>
-              <ul className="space-y-3 text-foreground/90">
-                <li className="flex items-start">
-                  <span className="mr-2 text-primary font-bold">✓</span>
-                  <span><strong>Easy EMI Options:</strong> Start your journey with affordable monthly installments</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-primary font-bold">✓</span>
-                  <span><strong>Construction-Linked Payment:</strong> Pay as the construction progresses</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-primary font-bold">✓</span>
-                  <span><strong>Down Payment Flexibility:</strong> Choose a down payment plan that suits your budget</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-primary font-bold">✓</span>
-                  <span><strong>Home Loan Assistance:</strong> Expert guidance to help you secure the best loan rates</span>
-                </li>
-              </ul>
-              <p className="mt-6 text-sm italic">
-                Starting at just ₹69.99 lakhs*, your dream home is more affordable than you think. Contact us today to explore personalized payment options.
-              </p>
-            </div>
           </div>
 
           {/* CTA Buttons */}
@@ -134,3 +106,6 @@ const ProjectSummary = ({ onCtaClick }: ProjectSummaryProps) => {
 };
 
 export default ProjectSummary;
+
+
+

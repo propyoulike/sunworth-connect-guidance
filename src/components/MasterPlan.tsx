@@ -59,7 +59,7 @@ const MasterPlan = ({ onCtaClick }: MasterPlanProps) => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-            Master Plan
+            The Master <span className="text-primary">Plan</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             A thoughtfully planned 60-acre township with 19 acres of green cover, 50+ amenities, school, and commercial spaces—all designed for integrated living.
@@ -101,3 +101,4 @@ const MasterPlan = ({ onCtaClick }: MasterPlanProps) => {
 };
 
 export default MasterPlan;
+

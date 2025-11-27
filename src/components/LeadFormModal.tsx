@@ -12,7 +12,7 @@ const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto p-6">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">
-            Request for Guidance
+            Find Your <span className="text-primary">Best Options</span>
           </DialogTitle>
         </DialogHeader>
 
@@ -24,3 +24,4 @@ const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
 };
 
 export default LeadFormModal;
+

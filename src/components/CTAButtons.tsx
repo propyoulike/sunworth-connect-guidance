@@ -7,35 +7,42 @@ interface CTAButtonsProps {
 }
 
 const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
+  // ---------------- WhatsApp Click ----------------
   const handleWhatsAppClick = () => {
-    if (typeof (window as any).gtag === "function") {
+    if ((window as any).gtag) {
       (window as any).gtag("event", "click", {
         event_category: "WhatsApp",
         event_label: "Click to WhatsApp",
       });
     }
-    if (typeof (window as any).fbq === "function") {
+
+    if ((window as any).fbq) {
       (window as any).fbq("track", "Contact");
     }
+
     window.open(
       "https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20know%20more%20about%20Provident%20Sunworth",
       "_blank"
     );
   };
 
+  // ---------------- CTA Click → Open Form ----------------
   const handleFormClick = (buttonType: string) => {
-    if (typeof (window as any).gtag === "function") {
+    if ((window as any).gtag) {
       (window as any).gtag("event", "cta_click", {
         event_category: "engagement",
         event_label: buttonType,
       });
     }
-    if (typeof (window as any).fbq === "function") {
+
+    if ((window as any).fbq) {
       (window as any).fbq("track", "Lead");
     }
+
     onFormOpen();
   };
 
+  // ---------------- Compact Variant ----------------
   if (variant === "compact") {
     return (
       <div className="flex flex-col sm:flex-row gap-3 w-full">
@@ -46,18 +53,20 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
         >
           Personalised Guidance
         </Button>
+
         <Button
           size="lg"
           variant="outline"
           className="flex-1 text-base sm:text-lg px-6 py-5 rounded-full font-semibold border-2"
           onClick={() => handleFormClick("Free Site Visit")}
         >
-          Book FREE Site Visit
+          Site Visit
         </Button>
       </div>
     );
   }
 
+  // ---------------- Default Variant ----------------
   return (
     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
       <Button
@@ -67,14 +76,16 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
       >
         Personalised Guidance
       </Button>
+
       <Button
         size="lg"
         variant="outline"
         className="w-full sm:w-auto text-lg px-8 py-6 rounded-full font-semibold border-2"
         onClick={() => handleFormClick("Free Site Visit")}
       >
-        Book FREE Site Visit
+        Site Visit
       </Button>
+
       <Button
         size="lg"
         variant="secondary"
@@ -82,7 +93,7 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
         onClick={handleWhatsAppClick}
       >
         <Phone className="mr-2 h-5 w-5" />
-        Chat on WhatsApp
+        WhatsApp
       </Button>
     </div>
   );
