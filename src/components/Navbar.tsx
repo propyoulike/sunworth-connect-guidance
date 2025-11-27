@@ -7,14 +7,12 @@ interface NavbarProps {
 
 const sections = [
   { id: "project-summary", label: "Overview" },
-  { id: "floor-plans", label: "Plans" },
-  { id: "location", label: "Location" },
-  { id: "amenities", label: "Amenities" },
-  { id: "views", label: "Views" },
-  { id: "construction-status", label: "Construction" },
+  { id: "floor-plans", label: "Floor Plans" },
+  { id: "location", label: "Location Advantage" },
+  { id: "amenities", label: "Amenities and Views" },
+  { id: "construction-status", label: "Construction Status" },
   { id: "testimonials", label: "Testimonials" },
-  { id: "brochure", label: "Brochure" },
-  { id: "faq", label: "FAQ" },
+  { id: "faq", label: "FAQs" },
 ];
 
 export default function Navbar({ onCtaClick }: NavbarProps) {
