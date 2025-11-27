@@ -21,7 +21,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 
   const unitPlansVideos = [
     {
-      title: "2 BHK Model Flat",
+      title: "2 BHK",
       url: "https://www.youtube.com/shorts/z6-d5uB4rRA",
       description: "Experience the thoughtful design and smart use of space",
       sba: "883 sq.ft",
@@ -31,7 +31,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       id: "z6-d5uB4rRA",
     },
     {
-      title: "3 BHK Regular Model Flat",
+      title: "3 BHK Regular",
       url: "https://youtube.com/shorts/QEtUBt1Ac3U",
       description: "Explore premium homes designed for growing families",
       sba: "1082 sq.ft",
@@ -41,7 +41,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       id: "QEtUBt1Ac3U",
     },
     {
-      title: "3 BHK Royale Model Flat",
+      title: "3 BHK Royale",
       url: "https://youtu.be/B2izuPDFLak",
       description: "Discover luxurious living with premium finishes",
       sba: "1779 sq.ft",
@@ -390,3 +390,4 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 };
 
 export default FloorPlansTabs;
+
