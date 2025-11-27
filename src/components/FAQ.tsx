@@ -229,6 +229,12 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
               </AccordionItem>
             ))}
           </Accordion>
+          
+          {/* CTA Buttons */}
+          <div className="mt-12 text-center">
+            <CTAButtons onFormOpen={handleCtaClick} />
+          </div>
+
         </div>
       </div>
     </section>
@@ -236,5 +242,6 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
 };
 
 export default FAQ;
+
 
 
