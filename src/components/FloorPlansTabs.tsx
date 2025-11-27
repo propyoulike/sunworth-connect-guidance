@@ -9,57 +9,44 @@ interface FloorPlansTabsProps {
   trackFB?: (event: string, data?: any) => void;
 }
 
-interface UnitVideo {
-  id: string;
-  title: string;
-  url: string;
-  description: string;
-  sba: string;
-  ca: string;
-  usable: string;
-  price: string;
-  floorPlanImage: string;
-}
-
 const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
-  const [expanded, setExpanded] = useState<number | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const unitPlansVideos: UnitVideo[] = [
+  const [expanded, setExpanded] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0); // Which video is active
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [zoomImage, setZoomImage] = useState<string | null>(null);
+
+  const unitPlansVideos = [
     {
-      id: "z6-d5uB4rRA",
       title: "2 BHK Model Flat",
-      url: "https://www.youtube.com/embed/z6-d5uB4rRA?autoplay=1",
+      url: "https://www.youtube.com/shorts/z6-d5uB4rRA",
       description: "Experience the thoughtful design and smart use of space",
       sba: "883 sq.ft",
       ca: "628 sq.ft",
       usable: "655 sq.ft",
       price: "₹69.99 L*",
-      floorPlanImage: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
+      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
     },
     {
-      id: "QEtUBt1Ac3U",
       title: "3 BHK Regular Model Flat",
-      url: "https://www.youtube.com/embed/QEtUBt1Ac3U?autoplay=1",
+      url: "https://youtube.com/shorts/QEtUBt1Ac3U",
       description: "Explore premium homes designed for growing families",
       sba: "1082 sq.ft",
       ca: "779 sq.ft",
       usable: "805 sq.ft",
       price: "₹79.99 L*",
-      floorPlanImage: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
+      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
     },
     {
-      id: "B2izuPDFLak",
       title: "3 BHK Royale Model Flat",
-      url: "https://www.youtube.com/embed/B2izuPDFLak?autoplay=1",
+      url: "https://youtu.be/B2izuPDFLak",
       description: "Discover luxurious living with premium finishes",
       sba: "1779 sq.ft",
       ca: "1287 sq.ft",
       usable: "1351 sq.ft",
       price: "149.99 L*",
-      floorPlanImage: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_2.webp",
+      floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-2.webp",
     },
   ];
 
@@ -78,38 +65,70 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
     },
   ];
 
+  const convertToEmbed = (url: string) => {
+    if (url.includes("shorts")) return url.replace("shorts/", "embed/");
+    if (url.includes("youtu.be")) return url.replace("youtu.be/", "youtube.com/embed/");
+    if (url.includes("watch?v=")) return url.replace("watch?v=", "embed/");
+    return url;
+  };
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsFullscreen(false);
+      if (e.key === "Escape") {
+        setZoomImage(null);
+        setIsFullscreen(false);
+      }
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  const toggleExpand = (index: number) => {
-    setExpanded(expanded === index ? null : index);
-    if (expanded !== index) {
-      trackGA?.("unit_plan_expand", { category: "Unit Plan", label: unitPlansVideos[index].title });
-      trackFB?.("ViewContent", { title: unitPlansVideos[index].title });
-    }
-  };
+  // Intersection Observer to highlight which video is in view
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const videoRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const openFullscreenVideo = (index: number) => {
-    setActiveIndex(index);
-    setIsFullscreen(true);
-    trackGA?.("unit_plan_video_fullscreen", { category: "Unit Plan", label: unitPlansVideos[index].title });
-    trackFB?.("VideoView", { title: unitPlansVideos[index].title });
-  };
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute("data-index"));
+            setActiveIndex(index);
+            // GA + FB Tracking
+            const video = unitPlansVideos[index];
+            trackGA?.("video_scroll_inview", {
+              category: "Unit Plan",
+              label: video.title,
+              value: index,
+            });
+            trackFB?.("VideoView", { title: video.title });
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    videoRefs.current.forEach((el) => {
+      if (el) observerRef.current?.observe(el);
+    });
+
+    return () => observerRef.current?.disconnect();
+  }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 scroll-mt-32 bg-background">
+    <section
+      id="floorplanstabs"
+      ref={sectionRef}
+      className="py-20 lg:py-28 scroll-mt-32 bg-background"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
             Floor Plans & Unit Details
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Explore our thoughtfully designed homes with virtual walkthroughs and detailed floor plans
+            Explore our thoughtfully designed homes with virtual walkthroughs and detailed
+            floor plans
           </p>
         </div>
 
@@ -120,62 +139,91 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
             <TabsTrigger value="master-plan">Master Plan</TabsTrigger>
           </TabsList>
 
-          {/* ------------------- UNIT PLANS ------------------- */}
+          {/* ------------------- UNIT PLANS (with expand + fullscreen) ------------------- */}
           <TabsContent value="unit-plans" className="space-y-8">
-            {/* Thumbnails */}
-            <div className="flex overflow-x-auto gap-6 pb-4">
-              {unitPlansVideos.map((video, index) => (
-                <div
-                  key={video.id}
-                  className={`min-w-[260px] flex-shrink-0 rounded-xl border p-4 cursor-pointer
-                    ${index === activeIndex ? "border-primary shadow-lg bg-card" : "border-border bg-white"}`}
-                >
-                  <div className="w-full rounded-lg overflow-hidden mb-3">
-                    <img
-                      src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
-                      alt={video.title}
-                      className="w-full h-40 object-cover"
-                      onClick={() => openFullscreenVideo(index)}
-                    />
-                  </div>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); toggleExpand(index); }}
-                    className="flex items-center justify-between w-full text-left"
+            <div className="flex gap-6 overflow-x-auto py-4">
+              {unitPlansVideos.map((video, i) => {
+                const isOpen = expanded === i;
+                const isActive = activeIndex === i;
+
+                return (
+                  <div
+                    key={i}
+                    className={`flex-shrink-0 w-[300px] border-2 rounded-lg p-4 transition-all ${
+                      isActive ? "border-primary" : "border-muted/50"
+                    }`}
+                    ref={(el) => (videoRefs.current[i] = el)}
+                    data-index={i}
                   >
-                    <span className="font-semibold text-sm text-foreground">Unit Details</span>
-                    <span className={`transition-transform duration-300 text-xl ${expanded === index ? "rotate-90" : "rotate-0"}`}>&gt;</span>
-                  </button>
-                  {expanded === index && (
-                    <div className="mt-3">
-                      <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
-                        <div>
-                          <p className="font-semibold">SBA</p>
-                          <p>{video.sba}</p>
-                        </div>
-                        <div>
-                          <p className="font-semibold">Carpet Area</p>
-                          <p>{video.ca}</p>
-                        </div>
-                        <div>
-                          <p className="font-semibold">Usable Area</p>
-                          <p>{video.usable}</p>
-                        </div>
-                        <div>
-                          <p className="font-semibold">Price</p>
-                          <p className="text-primary font-semibold">{video.price}</p>
-                        </div>
-                      </div>
-                      <div className="mt-4">
-                        <img
-                          src={video.floorPlanImage}
-                          alt={`${video.title} Floor Plan`}
-                          className="w-full h-auto rounded-lg"
+                    {/* Thumbnail / Video */}
+                    <div
+                      className="w-full h-40 bg-black mb-3 rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() => setIsFullscreen(true)}
+                    >
+                      {isActive && (
+                        <iframe
+                          src={convertToEmbed(video.url) + "?autoplay=1"}
+                          title={video.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                          allowFullScreen
+                          className="w-full h-full"
                         />
-                      </div>
+                      )}
+                      {!isActive && (
+                        <img
+                          src={`https://img.youtube.com/vi/${video.url.split("/").pop()}/hqdefault.jpg`}
+                          alt={video.title}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
                     </div>
-                  )}
-                </div>
-              ))}
+
+                    {/* Title + Chevron */}
+                    <button
+                      className="flex items-center justify-between w-full text-left"
+                      onClick={() => {
+                        setExpanded(isOpen ? null : i);
+                        if (!isOpen) {
+                          trackGA?.("unit_plan_expand", {
+                            category: "Unit Plan",
+                            label: video.title,
+                          });
+                          trackFB?.("ViewContent", { title: video.title });
+                        }
+                      }}
+                    >
+                      <h3 className="text-lg font-bold text-foreground">{video.title}</h3>
+                      <span
+                        className={`transition-transform duration-300 text-2xl ${
+                          isOpen ? "rotate-90" : "rotate-0"
+                        }`}
+                      >
+                        &gt;
+                      </span>
+                    </button>
+
+                    {/* Expandable Content */}
+                    {isOpen && (
+                      <div className="mt-3 text-sm text-muted-foreground">
+                        <p className="mb-1 font-semibold">Description:</p>
+                        <p>{video.description}</p>
+                        <p className="mt-2 font-semibold">SBA: {video.sba}</p>
+                        <p>Carpet Area: {video.ca}</p>
+                        <p>Usable Area: {video.usable}</p>
+                        <p className="text-primary font-semibold">Price: {video.price}</p>
+                        {video.floorPlan && (
+                          <img
+                            src={video.floorPlan}
+                            alt="Floor Plan"
+                            className="mt-3 w-full rounded-lg cursor-zoom-in"
+                            onClick={() => setZoomImage(video.floorPlan)}
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </TabsContent>
 
@@ -184,10 +232,20 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {floorPlans.map((plan, i) => (
                 <Card key={i} className="p-6 hover:shadow-xl transition-shadow">
-                  <button onClick={() => setZoomImage(plan.image)} className="w-full p-0 bg-transparent border-0 text-left" type="button">
-                    <img src={plan.image} alt={plan.title} className="w-full h-auto rounded-lg cursor-zoom-in" />
+                  <button
+                    onClick={() => setZoomImage(plan.image)}
+                    className="w-full p-0 bg-transparent border-0 text-left"
+                    type="button"
+                  >
+                    <img
+                      src={plan.image}
+                      alt={plan.title}
+                      className="w-full h-auto rounded-lg cursor-zoom-in"
+                    />
                   </button>
-                  <h3 className="text-2xl font-bold my-3 text-foreground">{plan.description}</h3>
+                  <h3 className="text-2xl font-bold my-3 text-foreground">
+                    {plan.description}
+                  </h3>
                 </Card>
               ))}
             </div>
@@ -196,11 +254,18 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
           {/* ------------------- MASTER PLAN ------------------- */}
           <TabsContent value="master-plan" className="space-y-8">
             <Card className="p-8">
-              <img src="/images/master-plan.webp" alt="Provident Sunworth City Master Plan" className="w-full h-auto rounded-xl" />
+              <img
+                src="/images/master-plan.webp"
+                alt="Provident Sunworth City Master Plan"
+                className="w-full h-auto rounded-xl"
+              />
               <div className="text-center mt-6 space-y-3">
-                <h3 className="text-2xl font-bold text-foreground">Complete Township Layout</h3>
+                <h3 className="text-2xl font-bold text-foreground">
+                  Complete Township Layout
+                </h3>
                 <p className="text-muted-foreground max-w-3xl mx-auto">
-                  A meticulously planned 60-acre township with residential towers, green spaces, and world-class amenities.
+                  A meticulously planned 60-acre township with residential towers, green
+                  spaces, and world-class amenities.
                 </p>
               </div>
             </Card>
@@ -216,26 +281,32 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
         </div>
       </div>
 
-      {/* Fullscreen Video Modal */}
+      {/* Floor Plan Zoom Modal */}
+      {zoomImage && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          onClick={() => setZoomImage(null)}
+        >
+          <img
+            src={zoomImage}
+            className="max-w-[95%] max-h-[95%] rounded-lg shadow-lg"
+            alt="zoomed floor plan"
+          />
+        </div>
+      )}
+
+      {/* Fullscreen Video */}
       {isFullscreen && (
         <div
           className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
           onClick={() => setIsFullscreen(false)}
         >
           <iframe
-            src={unitPlansVideos[activeIndex].url}
-            title={unitPlansVideos[activeIndex].title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            src={convertToEmbed(unitPlansVideos[activeIndex].url) + "?autoplay=1"}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
             allowFullScreen
-            className="w-full h-full max-w-6xl max-h-[90%]"
+            className="w-full h-full max-w-[90%] max-h-[90%]"
           />
-        </div>
-      )}
-
-      {/* Image Zoom Modal */}
-      {zoomImage && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50" onClick={() => setZoomImage(null)}>
-          <img src={zoomImage} className="max-w-[95%] max-h-[95%] rounded-lg shadow-lg" alt="zoomed plan" />
         </div>
       )}
     </section>
