@@ -19,7 +19,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 
   const unitPlansVideos = [
     {
-      title: "2 BHK Model Flat",
+      title: "2 BHK Flat",
       url: "https://www.youtube.com/shorts/z6-d5uB4rRA",
       description: "Experience the thoughtful design and smart use of space",
       sba: "883 sq.ft",
@@ -29,7 +29,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
     },
     {
-      title: "3 BHK Regular Model Flat",
+      title: "3 BHK Regular Flat",
       url: "https://youtube.com/shorts/QEtUBt1Ac3U",
       description: "Explore premium homes designed for growing families",
       sba: "1082 sq.ft",
@@ -39,7 +39,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
     },
     {
-      title: "3 BHK Royale Model Flat",
+      title: "3 BHK Royale Flat",
       url: "https://youtu.be/B2izuPDFLak",
       description: "Discover luxurious living with premium finishes",
       sba: "1779 sq.ft",
@@ -314,3 +314,4 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 };
 
 export default FloorPlansTabs;
+
