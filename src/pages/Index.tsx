@@ -72,7 +72,7 @@ const Index = () => {
 </div>
 
 <div id="faq">
-  <FAQ onCtaClick={openForm}/>
+  <FAQ openLeadForm={openForm}/>
 </div>
 
       {/* Lead Form Modal */}
