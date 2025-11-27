@@ -68,7 +68,7 @@ const ProvidentSection = () => {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-              About Provident Housing
+              About <span className="text-primary">Provident Housing</span>
             </h2>
             <p className="text-lg text-muted-foreground">
               A trusted name in affordable luxury living
@@ -140,3 +140,4 @@ const ProvidentSection = () => {
 };
 
 export default ProvidentSection;
+
