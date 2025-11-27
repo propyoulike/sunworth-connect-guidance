@@ -12,9 +12,8 @@ export default function Navbar({ onCtaClick }: NavbarProps) {
 
     const handleScroll = () => {
       if (!heroSection) return;
-      const heroBottom = heroSection.getBoundingClientRect().bottom;
 
-      // When hero goes out of view → make sticky
+      const heroBottom = heroSection.getBoundingClientRect().bottom;
       setIsSticky(heroBottom <= 0);
     };
 
@@ -24,7 +23,7 @@ export default function Navbar({ onCtaClick }: NavbarProps) {
 
   return (
     <div
-      className={`w-full z-50 transition-all duration-300 ${
+      className={`w-full z-[9999] transition-all duration-300 ${
         isSticky
           ? "fixed top-0 left-0 bg-white shadow-lg"
           : "absolute top-0 left-0 bg-transparent"
