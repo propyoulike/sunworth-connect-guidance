@@ -82,7 +82,7 @@ export default function Location({ onCtaClick }: LocationProps) {
   const videoRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
 
-  // ---------- Tracking ----------
+  // ---------- GA / Meta Tracking ----------
   const trackView = (sectionName: string) => {
     if (typeof (window as any).gtag === "function") {
       (window as any).gtag("event", "section_view", {
@@ -204,8 +204,7 @@ export default function Location({ onCtaClick }: LocationProps) {
                 className="border border-border rounded-2xl bg-card shadow-sm"
               >
                 <AccordionTrigger
-                  className="px-4 py-2 flex justify-between items-center text-base md:text-lg font-semibold hover:no-underline"
-                  showChevron={false}
+                  className="px-4 py-2 flex justify-between items-center text-base md:text-lg font-semibold hover:no-underline [&>svg]:hidden"
                 >
                   <span>{section.title}</span>
 
@@ -215,8 +214,8 @@ export default function Location({ onCtaClick }: LocationProps) {
                   />
                 </AccordionTrigger>
 
-                <AccordionContent className="px-4 pb-3">
-                  <ul className="list-disc ml-5 mt-1 text-sm md:text-base text-muted-foreground space-y-1 animate-in fade-in slide-in-from-top-1 duration-300">
+                <AccordionContent className="px-4 pb-2 pt-1">
+                  <ul className="list-disc ml-5 space-y-1 text-sm md:text-base text-muted-foreground">
                     {section.items.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
