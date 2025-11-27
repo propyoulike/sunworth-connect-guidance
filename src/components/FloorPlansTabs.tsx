@@ -86,7 +86,6 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
                   </button>
                   <h3 className="text-2xl font-bold my-3 text-foreground">{plan.title}</h3>
                   <p className="text-muted-foreground mb-2">{plan.description}</p>
-                  <p className="text-xl font-bold text-primary">{plan.price}</p>
                 </Card>
               ))}
             </div>
@@ -120,3 +119,4 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 };
 
 export default FloorPlansTabs;
+
