@@ -1,18 +1,31 @@
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 
 interface NavbarProps {
   onCtaClick: () => void;
 }
 
+const sections = [
+  { id: "project-summary", label: "Overview" },
+  { id: "floor-plans", label: "Plans" },
+  { id: "location", label: "Location" },
+  { id: "amenities", label: "Amenities" },
+  { id: "views", label: "Views" },
+  { id: "construction-status", label: "Construction" },
+  { id: "testimonials", label: "Testimonials" },
+  { id: "brochure", label: "Brochure" },
+  { id: "faq", label: "FAQ" },
+];
+
 export default function Navbar({ onCtaClick }: NavbarProps) {
   const [isSticky, setIsSticky] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const heroSection = document.getElementById("hero-section");
 
     const handleScroll = () => {
       if (!heroSection) return;
-
       const heroBottom = heroSection.getBoundingClientRect().bottom;
       setIsSticky(heroBottom <= 0);
     };
@@ -20,6 +33,18 @@ export default function Navbar({ onCtaClick }: NavbarProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const yOffset = isSticky ? -60 : -120; // adjust for navbar height
+    const y =
+      el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({ top: y, behavior: "smooth" });
+    setMobileOpen(false);
+  };
 
   return (
     <div
@@ -30,15 +55,63 @@ export default function Navbar({ onCtaClick }: NavbarProps) {
       }`}
     >
       <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Provident Sunworth</h1>
+        <h1 className="text-xl font-bold cursor-pointer" onClick={() => scrollTo("hero-section")}>
+          Provident Sunworth
+        </h1>
 
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex gap-8 text-sm font-medium">
+          {sections.map((s) => (
+            <li
+              key={s.id}
+              className="cursor-pointer hover:text-primary transition"
+              onClick={() => scrollTo(s.id)}
+            >
+              {s.label}
+            </li>
+          ))}
+        </ul>
+
+        {/* CTA Button */}
         <button
           onClick={onCtaClick}
-          className="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90 transition"
+          className="hidden md:block px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90 transition"
         >
           Enquire Now
         </button>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </nav>
+
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="md:hidden bg-white shadow-lg border-t">
+          <ul className="flex flex-col p-4 text-base">
+            {sections.map((s) => (
+              <li
+                key={s.id}
+                className="py-3 border-b cursor-pointer hover:text-primary"
+                onClick={() => scrollTo(s.id)}
+              >
+                {s.label}
+              </li>
+            ))}
+
+            <button
+              onClick={onCtaClick}
+              className="mt-4 w-full px-4 py-3 bg-primary text-white rounded-lg"
+            >
+              Enquire Now
+            </button>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
