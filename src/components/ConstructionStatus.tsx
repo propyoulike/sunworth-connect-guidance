@@ -132,7 +132,7 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
             PHASE IV
           </div>
           <h2 className="text-3xl lg:text-5xl font-bold mb-6 text-foreground">
-            Construction Status Report
+            Here’s How Your Future <span className="text-primary">Home is Shaping Up</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             Track the real-time progress of Phase IV construction. Transparency you can trust.
@@ -234,3 +234,4 @@ const ConstructionStatus = ({ onCtaClick }: ConstructionStatusProps) => {
 };
 
 export default ConstructionStatus;
+
