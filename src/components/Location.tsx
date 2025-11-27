@@ -82,7 +82,7 @@ export default function Location({ onCtaClick }: LocationProps) {
   const videoRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
 
-  // ---------- GA / Meta Tracking ----------
+  // ---------- Tracking ----------
   const trackView = (sectionName: string) => {
     if (typeof (window as any).gtag === "function") {
       (window as any).gtag("event", "section_view", {
@@ -159,7 +159,7 @@ export default function Location({ onCtaClick }: LocationProps) {
 
         {/* Video + Map Grid */}
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {/* ---- VIDEO ---- */}
+          {/* Video */}
           <div
             ref={videoRef}
             className="w-full h-[260px] sm:h-[300px] md:h-[420px] rounded-xl overflow-hidden"
@@ -176,7 +176,7 @@ export default function Location({ onCtaClick }: LocationProps) {
             )}
           </div>
 
-          {/* ---- MAP ---- */}
+          {/* Map */}
           <div
             ref={mapRef}
             className="w-full h-[260px] sm:h-[300px] md:h-[420px] rounded-xl overflow-hidden"
@@ -203,15 +203,20 @@ export default function Location({ onCtaClick }: LocationProps) {
                 value={`item-${index}`}
                 className="border border-border rounded-2xl bg-card shadow-sm"
               >
-                <AccordionTrigger className="px-4 py-3 flex justify-between items-center text-base md:text-lg font-semibold hover:no-underline">
+                <AccordionTrigger
+                  className="px-4 py-2 flex justify-between items-center text-base md:text-lg font-semibold hover:no-underline"
+                  showChevron={false}
+                >
                   <span>{section.title}</span>
 
                   {/* Slim Animated Chevron */}
-                  <ChevronDown className="h-4 w-4 transition-transform duration-300 accordion-trigger-rotate" />
+                  <ChevronDown
+                    className="h-4 w-4 transition-transform duration-300 data-[state=open]:rotate-180"
+                  />
                 </AccordionTrigger>
 
-                <AccordionContent>
-                  <ul className="list-disc ml-6 mb-4 mt-1 text-sm md:text-base text-muted-foreground space-y-1 animate-in fade-in slide-in-from-top-1 duration-300">
+                <AccordionContent className="px-4 pb-3">
+                  <ul className="list-disc ml-5 mt-1 text-sm md:text-base text-muted-foreground space-y-1 animate-in fade-in slide-in-from-top-1 duration-300">
                     {section.items.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
