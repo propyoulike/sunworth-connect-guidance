@@ -51,7 +51,7 @@ const Brochure = ({ onCtaClick }: BrochureProps) => {
             {/* ---------- LEFT IMAGE ---------- */}
             <div className="flex justify-center items-center">
               <img
-                src="https://www.providenthousing.com/wp-content/uploads/2022/12/Sunworth-City-Brochure-min.jpg"
+                src="https://www.providenthousing.com/wp-content/uploads/2022/12/sunworthcity-brochure-cover-1.png"
                 alt="Provident Brochure"
                 className="rounded-xl w-full h-auto object-cover"
               />
@@ -113,3 +113,4 @@ const Brochure = ({ onCtaClick }: BrochureProps) => {
 };
 
 export default Brochure;
+
