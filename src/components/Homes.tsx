@@ -24,7 +24,7 @@ const Homes = ({ onCtaClick }: HomesProps) => {
     <section className="py-20 lg:py-28 bg-gradient-to-b from-secondary/30 to-background">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-center mb-16 text-foreground">
-          Choose the home that fits your next chapter.
+          Choose the home that <span className="text-primary">fits your next chapter.</span>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
