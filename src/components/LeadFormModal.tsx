@@ -31,6 +31,7 @@ const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
           p-6
           relative
           rounded-xl
+          z-[9999]   /* ✅ FIX: Forces modal above all sections */
         "
       >
         {/* Mobile-friendly Close Button */}
@@ -54,7 +55,6 @@ const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
           </DialogTitle>
         </DialogHeader>
 
-        {/* LeadForm closes the modal on success */}
         <LeadForm onSuccess={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
