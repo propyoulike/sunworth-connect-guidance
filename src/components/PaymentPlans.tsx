@@ -41,17 +41,17 @@ const priceComponents = [
   {
     title: "GST on Sale Consideration",
     points: [
+      "Under-Construction Units: 5% GST",
+      "Ready-to-Move Units: No GST",
       "Charged as per IT Act",
       "Applied milestone-wise",
-      "Ready-to-Move Units: No GST",
-      "Under-Construction Units: 5% GST",
     ],
   },
   {
     title: "Other / Possession Charges",
     points: [
-      "Advance Maintenance (Actuals)",
-      "Electricity & Water Infra Charges",
+      "Advance Maintenance (Actuals) roughly 6 per month per sft (SBA)",
+      "Electricity & Water Infra Charges: Roughly 350 per sft (SBA)",
       "Corpus Fund – 0/-",
       "Legal Charges – approx ₹50,000",
       "Modifications (if applicable)",
@@ -62,11 +62,11 @@ const priceComponents = [
   {
     title: "Stamp Duty & Registration",
     points: [
+      "Approx. total: 7.6% of Agreement Value",
       "Stamp Duty – 5%",
       "Cess – 10% on stamp duty",
       "Surcharge – 2% on stamp duty",
       "Registration – 2%",
-      "Approx. total: 7.6% of Agreement Value",
     ],
   },
 ];
