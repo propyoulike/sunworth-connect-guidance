@@ -43,18 +43,21 @@ const priceComponents = [
     points: [
       "Applicable as per IT Act",
       "Calculated on every milestone invoice",
+      "Ready-to-Move-In Flats (with Occupancy Certificate): No GST is applicable.",
+      "Under-Construction Flats: 1% GST if the flat have a carpet area up to 60 sq. m. in a metro city (like Bangalore) or 90 sq. m. in a non-metro city, and the total value must be ₹45 lakhs or less.",
+      "Under-Construction Flats: 5% GST if the flat have a carpet area more than 60 sq. m. in a metro city (like Bangalore) or 90 sq. m. in a non-metro city, and the total value exceeding ₹45 lakhs.",
     ],
   },
   {
     title: "Other / Possession Related Charges",
     points: [
-      "Advance Maintenance (Actuals)",
+      "Advance Maintenance (Actuals), typically for a year around  6 INR per SFT of Super Builtup Area",
       "Infrastructure Charges (Electricity & Water)",
       "Corpus Fund",
-      "Legal Charges",
+      "Legal Charges: Approx. 50,000/-",
       "Modifications (if applicable)",
       "Stamp/Share/Registration Paper Fee (if any)",
-      "GST on other charges",
+      "GST on other charges: 18%",
     ],
   },
   {
@@ -62,6 +65,12 @@ const priceComponents = [
     points: [
       "Payable at actuals",
       "As per prevailing government rates",
+      "Stamp Duty: 5%",
+      "Cess: 10% on stamp duty",
+      "Surcharge: 2% on stamp duty",
+      "Registration: 2%",
+      "Note: The registration fee was recently updated from 1% to 2% effective August 31, 2025, for all document types.",
+      "The total property transaction cost (stamp duty + registration + cess/surcharge) can reach around 7.6% for properties above ₹45 lakh. ",
     ],
   },
 ];
