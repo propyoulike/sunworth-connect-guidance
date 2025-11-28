@@ -46,6 +46,7 @@ export default function Navbar({ onCtaClick }: NavbarProps) {
           <li className="cursor-pointer hover:text-primary transition" onClick={() => document.getElementById("floor-plans")?.scrollIntoView({ behavior: "smooth" })}>Plans</li>
           <li className="cursor-pointer hover:text-primary transition" onClick={() => document.getElementById("location")?.scrollIntoView({ behavior: "smooth" })}>Location</li>
           <li className="cursor-pointer hover:text-primary transition" onClick={() => document.getElementById("amenities")?.scrollIntoView({ behavior: "smooth" })}>Amenities</li>
+          <li className="cursor-pointer hover:text-primary transition" onClick={() => document.getElementById("payment-plans")?.scrollIntoView({ behavior: "smooth" })}>Pricing</li>
           <li className="cursor-pointer hover:text-primary transition" onClick={() => document.getElementById("about-provident")?.scrollIntoView({ behavior: "smooth" })}>About</li>
           <li className="cursor-pointer hover:text-primary transition" onClick={() => document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" })}>FAQ</li>
         </ul>
