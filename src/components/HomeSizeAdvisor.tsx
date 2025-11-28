@@ -252,7 +252,7 @@ export default function HomeSizeAdvisor({
       <Card className="w-full max-w-4xl p-6 rounded-2xl shadow-sm border border-gray-200">
         <CardHeader>
           <CardTitle className="text-2xl font-semibold text-[#1A365D]">
-            PropYouLike — Home Size Advisor (Provident Sunworth City)
+            Find Your Ideal Home Configuration
           </CardTitle>
         </CardHeader>
 
