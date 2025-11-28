@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 
@@ -25,7 +25,7 @@ const trackMeta = (event: string, label: string) => {
 };
 
 /* ----------------------------------------------------
-   PRICING COMPONENTS (LEFT GRID)
+   PRICING GRID - LEFT SIDE
 ---------------------------------------------------- */
 const priceComponents = [
   {
@@ -51,11 +51,11 @@ const priceComponents = [
     title: "Other / Possession Charges",
     points: [
       "Advance Maintenance (Actuals)",
-      "Electricity & Water Infrastructure Charges",
+      "Electricity & Water Infra Charges",
       "Corpus Fund – 0/-",
       "Legal Charges – approx ₹50,000",
       "Modifications (if applicable)",
-      "Stamp / Share / Admin Fees (if applicable)",
+      "Stamp / Admin Fees (if applicable)",
       "GST on Other Charges – 18%",
     ],
   },
@@ -72,7 +72,7 @@ const priceComponents = [
 ];
 
 /* ----------------------------------------------------
-   PAYMENT SCHEDULE (RIGHT GRID)
+   PAYMENT SCHEDULE - RIGHT SIDE
 ---------------------------------------------------- */
 const paymentSchedule = [
   {
@@ -85,16 +85,8 @@ const paymentSchedule = [
       "Post Agreement Execution – 11%",
     ],
   },
-  {
-    title: "Excavation Complete",
-    percentage: "10%",
-    expandable: false,
-  },
-  {
-    title: "Foundation Complete",
-    percentage: "15%",
-    expandable: false,
-  },
+  { title: "Excavation Complete", percentage: "10%", expandable: false },
+  { title: "Foundation Complete", percentage: "15%", expandable: false },
   {
     title: "Structure Completion",
     percentage: "35%",
@@ -112,16 +104,12 @@ const paymentSchedule = [
     percentage: "15%",
     expandable: true,
     items: [
-      "Flooring Complete – 5%",
+      "Flooring Completion – 5%",
       "External Windows – 5%",
       "Lift Erection – 5%",
     ],
   },
-  {
-    title: "Possession",
-    percentage: "5%",
-    expandable: false,
-  },
+  { title: "Possession", percentage: "5%", expandable: false },
 ];
 
 /* ----------------------------------------------------
@@ -130,6 +118,26 @@ const paymentSchedule = [
 const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
   const [openPrice, setOpenPrice] = useState<number | null>(null);
   const [openStage, setOpenStage] = useState<number | null>(null);
+
+  const lineRef = useRef<HTMLDivElement | null>(null);
+
+  // animate the vertical timeline
+  useEffect(() => {
+    const line = lineRef.current;
+    if (!line) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          line.classList.add("timeline-grow");
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(line);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section id="payment-plans" className="py-24 lg:py-32 bg-background">
@@ -141,25 +149,24 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
             Pricing & <span className="text-primary">Payment Plans</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Transparent costing • Flexible milestones • RERA compliant
+            Transparent costing • Milestone-based • RERA compliant
           </p>
         </div>
 
         {/* TWO COLUMN GRID */}
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-14">
 
-          {/* LEFT: PRICING COMPUTATION */}
+          {/* LEFT COLUMN — PRICING */}
           <div>
             <h3 className="text-2xl font-bold mb-6">Pricing Computation</h3>
 
             <div className="space-y-4">
               {priceComponents.map((item, i) => {
                 const open = openPrice === i;
-
                 return (
                   <div
                     key={i}
-                    className="border rounded-2xl p-5 shadow-sm bg-card"
+                    className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-lg transition"
                   >
                     <button
                       className="w-full flex justify-between"
@@ -177,7 +184,7 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
                       <ul className="mt-4 space-y-2 text-muted-foreground">
                         {item.points.map((p, idx) => (
                           <li key={idx} className="flex gap-2">
-                            <CheckCircle className="w-4 h-4 text-primary mt-1" />
+                            <CheckCircle className="text-primary w-4 h-4 mt-1" />
                             {p}
                           </li>
                         ))}
@@ -189,23 +196,26 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
             </div>
           </div>
 
-          {/* RIGHT: PAYMENT SCHEDULE WITH TIMELINE */}
+          {/* RIGHT COLUMN — PAYMENT SCHEDULE */}
           <div>
             <h3 className="text-2xl font-bold mb-6">Construction Payment Schedule</h3>
 
-            <div className="relative pl-6">
-              {/* Vertical connector */}
-              <div className="absolute top-0 bottom-0 left-2 w-1 bg-primary/30 rounded-full"></div>
+            <div className="relative pl-8">
 
-              <div className="space-y-8">
+              {/* Vertical animated line */}
+              <div
+                ref={lineRef}
+                className="absolute top-0 left-2 w-1 bg-primary/20 rounded-full timeline-line"
+              ></div>
+
+              <div className="space-y-10">
                 {paymentSchedule.map((stage, i) => {
                   const open = openStage === i;
-
                   return (
-                    <div key={i} className="relative">
-                      {/* Blue dot */}
-                      <div className="absolute -left-1 top-1 w-4 h-4 bg-primary rounded-full border-2 border-background"></div>
-
+                    <div
+                      key={i}
+                      className="relative fade-stage"
+                    >
                       <button
                         className="w-full flex items-center justify-between"
                         onClick={() =>
@@ -213,10 +223,8 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
                         }
                       >
                         <span className="text-lg font-semibold">{stage.title}</span>
-
                         <div className="flex items-center gap-2">
                           <span className="text-primary font-bold">{stage.percentage}</span>
-
                           {stage.expandable &&
                             (open ? (
                               <ChevronUp className="text-primary" />
@@ -226,9 +234,8 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
                         </div>
                       </button>
 
-                      {/* Sub-items */}
                       {open && stage.items && (
-                        <ul className="mt-4 ml-1 space-y-2 text-muted-foreground">
+                        <ul className="mt-4 space-y-2 text-muted-foreground ml-1">
                           {stage.items.map((p, idx) => (
                             <li key={idx} className="flex gap-2">
                               <CheckCircle className="w-4 h-4 text-primary mt-1" />
@@ -241,15 +248,38 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
                   );
                 })}
               </div>
+
             </div>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="mt-16 text-center">
+        <div className="text-center mt-16">
           <CTAButtons onFormOpen={onCtaClick} />
         </div>
       </div>
+
+      {/* ANIMATIONS */}
+      <style>{`
+        .timeline-line {
+          height: 0%;
+          transition: height 1.4s ease-out;
+        }
+        .timeline-grow {
+          height: 100%;
+        }
+        .fade-stage {
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fadeUpStage 0.6s forwards ease-out;
+        }
+        @keyframes fadeUpStage {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 };
