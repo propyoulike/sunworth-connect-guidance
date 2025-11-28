@@ -114,7 +114,7 @@ const Index = () => {
             Your family's brighter everyday
           </p>
           <p>RERA Number: PRM/KA/RERA/1251/310/AG/250811/005899</p>
-          <p>Email: propyolike@gmail.com</p>
+          <p>Email: propyoulike@gmail.com</p>
           <p>Address: Banashankari 3rd Stage Bengaluru 560085</p>
           <p className="text-sm text-background/60">
             Disclaimer: All project information, including availability,
