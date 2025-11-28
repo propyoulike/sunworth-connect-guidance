@@ -1,11 +1,13 @@
-// /components/HomeSizeAdvisor.tsx
+// HomeSizeAdvisor WITHOUT Framer Motion — full rewrite
+// Mobile-first, Lovable-compatible, clean JSX, fixed tag/paren issues
+
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { motion, AnimatePresence } from "framer-motion";
-import { Users, Briefcase, HeartHandshake, Layers } from "lucide-react";
+import { Users, Briefcase, HeartHandshake, Layers, Info } from "lucide-react";
 
+/* ------------------ Types ------------------ */
 type Recommendation = {
   type: string;
   size: string;
@@ -25,7 +27,7 @@ type Props = {
   className?: string;
 };
 
-/* Unit capacities — how many 'rooms' each unit supplies */
+/* ------------------ Unit Capacity Map ------------------ */
 const UNIT_CAPACITY: Record<string, number> = {
   "2 BHK": 2,
   "3 BHK": 3,
@@ -38,18 +40,19 @@ export default function HomeSizeAdvisor({
   trackGA,
   trackFB,
   className = "",
-}: Props): JSX.Element {
-  // Inputs
+}: Props) {
+  /* ------------------ State ------------------ */
   const [adults, setAdults] = useState<number>(2);
   const [kids, setKids] = useState<number>(0);
   const [elderly, setElderly] = useState<number>(0);
   const [wfh, setWfh] = useState<boolean>(false);
-  const [guests, setGuests] = useState<string>("rare"); // rare | sometimes | frequent
-  const [storage, setStorage] = useState<string>("medium"); // low | medium | high
-  const [comfort, setComfort] = useState<number>(50); // 0-100
+  const [guests, setGuests] = useState<string>("rare");
+  const [storage, setStorage] = useState<string>("medium");
+  const [comfort, setComfort] = useState<number>(50);
   const [result, setResult] = useState<Result>(null);
+  const [fadeIn, setFadeIn] = useState<boolean>(false);
 
-  // Tracking helpers (fall back to global gtag/fbq if present)
+  /* ------------------ Tracking wrappers ------------------ */
   const _trackGA = trackGA ?? ((event: string, payload?: any) => {
     if (gaEnabled && typeof (window as any).gtag === "function") (window as any).gtag("event", event, payload || {});
   });
@@ -57,72 +60,54 @@ export default function HomeSizeAdvisor({
     if (fbEnabled && typeof (window as any).fbq === "function") (window as any).fbq("track", event, payload || {});
   });
 
-  // Labels (simple functions to avoid stale closures)
+  /* ------------------ Label helpers ------------------ */
   const adultsRoomLabel = () => {
     const rooms = Math.max(1, Math.ceil(adults / 2));
     return rooms === 1 ? "1 Adult Room" : `${rooms} Adult Rooms`;
   };
+
   const kidsRoomLabel = () => {
     if (kids === 0) return "No Kid Room";
-    if (kids === 1) return "1 Kid Room";
-    return "2 Kid Rooms";
+    const rooms = Math.ceil(kids / 2);
+    return rooms === 1 ? "1 Kid Room" : `${rooms} Kid Rooms`;
   };
+
   const elderlyRoomLabel = () => {
     if (elderly === 0) return "No Elderly Room";
     const rooms = Math.ceil(elderly / 2);
     return rooms === 1 ? "1 Elderly Room" : `${rooms} Elderly Room(s)`;
   };
-  const guestsLabel = () => {
-    if (guests === "rare") return "Occasional Guests";
-    if (guests === "sometimes") return "Guests sometimes (flexible)";
-    return "Frequent guests — extra room recommended";
-  };
 
-  // Map people to raw rooms needed
+  const guestsLabel = () => (guests === "rare" ? "Occasional Guests" : guests === "sometimes" ? "Guests sometimes (flexible)" : "Frequent guests — extra room recommended");
+
+  /* ------------------ Rooms calculation ------------------ */
   const totalRoomsNeeded = () => {
     let rooms = 0;
-    rooms += Math.max(1, Math.ceil(adults / 2)); // adults pair into rooms
-    rooms += kids === 0 ? 0 : kids === 1 ? 1 : 2;
+    rooms += Math.max(1, Math.ceil(adults / 2));
+    rooms += Math.ceil(kids / 2);
     rooms += Math.ceil(elderly / 2);
     rooms += wfh ? 1 : 0;
     return rooms;
   };
 
-  /* ---------------- Multi-unit builder (Option C: usability-optimized) ---------------- */
+  /* ------------------ Multi-unit builder ------------------ */
   function generateMultiUnitCombo(required: number) {
-    const parts: string[] = [];
+    const out: string[] = [];
     let rem = required;
-
-    const pushUnit = (unit: keyof typeof UNIT_CAPACITY) => {
-      parts.push(unit);
-      rem -= UNIT_CAPACITY[unit];
+    const push = (u: keyof typeof UNIT_CAPACITY) => {
+      out.push(u);
+      rem -= UNIT_CAPACITY[u];
     };
-
     while (rem > 0) {
-      if (rem >= 4) {
-        pushUnit("3 BHK Royale");
-        continue;
-      }
-      if (rem === 3) {
-        pushUnit("3 BHK");
-        continue;
-      }
-      if (rem === 2) {
-        pushUnit("2 BHK");
-        continue;
-      }
-      if (rem === 1) {
-        // realistically, add a 2 BHK
-        pushUnit("2 BHK");
-        continue;
-      }
-      break;
+      if (rem >= 4) push("3 BHK Royale");
+      else if (rem === 3) push("3 BHK");
+      else if (rem === 2) push("2 BHK");
+      else if (rem === 1) push("2 BHK");
+      else break;
     }
-
-    // compress counts
     const counts: Record<string, number> = {};
-    parts.forEach((p) => (counts[p] = (counts[p] || 0) + 1));
-    return Object.entries(counts).map(([unit, c]) => (c === 1 ? unit : `${c} × ${unit}`));
+    out.forEach((u) => (counts[u] = (counts[u] || 0) + 1));
+    return Object.entries(counts).map(([u, c]) => (c === 1 ? u : `${c} × ${u}`));
   }
 
   const buildMultiUnitCombos = () => {
@@ -133,28 +118,22 @@ export default function HomeSizeAdvisor({
   };
 
   const capacityFromComboString = (comboStr: string) => {
-    if (!comboStr) return 0;
     const cleaned = comboStr.replace(/^Consider:\s*/, "");
-    const parts = cleaned.split(" + ").map((p) => p.trim());
-    return parts.reduce((sum, p) => sum + (UNIT_CAPACITY[p] || 0), 0);
+    return cleaned.split(" + ").reduce((sum, p) => sum + (UNIT_CAPACITY[p.trim()] || 0), 0);
   };
 
-  /* ---------------- Recommendation engine (hybrid) ---------------- */
+  /* ------------------ Recommendation engine ------------------ */
   const calculateResult = () => {
     const roomsNeeded = totalRoomsNeeded();
-
-    // boost factors from comfort/storage/guests
     let boost = 0;
     if (comfort > 70) boost += 1;
     if (storage === "high") boost += 1;
     if (guests === "frequent") boost += 1;
-
     const effectiveRooms = roomsNeeded + boost;
 
     let primary: Recommendation = { type: "2 BHK", size: "883 sq.ft", rationale: [] };
     let backup: Recommendation = { type: "3 BHK", size: "1082 sq.ft", rationale: [] };
 
-    // single-unit mapping
     if (effectiveRooms <= 2) {
       primary = { type: "2 BHK", size: "883 sq.ft", rationale: [] };
       backup = { type: "3 BHK", size: "1082 sq.ft", rationale: ["Upgrade for future flexibility"] };
@@ -162,52 +141,44 @@ export default function HomeSizeAdvisor({
       primary = { type: "3 BHK", size: "1082 sq.ft", rationale: [] };
       backup = { type: "3 BHK Royale", size: "1756–1779 sq.ft", rationale: ["More generous living area"] };
     } else {
-      // effectiveRooms >= 4
       primary = { type: "3 BHK Royale", size: "1756–1779 sq.ft", rationale: [] };
       backup = { type: "3 BHK", size: "1082 sq.ft", rationale: ["Compact alternative"] };
     }
 
-    // Hybrid override to multi-unit primary when effectiveRooms > 4
     if (effectiveRooms > 4) {
       const combos = buildMultiUnitCombos();
-      const primaryCombo = combos[0] || "";
-      if (primaryCombo) {
-        const cap = capacityFromComboString(primaryCombo);
-        primary = {
-          type: primaryCombo.replace(/^Consider:\s*/, ""),
-          size: `${cap} room capacity`,
-          rationale: [],
-        };
+      const pri = combos[0];
+      if (pri) {
+        primary = { type: pri.replace(/^Consider:\s*/, ""), size: `${capacityFromComboString(pri)} room capacity`, rationale: [] };
       }
     }
 
-    // Build rationale bullets (merged, not replacing)
     const rationale: string[] = [];
     rationale.push(`Rooms needed (raw): ${roomsNeeded}`);
     if (wfh) rationale.push("Dedicated workspace recommended");
-    if (kids > 0) rationale.push("Separate room(s) for kids recommended");
-    if (elderly > 0) rationale.push("Elderly accommodation recommended (accessible)");
-    if (comfort > 70) rationale.push("High comfort preference — consider larger space");
-    if (comfort < 40) rationale.push("Low comfort preference — compact living preferred");
-    if (storage === "high") rationale.push("High storage needs — consider extra storage");
-    if (guests === "frequent") rationale.push("Frequent guests — guest room recommended");
+    if (kids > 0) rationale.push("Kids need separate room(s)");
+    if (elderly > 0) rationale.push("Elderly accommodation recommended");
+    if (comfort > 70) rationale.push("High comfort preference — larger space ideal");
+    if (comfort < 40) rationale.push("Compact living preference");
+    if (storage === "high") rationale.push("High storage needs");
+    if (guests === "frequent") rationale.push("Frequent guests — guest room useful");
 
     primary.rationale = rationale;
-
     setResult({ primary, backup });
 
-    // Analytics events
+    setFadeIn(true);
+    setTimeout(() => setFadeIn(false), 300);
+
     _trackGA("advisor_calculated", { roomsNeeded, effectiveRooms, primary: primary.type });
     _trackFB("AdvisorCalculated", { roomsNeeded, effectiveRooms, primary: primary.type });
   };
 
-  // Recompute when inputs change
   useEffect(() => {
     calculateResult();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [adults, kids, elderly, wfh, guests, storage, comfort]);
 
-  /* ---------------- UI helpers ---------------- */
+  /* ------------------ Space Pressure / meters ------------------ */
   const bhkMeterValue = () => {
     if (!result) return 0;
     if (result.primary.type.includes("2 BHK")) return 33;
@@ -216,17 +187,15 @@ export default function HomeSizeAdvisor({
   };
 
   const spacePressureScore = () => {
-    const rooms = totalRoomsNeeded();
-    // if primary is a combo, use its capacity
+    const raw = totalRoomsNeeded();
     if (result && (result.primary.type.includes("+") || result.primary.type.includes("×"))) {
       const cap = capacityFromComboString(`Consider: ${result.primary.type}`);
-      if (cap > 0) return Math.min(100, Math.round((rooms / cap) * 100));
+      return Math.min(100, Math.round((raw / cap) * 100));
     }
-    const maxCap = UNIT_CAPACITY["3 BHK Royale"];
-    return Math.min(100, Math.round((rooms / maxCap) * 100));
+    return Math.min(100, Math.round((raw / 4) * 100));
   };
 
-  /* Reset & manual refresh */
+  /* ------------------ Reset / refresh ------------------ */
   const resetForm = () => {
     setAdults(2);
     setKids(0);
@@ -240,92 +209,115 @@ export default function HomeSizeAdvisor({
     _trackFB("AdvisorReset");
   };
 
-  const manualRefresh = () => {
-    calculateResult();
-    _trackGA("advisor_manual_refresh");
-    _trackFB("AdvisorManualRefresh");
-  };
-
-  /* ---------------- Render ---------------- */
+  /* ------------------ Render UI (mobile-first hybrid) ------------------ */
   return (
-    <div className={`w-full flex justify-center bg-[#F5F7FA] p-8 ${className}`}>
-      <Card className="w-full max-w-4xl p-6 rounded-2xl shadow-sm border border-gray-200">
+    <div className={`w-full flex justify-center bg-[#F5F7FA] p-4 md:p-8 ${className}`}>
+      <Card className="w-full max-w-4xl p-4 md:p-6 rounded-2xl shadow-sm border border-gray-200">
         <CardHeader>
-          <CardTitle className="text-2xl font-semibold text-[#1A365D]">
-            Find Your Ideal Home Configuration
-          </CardTitle>
+          <CardTitle className="text-xl md:text-2xl font-semibold text-[#1A365D]">Find Your Ideal Home Configuration</CardTitle>
         </CardHeader>
 
         <CardContent className="md:flex md:gap-6 md:items-start">
-          {/* LEFT: inputs */}
+          {/* LEFT PANEL */}
           <div className="md:w-1/2 space-y-6">
+            {/* Household */}
             <div className="border rounded-lg p-3 bg-white">
               <div className="flex items-center justify-between">
                 <h4 className="font-medium flex items-center gap-2 text-[#2D3748]"><Users className="w-4 h-4" /> Household</h4>
                 <span className="text-sm text-[#4A5568]">Enter composition</span>
               </div>
 
+              {/* Mobile-first: stacked rows with clear labels */}
               <div className="mt-3 space-y-3">
-                <div className="flex gap-2">
-                  <div className="flex-1">
-                    <label className="text-sm text-[#4A5568]">Adults</label>
-                    <div className="flex items-center gap-2 mt-1">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="flex flex-col">
+                    <label className="text-sm text-[#4A5568] mb-1">Adults</label>
+                    <div className="flex items-center gap-3">
                       <Button variant="outline" size="sm" onClick={() => setAdults(Math.max(1, adults - 1))}>-</Button>
-                      <div className="w-10 text-center">{adults}</div>
+                      <div className="min-w-[44px] text-center">{adults}</div>
                       <Button variant="outline" size="sm" onClick={() => setAdults(adults + 1)}>+</Button>
+                      <div className="relative group ml-1">
+                        <button type="button" className="cursor-pointer text-[#A0AEC0] text-xs p-1 rounded-full">
+                          <Info className="w-3 h-3" />
+                        </button>
+                        <div className="absolute hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 left-0 top-8 z-10 whitespace-nowrap">
+                          {adultsRoomLabel()}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <label className="text-sm text-[#4A5568]">Kids</label>
-                    <div className="flex items-center gap-2 mt-1">
+
+                  <div className="flex flex-col">
+                    <label className="text-sm text-[#4A5568] mb-1">Kids</label>
+                    <div className="flex items-center gap-3">
                       <Button variant="outline" size="sm" onClick={() => setKids(Math.max(0, kids - 1))}>-</Button>
-                      <div className="w-10 text-center">{kids}</div>
+                      <div className="min-w-[44px] text-center">{kids}</div>
                       <Button variant="outline" size="sm" onClick={() => setKids(kids + 1)}>+</Button>
+                      <div className="relative group ml-1">
+                        <button type="button" className="cursor-pointer text-[#A0AEC0] text-xs p-1 rounded-full">
+                          <Info className="w-3 h-3" />
+                        </button>
+                        <div className="absolute hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 left-0 top-8 z-10 whitespace-nowrap">
+                          {kidsRoomLabel()}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <label className="text-sm text-[#4A5568]">Elderly</label>
-                    <div className="flex items-center gap-2 mt-1">
+
+                  <div className="flex flex-col">
+                    <label className="text-sm text-[#4A5568] mb-1">Elderly</label>
+                    <div className="flex items-center gap-3">
                       <Button variant="outline" size="sm" onClick={() => setElderly(Math.max(0, elderly - 1))}>-</Button>
-                      <div className="w-10 text-center">{elderly}</div>
+                      <div className="min-w-[44px] text-center">{elderly}</div>
                       <Button variant="outline" size="sm" onClick={() => setElderly(elderly + 1)}>+</Button>
+                      <div className="relative group ml-1">
+                        <button type="button" className="cursor-pointer text-[#A0AEC0] text-xs p-1 rounded-full">
+                          <Info className="w-3 h-3" />
+                        </button>
+                        <div className="absolute hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 left-0 top-8 z-10 whitespace-nowrap">
+                          {elderlyRoomLabel()}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Lifestyle */}
             <div className="border rounded-lg p-3 bg-white space-y-3">
               <div className="flex items-center gap-2">
                 <Briefcase className="w-4 h-4" />
                 <h4 className="font-medium text-[#2D3748]">Lifestyle</h4>
               </div>
-              <div>
+
+              <div className="flex flex-col gap-3">
                 <label className="inline-flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={wfh} onChange={() => setWfh(!wfh)} />
-                  <span className="text-sm ml-2">Work from home</span>
+                  <span className="text-sm">Work from home</span>
                 </label>
-              </div>
 
-              <div>
-                <div className="text-sm text-[#4A5568] mb-1">Guest Frequency</div>
-                <div className="flex gap-2">
-                  <Button variant={guests === "rare" ? "default" : "outline"} onClick={() => setGuests("rare")}>Rarely</Button>
-                  <Button variant={guests === "sometimes" ? "default" : "outline"} onClick={() => setGuests("sometimes")}>Sometimes</Button>
-                  <Button variant={guests === "frequent" ? "default" : "outline"} onClick={() => setGuests("frequent")}>Frequently</Button>
+                <div>
+                  <div className="text-sm text-[#4A5568] mb-2">Guest Frequency</div>
+                  <div className="flex gap-2 flex-wrap">
+                    <Button variant={guests === "rare" ? "default" : "outline"} onClick={() => setGuests("rare")}>Rarely</Button>
+                    <Button variant={guests === "sometimes" ? "default" : "outline"} onClick={() => setGuests("sometimes")}>Sometimes</Button>
+                    <Button variant={guests === "frequent" ? "default" : "outline"} onClick={() => setGuests("frequent")}>Frequently</Button>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <div className="text-sm text-[#4A5568] mb-1">Storage Needs <span className="text-xs text-gray-400">(Low / Medium / High)</span></div>
-                <div className="flex gap-2">
-                  <Button variant={storage === "low" ? "default" : "outline"} onClick={() => setStorage("low")}>Low</Button>
-                  <Button variant={storage === "medium" ? "default" : "outline"} onClick={() => setStorage("medium")}>Medium</Button>
-                  <Button variant={storage === "high" ? "default" : "outline"} onClick={() => setStorage("high")}>High</Button>
+                <div>
+                  <div className="text-sm text-[#4A5568] mb-2">Storage Needs <span className="text-xs text-gray-400">(Low / Medium / High)</span></div>
+                  <div className="flex gap-2 flex-wrap">
+                    <Button variant={storage === "low" ? "default" : "outline"} onClick={() => setStorage("low")}>Low</Button>
+                    <Button variant={storage === "medium" ? "default" : "outline"} onClick={() => setStorage("medium")}>Medium</Button>
+                    <Button variant={storage === "high" ? "default" : "outline"} onClick={() => setStorage("high")}>High</Button>
+                  </div>
                 </div>
               </div>
             </div>
 
+            {/* Comfort */}
             <div className="border rounded-lg p-3 bg-white">
               <div className="flex items-center gap-2">
                 <HeartHandshake className="w-4 h-4" />
@@ -337,23 +329,17 @@ export default function HomeSizeAdvisor({
               </div>
             </div>
 
+            {/* Actions */}
             <div className="flex gap-3">
               <Button className="flex-1 h-12 bg-[#1A365D] text-white" onClick={resetForm}>Reset</Button>
-              <Button className="flex-1 h-12" onClick={manualRefresh}>Refresh</Button>
             </div>
           </div>
 
-          {/* RIGHT: recommendation */}
+          {/* RIGHT PANEL: Recommendation (non-sticky on mobile) */}
           <div className="md:w-1/2 md:sticky md:top-6 h-fit mt-6 md:mt-0">
-            <AnimatePresence>
+            <div className={`${fadeIn ? 'opacity-100 transition-opacity duration-300' : 'opacity-100'}`}>
               {result && (
-                <motion.div
-                  key={result.primary.type}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 6 }}
-                  className="p-4 border rounded-xl bg-white shadow"
-                >
+                <div className="p-4 border rounded-xl bg-white shadow">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <Layers className="w-5 h-5 text-[#2D3748]" />
@@ -393,7 +379,7 @@ export default function HomeSizeAdvisor({
                     </ul>
                   </div>
 
-                  {/* Multi-unit suggestion */}
+                  {/* Multi-unit */}
                   <div className="mt-4">
                     {buildMultiUnitCombos().length > 0 && (
                       <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
@@ -432,9 +418,9 @@ export default function HomeSizeAdvisor({
                       <li className="font-semibold">Total rooms needed: {totalRoomsNeeded()}</li>
                     </ul>
                   </div>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
+            </div>
           </div>
         </CardContent>
       </Card>
