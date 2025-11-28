@@ -115,6 +115,7 @@ const Index = () => {
           </p>
           <p>RERA Number: PRM/KA/RERA/1251/310/AG/250811/005899</p>
           <p>Email: propyolike@gmail.com</p>
+          <p>Address: Banashankari 3rd Stage Bengaluru 560085</p>
           <p className="text-sm text-background/60">
             Disclaimer: All project information, including availability,
             pricing, floor plans, and amenities, is subject to change without
@@ -140,7 +141,7 @@ const Index = () => {
             your browser settings at any time.
           </p>
           <p className="text-sm text-background/60">
-            © 2025 PropYouLike, Authorised Channel Partner. All rights reserved.
+            © 2025 Pankaj - PropYouLike, Authorised Channel Partner. All rights reserved.
           </p>
         </div>
       </footer>
