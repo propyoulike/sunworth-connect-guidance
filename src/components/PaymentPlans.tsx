@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 
@@ -25,7 +25,7 @@ const trackMeta = (event: string, label: string) => {
 };
 
 /* ----------------------------------------------------
-   PRICING COMPONENTS (Left Column)
+   PRICING COMPONENTS (LEFT GRID)
 ---------------------------------------------------- */
 const priceComponents = [
   {
@@ -51,7 +51,7 @@ const priceComponents = [
     title: "Other / Possession Charges",
     points: [
       "Advance Maintenance (Actuals)",
-      "Infrastructure Charges (Electricity & Water)",
+      "Electricity & Water Infrastructure Charges",
       "Corpus Fund – 0/-",
       "Legal Charges – approx ₹50,000",
       "Modifications (if applicable)",
@@ -72,7 +72,7 @@ const priceComponents = [
 ];
 
 /* ----------------------------------------------------
-   PAYMENT SCHEDULE (Right Column)
+   PAYMENT SCHEDULE (RIGHT GRID)
 ---------------------------------------------------- */
 const paymentSchedule = [
   {
@@ -125,36 +125,17 @@ const paymentSchedule = [
 ];
 
 /* ----------------------------------------------------
-   EMI CALCULATOR LOGIC
----------------------------------------------------- */
-const calculateEMI = (amount: number, rate: number, tenure: number) => {
-  const monthlyRate = rate / 12 / 100;
-  const n = tenure * 12;
-  return (
-    (amount * monthlyRate * Math.pow(1 + monthlyRate, n)) /
-    (Math.pow(1 + monthlyRate, n) - 1)
-  );
-};
-
-/* ----------------------------------------------------
    MAIN COMPONENT
 ---------------------------------------------------- */
 const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
   const [openPrice, setOpenPrice] = useState<number | null>(null);
   const [openStage, setOpenStage] = useState<number | null>(null);
 
-  // EMI widget state
-  const [loan, setLoan] = useState(5000000);
-  const [rate, setRate] = useState(8.5);
-  const [tenure, setTenure] = useState(20);
-
-  const emi = calculateEMI(loan, rate, tenure);
-
   return (
     <section id="payment-plans" className="py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4">
 
-        {/* ---------------- HEADER ---------------- */}
+        {/* HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl lg:text-6xl font-extrabold mb-5">
             Pricing & <span className="text-primary">Payment Plans</span>
@@ -164,10 +145,10 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
           </p>
         </div>
 
-        {/* ---------------- TWO COLUMN GRID ---------------- */}
+        {/* TWO COLUMN GRID */}
         <div className="grid lg:grid-cols-2 gap-12">
 
-          {/* LEFT: PRICING */}
+          {/* LEFT: PRICING COMPUTATION */}
           <div>
             <h3 className="text-2xl font-bold mb-6">Pricing Computation</h3>
 
@@ -208,14 +189,12 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
             </div>
           </div>
 
-          {/* RIGHT: PAYMENT SCHEDULE */}
+          {/* RIGHT: PAYMENT SCHEDULE WITH TIMELINE */}
           <div>
-            <h3 className="text-2xl font-bold mb-6">
-              Construction Payment Schedule
-            </h3>
+            <h3 className="text-2xl font-bold mb-6">Construction Payment Schedule</h3>
 
             <div className="relative pl-6">
-              {/* Vertical line */}
+              {/* Vertical connector */}
               <div className="absolute top-0 bottom-0 left-2 w-1 bg-primary/30 rounded-full"></div>
 
               <div className="space-y-8">
@@ -224,24 +203,20 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
 
                   return (
                     <div key={i} className="relative">
-                      {/* Dot */}
+                      {/* Blue dot */}
                       <div className="absolute -left-1 top-1 w-4 h-4 bg-primary rounded-full border-2 border-background"></div>
 
                       <button
                         className="w-full flex items-center justify-between"
                         onClick={() =>
-                          stage.expandable
-                            ? setOpenStage(open ? null : i)
-                            : null
+                          stage.expandable ? setOpenStage(open ? null : i) : null
                         }
                       >
-                        <span className="text-lg font-semibold">
-                          {stage.title}
-                        </span>
+                        <span className="text-lg font-semibold">{stage.title}</span>
+
                         <div className="flex items-center gap-2">
-                          <span className="text-primary font-bold">
-                            {stage.percentage}
-                          </span>
+                          <span className="text-primary font-bold">{stage.percentage}</span>
+
                           {stage.expandable &&
                             (open ? (
                               <ChevronUp className="text-primary" />
@@ -251,6 +226,7 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
                         </div>
                       </button>
 
+                      {/* Sub-items */}
                       {open && stage.items && (
                         <ul className="mt-4 ml-1 space-y-2 text-muted-foreground">
                           {stage.items.map((p, idx) => (
@@ -264,39 +240,6 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
                     </div>
                   );
                 })}
-              </div>
-            </div>
-
-            {/* EMI CALCULATOR */}
-            <div className="mt-10 p-6 rounded-2xl border shadow-sm bg-card">
-              <h4 className="text-lg font-bold mb-4">EMI Calculator</h4>
-
-              <label className="text-sm">Loan Amount (₹)</label>
-              <input
-                type="number"
-                value={loan}
-                onChange={(e) => setLoan(Number(e.target.value))}
-                className="w-full p-2 border rounded mb-4"
-              />
-
-              <label className="text-sm">Interest Rate (%)</label>
-              <input
-                type="number"
-                value={rate}
-                onChange={(e) => setRate(Number(e.target.value))}
-                className="w-full p-2 border rounded mb-4"
-              />
-
-              <label className="text-sm">Tenure (years)</label>
-              <input
-                type="number"
-                value={tenure}
-                onChange={(e) => setTenure(Number(e.target.value))}
-                className="w-full p-2 border rounded mb-4"
-              />
-
-              <div className="text-xl font-semibold mt-4">
-                EMI: ₹{Math.round(emi).toLocaleString("en-IN")}
               </div>
             </div>
           </div>
