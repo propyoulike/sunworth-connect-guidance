@@ -7,6 +7,7 @@ import FloorPlansTabs from "@/components/FloorPlansTabs";
 import Amenities from "@/components/Amenities";
 import Views from "@/components/Views";
 import PaymentPlans from "@/components/PaymentPlans";
+import LoanEligibilityWidget from "@/components/LoanEligibilityWidget";
 import CustomerSpeaks from "@/components/CustomerSpeaks";
 import Brochure from "@/components/Brochure";
 import ProvidentSection from "@/components/ProvidentSection";
@@ -62,6 +63,11 @@ const Index = () => {
 
 <div id="payment-plans">
   <PaymentPlans onCtaClick={openForm} />
+</div>
+
+{/* Loan Eligibility & Affordability Widget */}
+<div id="loan-eligibility">
+  <LoanEligibilityWidget onCtaClick={openForm} />
 </div>
 
 <div id="testimonials">
