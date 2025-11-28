@@ -43,9 +43,8 @@ const priceComponents = [
     points: [
       "Applicable as per IT Act",
       "Calculated on every milestone invoice",
-      "Ready-to-Move-In Flats (with Occupancy Certificate): No GST is applicable.",
-      "Under-Construction Flats: 1% GST if the flat have a carpet area up to 60 sq. m. in a metro city (like Bangalore) or 90 sq. m. in a non-metro city, and the total value must be ₹45 lakhs or less.",
-      "Under-Construction Flats: 5% GST if the flat have a carpet area more than 60 sq. m. in a metro city (like Bangalore) or 90 sq. m. in a non-metro city, and the total value exceeding ₹45 lakhs.",
+      "Ready-to-Move-In Flats (with Occupancy Certificate): No GST",
+      "Under-Construction Flats: 5% GST",
     ],
   },
   {
