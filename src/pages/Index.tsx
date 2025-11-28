@@ -141,7 +141,7 @@ const Index = () => {
             your browser settings at any time.
           </p>
           <p className="text-sm text-background/60">
-            © 2025 Pankaj - PropYouLike, Authorised Channel Partner. All rights reserved.
+            © 2025 PropYouLike, Authorised Channel Partner. All rights reserved.
           </p>
         </div>
       </footer>
