@@ -31,11 +31,11 @@ const priceComponents = [
   {
     title: "Sales Consideration",
     points: [
-      "Flat/Unit Cost (Size × Base Rate)",
+      "Flat/Unit Cost - Size × Base Rate",
       "Club Development Charges – ₹3 Lakhs",
-      "Premium Location Charges",
-      "Floor Rise Charges",
-      "Car Park Charges",
+      "Premium Location Charges: 0/-",
+      "Floor Rise Charges: 0/-",
+      "Car Park Charges: 0/-",
     ],
   },
   {
@@ -51,9 +51,9 @@ const priceComponents = [
   {
     title: "Other / Possession Related Charges",
     points: [
-      "Advance Maintenance (Actuals), typically for a year around  6 INR per SFT of Super Builtup Area",
+      "Advance Maintenance (Actuals), typically for a year around  6 INR per SFT per month of Super Builtup Area of selected unit",
       "Infrastructure Charges (Electricity & Water)",
-      "Corpus Fund",
+      "Corpus Fund: 0/-",
       "Legal Charges: Approx. 50,000/-",
       "Modifications (if applicable)",
       "Stamp/Share/Registration Paper Fee (if any)",
@@ -63,7 +63,6 @@ const priceComponents = [
   {
     title: "Stamp Duty & Registration",
     points: [
-      "Payable at actuals",
       "As per prevailing government rates",
       "Stamp Duty: 5%",
       "Cess: 10% on stamp duty",
@@ -71,6 +70,7 @@ const priceComponents = [
       "Registration: 2%",
       "Note: The registration fee was recently updated from 1% to 2% effective August 31, 2025, for all document types.",
       "The total property transaction cost (stamp duty + registration + cess/surcharge) can reach around 7.6% for properties above ₹45 lakh. ",
+      "Payable at actuals",
     ],
   },
 ];
