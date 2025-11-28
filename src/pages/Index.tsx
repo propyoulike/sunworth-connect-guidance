@@ -4,6 +4,7 @@ import ProjectSummary from "@/components/ProjectSummary";
 import ConstructionStatus from "@/components/ConstructionStatus";
 import Location from "@/components/Location";
 import FloorPlansTabs from "@/components/FloorPlansTabs";
+import HomeSizeAdvisor from "@/components/HomeSizeAdvisor";
 import Amenities from "@/components/Amenities";
 import Views from "@/components/Views";
 import PaymentPlans from "@/components/PaymentPlans";
@@ -43,6 +44,22 @@ const Index = () => {
 
 <div id="floor-plans">
   <FloorPlansTabs onCtaClick={openForm} />
+</div>
+
+{/* Home Size Advisor Section */}
+<div id="home-size-advisor" className="py-20 lg:py-28 bg-[#F5F7FA] scroll-mt-32">
+  <div className="container mx-auto px-4">
+    <h2 className="text-3xl lg:text-5xl font-bold text-center mb-10 text-foreground">
+      Find Your Ideal <span className="text-primary">Unit Configuration</span>
+    </h2>
+    <p className="text-center text-muted-foreground mb-14 max-w-2xl mx-auto">
+      Based on your family size, lifestyle, comfort preferences, and future needs — 
+      this smart advisor recommends the best fitting 2 BHK, 3 BHK, 3 BHK Royale or 
+      multi-unit combinations inside Sunworth City.
+    </p>
+
+    <HomeSizeAdvisor />
+  </div>
 </div>
 
 <div id="location">
