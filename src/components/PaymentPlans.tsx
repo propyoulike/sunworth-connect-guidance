@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 
@@ -6,237 +6,195 @@ interface PaymentPlansProps {
   onCtaClick: () => void;
 }
 
-/* -------------------------------------------------------
-   Tracking Helpers
-------------------------------------------------------- */
+/* ----------------------------------------------------
+   TRACKING HELPERS
+---------------------------------------------------- */
 const trackGA = (event: string, label: string) => {
-  if ((window as any).gtag) {
+  if (typeof (window as any).gtag === "function") {
     (window as any).gtag("event", event, {
       event_category: "engagement",
       event_label: label,
     });
   }
 };
+
 const trackMeta = (event: string, label: string) => {
-  if ((window as any).fbq) {
+  if (typeof (window as any).fbq === "function") {
     (window as any).fbq("trackCustom", event, { label });
   }
 };
 
-/* -------------------------------------------------------
-   GRID 1 — PRICE COMPUTATION
-------------------------------------------------------- */
+/* ----------------------------------------------------
+   PRICING COMPONENTS (Left Column)
+---------------------------------------------------- */
 const priceComponents = [
   {
     title: "Sales Consideration",
     points: [
       "Flat/Unit Cost - Size × Base Rate",
-      "Club Development Charges – ₹3 Lakhs",
-      "Premium Location Charges: 0/-",
-      "Floor Rise Charges: 0/-",
-      "Car Park Charges: 0/-",
+      "Club Development Charges – ₹3,00,000",
+      "Premium Location Charges – 0/-",
+      "Floor Rise Charges – 0/-",
+      "Car Park Charges – 0/-",
     ],
   },
   {
     title: "GST on Sale Consideration",
     points: [
-      "Applicable as per IT Act",
-      "Milestone-based billing",
-      "Ready-to-Move: 0% GST",
-      "Under-Construction: 5% GST",
+      "Charged as per IT Act",
+      "Applied milestone-wise",
+      "Ready-to-Move Units: No GST",
+      "Under-Construction Units: 5% GST",
     ],
   },
   {
     title: "Other / Possession Charges",
     points: [
-      "Advance Maintenance – approx ₹6/SFT/month",
-      "Electricity + Water Infra Charges",
-      "Corpus Fund: 0/-",
-      "Legal Charges: approx ₹50,000",
-      "Stamp/Share Papers (if applicable)",
-      "GST @ 18% on other charges",
+      "Advance Maintenance (Actuals)",
+      "Infrastructure Charges (Electricity & Water)",
+      "Corpus Fund – 0/-",
+      "Legal Charges – approx ₹50,000",
+      "Modifications (if applicable)",
+      "Stamp / Share / Admin Fees (if applicable)",
+      "GST on Other Charges – 18%",
     ],
   },
   {
     title: "Stamp Duty & Registration",
     points: [
-      "Stamp Duty: 5%",
-      "Cess: 10% of stamp duty",
-      "Surcharge: 2% of stamp duty",
-      "Registration: 2%",
-      "Approx 7.6% of Agreement Value",
-      "Payable at actuals",
+      "Stamp Duty – 5%",
+      "Cess – 10% on stamp duty",
+      "Surcharge – 2% on stamp duty",
+      "Registration – 2%",
+      "Approx. total: 7.6% of Agreement Value",
     ],
   },
 ];
 
-/* -------------------------------------------------------
-   GRID 2 — PAYMENT SCHEDULE (Vertical Timeline)
-------------------------------------------------------- */
-const paymentStages = [
+/* ----------------------------------------------------
+   PAYMENT SCHEDULE (Right Column)
+---------------------------------------------------- */
+const paymentSchedule = [
   {
     title: "Agreement Stage",
-    percent: "20%",
+    percentage: "20%",
     expandable: true,
     items: [
       "Initial Advance – ₹2,00,000",
       "Balance Advance – 9%",
-      "Agreement Execution – 11%",
+      "Post Agreement Execution – 11%",
     ],
   },
   {
     title: "Excavation Complete",
-    percent: "10%",
+    percentage: "10%",
     expandable: false,
   },
   {
     title: "Foundation Complete",
-    percent: "15%",
+    percentage: "15%",
     expandable: false,
   },
   {
     title: "Structure Completion",
-    percent: "35%",
+    percentage: "35%",
     expandable: true,
     items: [
       "Ground/Stilt Slab – 7%",
-      "3rd Floor Slab – 7%",
-      "6th Floor Slab – 7%",
-      "9th Floor Slab – 7%",
+      "Third Floor Slab – 7%",
+      "Sixth Floor Slab – 7%",
+      "Ninth Floor Slab – 7%",
       "Terrace Slab – 7%",
     ],
   },
   {
     title: "Unit Completion",
-    percent: "15%",
+    percentage: "15%",
     expandable: true,
     items: [
-      "Flooring Completion – 5%",
+      "Flooring Complete – 5%",
       "External Windows – 5%",
       "Lift Erection – 5%",
     ],
   },
   {
     title: "Possession",
-    percent: "5%",
+    percentage: "5%",
     expandable: false,
   },
 ];
 
-/* -------------------------------------------------------
-   EMI Calculator Widget (Simple 3-variable EMI formula)
-------------------------------------------------------- */
-const calculateEMI = (principal: number, rate: number, tenure: number) => {
+/* ----------------------------------------------------
+   EMI CALCULATOR LOGIC
+---------------------------------------------------- */
+const calculateEMI = (amount: number, rate: number, tenure: number) => {
   const monthlyRate = rate / 12 / 100;
-  const emi =
-    (principal * monthlyRate * Math.pow(1 + monthlyRate, tenure)) /
-    (Math.pow(1 + monthlyRate, tenure) - 1);
-
-  return Math.round(emi);
+  const n = tenure * 12;
+  return (
+    (amount * monthlyRate * Math.pow(1 + monthlyRate, n)) /
+    (Math.pow(1 + monthlyRate, n) - 1)
+  );
 };
 
-/* -------------------------------------------------------
-   COMPONENT
-------------------------------------------------------- */
+/* ----------------------------------------------------
+   MAIN COMPONENT
+---------------------------------------------------- */
 const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
   const [openPrice, setOpenPrice] = useState<number | null>(null);
-  const [openSchedule, setOpenSchedule] = useState<number | null>(null);
+  const [openStage, setOpenStage] = useState<number | null>(null);
 
-  /* EMI State */
-  const [loan, setLoan] = useState(6000000); // 60L default
-  const [roi, setRoi] = useState(8.5); // 8.5%
-  const [tenure, setTenure] = useState(240); // 20 years
+  // EMI widget state
+  const [loan, setLoan] = useState(5000000);
+  const [rate, setRate] = useState(8.5);
+  const [tenure, setTenure] = useState(20);
 
-  const emi = calculateEMI(loan, roi, tenure);
+  const emi = calculateEMI(loan, rate, tenure);
 
   return (
     <section id="payment-plans" className="py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4">
 
         {/* ---------------- HEADER ---------------- */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <h2 className="text-4xl lg:text-5xl font-extrabold mb-3 text-foreground">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-4xl lg:text-6xl font-extrabold mb-5">
             Pricing & <span className="text-primary">Payment Plans</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Two transparent widgets • One simple decision
+            Transparent costing • Flexible milestones • RERA compliant
           </p>
         </div>
 
-        {/* ------------------------------------------------------------------ */}
-        {/* --------------------- MAIN 2-WIDGET LAYOUT ------------------------ */}
-        {/* ------------------------------------------------------------------ */}
+        {/* ---------------- TWO COLUMN GRID ---------------- */}
         <div className="grid lg:grid-cols-2 gap-12">
 
-          {/* ================= GRID 1 — PRICING =================== */}
-          <div className="bg-card border rounded-2xl p-6 shadow-md">
-            <h3 className="text-2xl font-bold mb-4">Pricing Computation</h3>
+          {/* LEFT: PRICING */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6">Pricing Computation</h3>
 
-            {priceComponents.map((section, i) => {
-              const open = openPrice === i;
-
-              return (
-                <div key={i} className="border rounded-xl p-4 mb-4">
-                  <button
-                    className="w-full flex justify-between items-center"
-                    onClick={() => {
-                      setOpenPrice(open ? null : i);
-                      trackGA("price_open", section.title);
-                      trackMeta("PriceOpen", section.title);
-                    }}
-                  >
-                    <span className="font-semibold">{section.title}</span>
-                    {open ? <ChevronUp /> : <ChevronDown />}
-                  </button>
-
-                  {open && (
-                    <ul className="mt-3 space-y-2 text-muted-foreground text-sm">
-                      {section.points.map((p, idx) => (
-                        <li key={idx} className="flex gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary mt-0.5" />
-                          {p}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          {/* ================= GRID 2 — PAYMENT SCHEDULE =================== */}
-          <div className="bg-card border rounded-2xl p-6 shadow-md">
-            <h3 className="text-2xl font-bold mb-4">Construction Payment Schedule</h3>
-
-            <div className="relative pl-6 border-l-2 border-primary/40">
-              {paymentStages.map((stage, i) => {
-                const open = openSchedule === i;
+            <div className="space-y-4">
+              {priceComponents.map((item, i) => {
+                const open = openPrice === i;
 
                 return (
-                  <div key={i} className="mb-6 relative">
-                    {/* Vertical timeline dot */}
-                    <div className="w-3 h-3 bg-primary rounded-full absolute -left-[9px] top-1" />
-
+                  <div
+                    key={i}
+                    className="border rounded-2xl p-5 shadow-sm bg-card"
+                  >
                     <button
-                      className="w-full flex justify-between items-center"
-                      onClick={() =>
-                        stage.expandable
-                          ? setOpenSchedule(open ? null : i)
-                          : null
-                      }
+                      className="w-full flex justify-between"
+                      onClick={() => setOpenPrice(open ? null : i)}
                     >
-                      <span className="font-semibold">{stage.title}</span>
-                      <div className="flex items-center gap-3">
-                        <span className="text-primary font-bold">{stage.percent}</span>
-
-                        {stage.expandable &&
-                          (open ? <ChevronUp /> : <ChevronDown />)}
-                      </div>
+                      <span className="font-semibold text-lg">{item.title}</span>
+                      {open ? (
+                        <ChevronUp className="text-primary" />
+                      ) : (
+                        <ChevronDown className="text-primary" />
+                      )}
                     </button>
 
-                    {open && stage.items && (
-                      <ul className="mt-2 ml-2 space-y-2 text-muted-foreground text-sm">
-                        {stage.items.map((p, idx) => (
+                    {open && (
+                      <ul className="mt-4 space-y-2 text-muted-foreground">
+                        {item.points.map((p, idx) => (
                           <li key={idx} className="flex gap-2">
                             <CheckCircle className="w-4 h-4 text-primary mt-1" />
                             {p}
@@ -249,69 +207,103 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
               })}
             </div>
           </div>
-        </div>
 
-        {/* ------------------------------------------------------------------ */}
-        {/* ------------------------ EMI CALCULATOR -------------------------- */}
-        {/* ------------------------------------------------------------------ */}
-        <div className="mt-20 bg-card border rounded-2xl p-6 shadow-md max-w-3xl mx-auto">
-          <h3 className="text-2xl font-bold mb-4 text-center">EMI Calculator</h3>
+          {/* RIGHT: PAYMENT SCHEDULE */}
+          <div>
+            <h3 className="text-2xl font-bold mb-6">
+              Construction Payment Schedule
+            </h3>
 
-          <div className="space-y-6">
-            {/* Loan Amount */}
-            <div>
-              <label className="font-semibold">Loan Amount (₹)</label>
+            <div className="relative pl-6">
+              {/* Vertical line */}
+              <div className="absolute top-0 bottom-0 left-2 w-1 bg-primary/30 rounded-full"></div>
+
+              <div className="space-y-8">
+                {paymentSchedule.map((stage, i) => {
+                  const open = openStage === i;
+
+                  return (
+                    <div key={i} className="relative">
+                      {/* Dot */}
+                      <div className="absolute -left-1 top-1 w-4 h-4 bg-primary rounded-full border-2 border-background"></div>
+
+                      <button
+                        className="w-full flex items-center justify-between"
+                        onClick={() =>
+                          stage.expandable
+                            ? setOpenStage(open ? null : i)
+                            : null
+                        }
+                      >
+                        <span className="text-lg font-semibold">
+                          {stage.title}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-primary font-bold">
+                            {stage.percentage}
+                          </span>
+                          {stage.expandable &&
+                            (open ? (
+                              <ChevronUp className="text-primary" />
+                            ) : (
+                              <ChevronDown className="text-primary" />
+                            ))}
+                        </div>
+                      </button>
+
+                      {open && stage.items && (
+                        <ul className="mt-4 ml-1 space-y-2 text-muted-foreground">
+                          {stage.items.map((p, idx) => (
+                            <li key={idx} className="flex gap-2">
+                              <CheckCircle className="w-4 h-4 text-primary mt-1" />
+                              {p}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* EMI CALCULATOR */}
+            <div className="mt-10 p-6 rounded-2xl border shadow-sm bg-card">
+              <h4 className="text-lg font-bold mb-4">EMI Calculator</h4>
+
+              <label className="text-sm">Loan Amount (₹)</label>
               <input
-                type="range"
-                min={500000}
-                max={20000000}
-                step={50000}
+                type="number"
                 value={loan}
                 onChange={(e) => setLoan(Number(e.target.value))}
-                className="w-full"
+                className="w-full p-2 border rounded mb-4"
               />
-              <p className="text-sm mt-1">₹ {loan.toLocaleString()}</p>
-            </div>
 
-            {/* ROI */}
-            <div>
-              <label className="font-semibold">Rate of Interest (%)</label>
+              <label className="text-sm">Interest Rate (%)</label>
               <input
-                type="range"
-                min={7}
-                max={12}
-                step={0.1}
-                value={roi}
-                onChange={(e) => setRoi(Number(e.target.value))}
-                className="w-full"
+                type="number"
+                value={rate}
+                onChange={(e) => setRate(Number(e.target.value))}
+                className="w-full p-2 border rounded mb-4"
               />
-              <p className="text-sm mt-1">{roi}%</p>
-            </div>
 
-            {/* Tenure */}
-            <div>
-              <label className="font-semibold">Tenure (Months)</label>
+              <label className="text-sm">Tenure (years)</label>
               <input
-                type="range"
-                min={60}
-                max={360}
-                step={12}
+                type="number"
                 value={tenure}
                 onChange={(e) => setTenure(Number(e.target.value))}
-                className="w-full"
+                className="w-full p-2 border rounded mb-4"
               />
-              <p className="text-sm mt-1">{tenure} months</p>
-            </div>
 
-            {/* EMI Result */}
-            <div className="text-center text-2xl font-bold text-primary mt-6">
-              EMI: ₹ {emi.toLocaleString()}
+              <div className="text-xl font-semibold mt-4">
+                EMI: ₹{Math.round(emi).toLocaleString("en-IN")}
+              </div>
             </div>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-12">
+        <div className="mt-16 text-center">
           <CTAButtons onFormOpen={onCtaClick} />
         </div>
       </div>
