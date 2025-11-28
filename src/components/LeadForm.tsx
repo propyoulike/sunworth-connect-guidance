@@ -250,8 +250,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
         </Button>
 
         <p className="text-xs text-muted-foreground text-center leading-relaxed">
-          No spam. A PropYouLike advisor will call or WhatsApp you to understand
-          your plans and guide you to the right unit.
+        This enquiry is collected and handled by PropYouLike, a RERA Registered Real Estate Agent (RERA No: PRM/KA/RERA/1251/310/AG/250811/005899).
         </p>
       </form>
     </div>
@@ -259,3 +258,4 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
 };
 
 export default LeadForm;
+
