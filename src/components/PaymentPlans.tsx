@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
 
@@ -42,33 +42,31 @@ const priceComponents = [
     title: "GST on Sale Consideration",
     points: [
       "Applicable as per IT Act",
-      "Calculated on every milestone invoice",
-      "Ready-to-Move-In Flats (with Occupancy Certificate): No GST",
-      "Under-Construction Flats: 5% GST",
+      "Paid on milestone invoices",
+      "Ready-to-Move Homes: 0% GST",
+      "Under-Construction Homes: 5% GST",
     ],
   },
   {
-    title: "Other / Possession Related Charges",
+    title: "Other / Possession Charges",
     points: [
-      "Advance Maintenance (Actuals), typically for a year around  6 INR per SFT per month of Super Builtup Area of selected unit",
-      "Infrastructure Charges (Electricity & Water)",
+      "Advance Maintenance – approx ₹6 per SFT",
+      "Infrastructure Charges (Electricity + Water)",
       "Corpus Fund: 0/-",
-      "Legal Charges: Approx. 50,000/-",
+      "Legal Charges – approx ₹50,000",
       "Modifications (if applicable)",
-      "Stamp/Share/Registration Paper Fee (if any)",
-      "GST on other charges: 18%",
+      "Stamp/Share Papers (if applicable)",
+      "GST @ 18% on other charges",
     ],
   },
   {
     title: "Stamp Duty & Registration",
     points: [
-      "As per prevailing government rates",
-      "Stamp Duty: 5%",
-      "Cess: 10% on stamp duty",
-      "Surcharge: 2% on stamp duty",
-      "Registration: 2%",
-      "Note: The registration fee was recently updated from 1% to 2% effective August 31, 2025, for all document types.",
-      "The total property transaction cost (stamp duty + registration + cess/surcharge) can reach around 7.6% for properties above ₹45 lakh. ",
+      "Stamp Duty – 5%",
+      "Cess – 10% on stamp duty",
+      "Surcharge – 2%",
+      "Registration Fee – 2%",
+      "Total typically ~7.6% of Agreement Value",
       "Payable at actuals",
     ],
   },
@@ -82,31 +80,27 @@ const paymentStages = [
     title: "Agreement Stage — 20%",
     percentage: "20%",
     expandable: true,
-    items: [
-      "Initial Advance – ₹2,00,000",
-      "Balance Advance – 9%",
-      "Post Agreement Execution – 11%",
-    ],
+    items: ["Initial Advance – ₹2,00,000", "Balance Advance – 9%", "Agreement Execution – 11%"],
   },
   {
-    title: "Excavation of Building — 10%",
+    title: "Excavation Complete — 10%",
     percentage: "10%",
     expandable: false,
   },
   {
-    title: "Foundation of Building — 15%",
+    title: "Foundation Complete — 15%",
     percentage: "15%",
     expandable: false,
   },
   {
-    title: "Building Completion — 35%",
+    title: "Structure Complete — 35%",
     percentage: "35%",
     expandable: true,
     items: [
-      "Ground/Stilt Floor Slab – 7%",
-      "Third Floor Slab – 7%",
-      "Sixth Floor Slab – 7%",
-      "Ninth Floor Slab – 7%",
+      "Ground/Stilt Slab – 7%",
+      "3rd Floor Slab – 7%",
+      "6th Floor Slab – 7%",
+      "9th Floor Slab – 7%",
       "Terrace Slab – 7%",
     ],
   },
@@ -114,11 +108,7 @@ const paymentStages = [
     title: "Unit Completion — 15%",
     percentage: "15%",
     expandable: true,
-    items: [
-      "Flooring Completion – 5%",
-      "External Windows – 5%",
-      "Lift Erection Start – 5%",
-    ],
+    items: ["Flooring – 5%", "External Windows – 5%", "Lift Erection – 5%"],
   },
   {
     title: "Possession — 5%",
@@ -129,52 +119,54 @@ const paymentStages = [
 
 const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
   const [openPriceIndex, setOpenPriceIndex] = useState<number | null>(null);
-  const [openPaymentIndex, setOpenPaymentIndex] = useState<number | null>(null);
+  const [openPayIndex, setOpenPayIndex] = useState<number | null>(null);
 
   return (
-    <section id="payment-plans" className="py-24 lg:py-36 bg-background">
+    <section id="payment-plans" className="py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4">
 
         {/* HEADER */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl lg:text-6xl font-extrabold mb-5 text-foreground">
-            Pricing &{" "}
-            <span className="text-primary">Payment Plans</span>
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <h2 className="text-4xl lg:text-5xl font-extrabold mb-3 text-foreground">
+            Pricing & <span className="text-primary">Payment Plans</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
-            Transparent costing • Flexible payment structure • RERA compliant
+          <p className="text-muted-foreground text-lg">
+            Transparent pricing • Simple breakdown • RERA compliant
           </p>
         </div>
 
-        {/* GRID 1 — PRICE COMPUTATION */}
+        {/* ---------------------------------------------------------------- */}
+        {/* GRID 1: PRICE COMPUTATION */}
+        {/* ---------------------------------------------------------------- */}
         <div className="mb-20">
-          <h3 className="text-3xl font-bold mb-6">Price Computation</h3>
+          <h3 className="text-2xl font-bold mb-4">1. Price Computation</h3>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {priceComponents.map((comp, i) => {
-              const isOpen = openPriceIndex === i;
+            {priceComponents.map((comp, index) => {
+              const open = openPriceIndex === index;
+
               return (
                 <div
-                  key={i}
-                  className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-lg transition"
+                  key={index}
+                  className="bg-card border rounded-xl p-5 shadow-sm hover:shadow-md transition"
                 >
                   <button
-                    className="w-full flex items-center justify-between"
-                    onClick={() => setOpenPriceIndex(isOpen ? null : i)}
+                    className="w-full flex justify-between items-center"
+                    onClick={() => {
+                      setOpenPriceIndex(open ? null : index);
+                      trackGA("price_component_click", comp.title);
+                      trackMeta("PriceComponentClick", comp.title);
+                    }}
                   >
-                    <h4 className="text-xl font-semibold">{comp.title}</h4>
-                    {isOpen ? (
-                      <ChevronUp className="text-primary" />
-                    ) : (
-                      <ChevronDown className="text-primary" />
-                    )}
+                    <h4 className="font-semibold text-lg text-foreground">{comp.title}</h4>
+                    {open ? <ChevronUp /> : <ChevronDown />}
                   </button>
 
-                  {isOpen && (
-                    <ul className="mt-4 space-y-2 text-muted-foreground">
-                      {comp.points.map((p, idx) => (
-                        <li key={idx} className="flex gap-2">
-                          <CheckCircle className="text-primary w-4 h-4 mt-1" />
+                  {open && (
+                    <ul className="mt-4 space-y-2 text-muted-foreground text-sm">
+                      {comp.points.map((p, i) => (
+                        <li key={i} className="flex gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary mt-0.5" />
                           {p}
                         </li>
                       ))}
@@ -186,43 +178,41 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
           </div>
         </div>
 
-        {/* GRID 2 — PAYMENT PLAN */}
+        {/* ---------------------------------------------------------------- */}
+        {/* GRID 2: PAYMENT PLAN */}
+        {/* ---------------------------------------------------------------- */}
         <div className="mb-20">
-          <h3 className="text-3xl font-bold mb-6">Construction-Linked Payment Plan</h3>
+          <h3 className="text-2xl font-bold mb-4">2. Construction-Linked Payment Schedule</h3>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {paymentStages.map((stage, i) => {
-              const isOpen = openPaymentIndex === i;
+            {paymentStages.map((stage, index) => {
+              const open = openPayIndex === index;
 
               return (
                 <div
-                  key={i}
-                  className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-lg transition"
+                  key={index}
+                  className="bg-card border rounded-xl p-5 shadow-sm hover:shadow-md transition"
                 >
                   <button
-                    className="w-full flex items-center justify-between"
-                    onClick={() =>
-                      stage.expandable
-                        ? setOpenPaymentIndex(isOpen ? null : i)
-                        : null
-                    }
+                    className="w-full flex justify-between items-center"
+                    onClick={() => {
+                      if (stage.expandable) setOpenPayIndex(open ? null : index);
+                      trackGA("payment_stage_click", stage.title);
+                      trackMeta("PaymentStageClick", stage.title);
+                    }}
                   >
-                    <h4 className="text-xl font-semibold">{stage.title}</h4>
-                    <span className="text-primary font-bold">{stage.percentage}</span>
-
-                    {stage.expandable &&
-                      (isOpen ? (
-                        <ChevronUp className="text-primary ml-4" />
-                      ) : (
-                        <ChevronDown className="text-primary ml-4" />
-                      ))}
+                    <h4 className="font-semibold text-lg text-foreground">{stage.title}</h4>
+                    <div className="flex items-center gap-3">
+                      <span className="text-primary font-bold">{stage.percentage}</span>
+                      {stage.expandable && (open ? <ChevronUp /> : <ChevronDown />)}
+                    </div>
                   </button>
 
-                  {isOpen && stage.items && (
-                    <ul className="mt-4 space-y-2 text-muted-foreground">
-                      {stage.items.map((p, idx) => (
-                        <li key={idx} className="flex gap-2">
-                          <CheckCircle className="text-primary w-4 h-4 mt-1" />
+                  {open && stage.items && (
+                    <ul className="mt-4 space-y-2 text-muted-foreground text-sm">
+                      {stage.items.map((p, i) => (
+                        <li key={i} className="flex gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary mt-0.5" />
                           {p}
                         </li>
                       ))}
@@ -233,8 +223,8 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
             })}
           </div>
 
-          <p className="text-sm text-muted-foreground mt-4">
-            *GST extra as applicable. Billing is milestone-driven.
+          <p className="text-xs text-muted-foreground mt-4">
+            *GST extra as applicable. Billing is strictly milestone-based.
           </p>
         </div>
 
