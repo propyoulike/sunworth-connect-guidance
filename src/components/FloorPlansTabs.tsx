@@ -25,6 +25,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       sba: "883 sq.ft",
       ca: "628 sq.ft",
       usable: "655 sq.ft",
+      uds: "321 sq.ft",
       price: "₹69.99 L*",
       floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/2_bhk_plan.webp",
     },
@@ -35,6 +36,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       sba: "1082 sq.ft",
       ca: "779 sq.ft",
       usable: "805 sq.ft",
+      uds: "398 sq.ft",
       price: "₹79.99 L*",
       floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/3_bhk_plan.webp",
     },
@@ -45,6 +47,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       sba: "1779 sq.ft",
       ca: "1287 sq.ft",
       usable: "1351 sq.ft",
+      uds: "658 sq.ft",
       price: "149.99 L*",
       floorPlan: "https://www.providenthousing.com/wp-content/uploads/2022/12/3bhk_royale.webp",
     },
@@ -55,13 +58,11 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
       title: "Type 1",
       image: "https://www.providenthousing.com/wp-content/uploads/2022/12/type_1.webp",
       description: "Type 1 floor plan",
-      price: "Starting at ₹69.99 L*",
     },
     {
       title: "Type 2",
       image: "https://www.providenthousing.com/wp-content/uploads/2022/12/AD-G-WING-RENDER-1.webp",
       description: "Type 2 floor plan",
-      price: "Starting at ₹79.99 L*",
     },
   ];
 
@@ -207,9 +208,10 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
                       <div className="mt-3 text-sm text-muted-foreground">
                         <p className="mb-1 font-semibold">Description:</p>
                         <p>{video.description}</p>
-                        <p className="mt-2 font-semibold">SBA: {video.sba}</p>
+                        <p className="mt-2 font-semibold">Super Builtup Area: {video.sba}</p>
                         <p>Carpet Area: {video.ca}</p>
                         <p>Usable Area: {video.usable}</p>
+                        <p>Undivided Share: {video.uds}</p>
                         <p className="text-primary font-semibold">Price: {video.price}</p>
                         {video.floorPlan && (
                           <img
@@ -314,6 +316,7 @@ const FloorPlansTabs = ({ onCtaClick, trackGA, trackFB }: FloorPlansTabsProps) =
 };
 
 export default FloorPlansTabs;
+
 
 
 
