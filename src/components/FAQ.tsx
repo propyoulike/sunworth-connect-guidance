@@ -146,6 +146,16 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
           <p className="mt-3">
             Get a custom plan by filling the{" "}
             <button
+              onClick={() => {
+                scrollToSection("payment-plans");
+                trackCtaClick("Payments Section Button");
+              }}
+              className="text-blue-600 underline"
+            >
+              Pricing and Payments Section
+            </button>
+
+            <button
               className="text-blue-600 underline"
               onClick={() => {
                 openLeadForm();
@@ -244,3 +254,4 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
 };
 
 export default FAQ;
+
