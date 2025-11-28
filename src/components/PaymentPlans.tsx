@@ -1,6 +1,6 @@
-import { CheckCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 import CTAButtons from "@/components/CTAButtons";
-import { useEffect } from "react";
 
 interface PaymentPlansProps {
   onCtaClick: () => void;
@@ -25,273 +25,216 @@ const trackMeta = (event: string, label: string) => {
 };
 
 // ------------------------------
-// FIXED: CONSTRUCTION STAGES
+// GRID 1 — PRICE COMPUTATION
 // ------------------------------
-const constructionStages: [string, string][] = [
-  ["Initial Advance", "₹2,00,000"],
-  ["Balance Advance (9%)", "9%"],
-  ["Agreement (within 30 days)", "11%"],
-  ["Completion of Excavation", "10%"],
-  ["Completion of Foundation", "15%"],
-  ["Ground/Stilt Slab", "7%"],
-  ["3rd Floor Slab", "7%"],
-  ["6th Floor Slab", "7%"],
-  ["9th Floor Slab", "7%"],
-  ["Terrace Slab", "7%"],
-  ["Flooring Completion", "5%"],
-  ["External Windows", "5%"],
-  ["Lift Erection Start", "5%"],
-  ["Possession", "5%"],
-];
-
-// ------------------------------
-// FIXED: PAYMENT PLAN
-// ------------------------------
-const paymentPlans = [
+const priceComponents = [
   {
-    title: "Construction-Linked Plan",
-    desc: "Phase IV provides a milestone-based payment structure.",
-    bullets: [
-      "Pay as per construction progress",
-      "Lower initial burden",
-      "RERA compliant billing",
+    title: "Sales Consideration",
+    points: [
+      "Flat/Unit Cost (Size × Base Rate)",
+      "Club Development Charges – ₹3 Lakhs",
+      "Premium Location Charges",
+      "Floor Rise Charges",
+      "Car Park Charges",
+    ],
+  },
+  {
+    title: "GST on Sale Consideration",
+    points: [
+      "Applicable as per IT Act",
+      "Calculated on every milestone invoice",
+    ],
+  },
+  {
+    title: "Other / Possession Related Charges",
+    points: [
+      "Advance Maintenance (Actuals)",
+      "Infrastructure Charges (Electricity & Water)",
+      "Corpus Fund",
+      "Legal Charges",
+      "Modifications (if applicable)",
+      "Stamp/Share/Registration Paper Fee (if any)",
+      "GST on other charges",
+    ],
+  },
+  {
+    title: "Stamp Duty & Registration",
+    points: [
+      "Payable at actuals",
+      "As per prevailing government rates",
     ],
   },
 ];
 
+// ------------------------------
+// GRID 2 — PAYMENT PLAN
+// ------------------------------
+const paymentStages = [
+  {
+    title: "Agreement Stage — 20%",
+    percentage: "20%",
+    expandable: true,
+    items: [
+      "Initial Advance – ₹2,00,000",
+      "Balance Advance – 9%",
+      "Post Agreement Execution – 11%",
+    ],
+  },
+  {
+    title: "Excavation of Building — 10%",
+    percentage: "10%",
+    expandable: false,
+  },
+  {
+    title: "Foundation of Building — 15%",
+    percentage: "15%",
+    expandable: false,
+  },
+  {
+    title: "Building Completion — 35%",
+    percentage: "35%",
+    expandable: true,
+    items: [
+      "Ground/Stilt Floor Slab – 7%",
+      "Third Floor Slab – 7%",
+      "Sixth Floor Slab – 7%",
+      "Ninth Floor Slab – 7%",
+      "Terrace Slab – 7%",
+    ],
+  },
+  {
+    title: "Unit Completion — 15%",
+    percentage: "15%",
+    expandable: true,
+    items: [
+      "Flooring Completion – 5%",
+      "External Windows – 5%",
+      "Lift Erection Start – 5%",
+    ],
+  },
+  {
+    title: "Possession — 5%",
+    percentage: "5%",
+    expandable: false,
+  },
+];
+
 const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
-  // Fade-in effect
-  useEffect(() => {
-    const elements = document.querySelectorAll(".fade-up");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("fade-up-active");
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  // Section tracking
-  useEffect(() => {
-    const el = document.getElementById("payment-plans");
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          trackGA("section_view", "PaymentPlans");
-          trackMeta("SectionView", "PaymentPlans");
-        }
-      },
-      { threshold: 0.4 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  // ------------------------------
-  // CTA handler
-  // ------------------------------
-  const handleCTA = (label: string) => {
-    trackGA("cta_click", label);
-    trackMeta("CTA_Clicked", label);
-    onCtaClick();
-  };
-
-  // ------------------------------
-  // PRICE GRID
-  // ------------------------------
-  const pricingGrid = [
-    {
-      title: "Sales Consideration",
-      points: [
-        "Flat/Unit Cost (Size × Base Rate)",
-        "Club Development Charges – ₹3 Lakhs",
-        "Premium Location Charges",
-        "Floor Rise Charges",
-        "Car Park Charges",
-      ],
-    },
-    {
-      title: "GST on Sale Consideration",
-      points: ["As per IT Act", "Applicable during each invoice"],
-    },
-    {
-      title: "Other / Possession Charges",
-      points: [
-        "Advanced Maintenance (Actuals)",
-        "Infra Charges (Electricity & Water)",
-        "Corpus Fund",
-        "Legal Charges",
-        "Modifications (if any)",
-        "Stamp / Share Fees",
-        "GST on other charges",
-      ],
-    },
-    {
-      title: "Stamp Duty & Registration",
-      points: ["Charged at actuals", "As per government rates"],
-    },
-  ];
+  const [openPriceIndex, setOpenPriceIndex] = useState<number | null>(null);
+  const [openPaymentIndex, setOpenPaymentIndex] = useState<number | null>(null);
 
   return (
-    <section
-      id="payment-plans"
-      className="py-24 lg:py-36 bg-gradient-to-b from-muted/40 via-background to-muted/20 relative overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-[url('/textures/soft-noise.png')] opacity-10"></div>
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="payment-plans" className="py-24 lg:py-36 bg-background">
+      <div className="container mx-auto px-4">
 
         {/* HEADER */}
-        <div className="text-center max-w-3xl mx-auto mb-20 fade-up">
-          <img
-            src="https://www.providenthousing.com/wp-content/themes/provident/assets/images/key-house-img.png"
-            alt="Payment Plans"
-            className="mx-auto w-40 h-auto mb-6 animate-floating"
-          />
-
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl lg:text-6xl font-extrabold mb-5 text-foreground">
-            Pricing &
-            <span className="bg-gradient-to-r from-primary to-yellow-400 bg-clip-text text-transparent">
-              {" "}
-              Payment Plans
-            </span>
+            Pricing &{" "}
+            <span className="text-primary">Payment Plans</span>
           </h2>
-
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Transparent costing • Flexible payment options • Complete loan support
+          <p className="text-lg text-muted-foreground">
+            Transparent costing • Flexible payment structure • RERA compliant
           </p>
         </div>
 
-        {/* ------------------------------ */}
-        {/* PRICE COMPUTATION GRID         */}
-        {/* ------------------------------ */}
-        <div className="mb-24 fade-up">
-          <h3 className="text-3xl font-bold mb-6">Price Computation — What’s Included</h3>
+        {/* GRID 1 — PRICE COMPUTATION */}
+        <div className="mb-20">
+          <h3 className="text-3xl font-bold mb-6">Price Computation</h3>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pricingGrid.map((item, idx) => (
-              <div
-                key={idx}
-                className="glass-card p-7 rounded-2xl border shadow-lg hover:shadow-2xl transition backdrop-blur-md"
-                onClick={() => {
-                  trackGA("pricing_card_click", item.title);
-                  trackMeta("PricingCardClick", item.title);
-                }}
-              >
-                <h4 className="text-xl font-semibold mb-3">{item.title}</h4>
+            {priceComponents.map((comp, i) => {
+              const isOpen = openPriceIndex === i;
+              return (
+                <div
+                  key={i}
+                  className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-lg transition"
+                >
+                  <button
+                    className="w-full flex items-center justify-between"
+                    onClick={() => setOpenPriceIndex(isOpen ? null : i)}
+                  >
+                    <h4 className="text-xl font-semibold">{comp.title}</h4>
+                    {isOpen ? (
+                      <ChevronUp className="text-primary" />
+                    ) : (
+                      <ChevronDown className="text-primary" />
+                    )}
+                  </button>
 
-                <ul className="space-y-2 text-muted-foreground">
-                  {item.points.map((p, i) => (
-                    <li key={i} className="flex gap-2">
-                      <CheckCircle className="text-primary w-4 h-4 mt-1" /> {p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                  {isOpen && (
+                    <ul className="mt-4 space-y-2 text-muted-foreground">
+                      {comp.points.map((p, idx) => (
+                        <li key={idx} className="flex gap-2">
+                          <CheckCircle className="text-primary w-4 h-4 mt-1" />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* ------------------------------ */}
-        {/* PAYMENT OPTIONS GRID           */}
-        {/* ------------------------------ */}
-        <div className="mb-24 fade-up">
-          <h3 className="text-3xl font-bold mb-6">Payment Options</h3>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {paymentPlans.map((plan, idx) => (
-              <div
-                key={idx}
-                className="glass-card p-10 rounded-3xl border shadow-lg hover:shadow-2xl transition backdrop-blur-md"
-                onClick={() => {
-                  trackGA("payment_plan_click", plan.title);
-                  trackMeta("PaymentPlanClick", plan.title);
-                }}
-              >
-                <h4 className="text-2xl font-bold mb-3">{plan.title}</h4>
-
-                <p className="text-muted-foreground mb-5">{plan.desc}</p>
-
-                <ul className="space-y-2 mb-4">
-                  {plan.bullets.map((b, i) => (
-                    <li key={i}>• {b}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ------------------------------ */}
-        {/* PAYMENT TIMELINE GRID          */}
-        {/* ------------------------------ */}
-        <div className="mb-24 fade-up">
-          <h3 className="text-3xl font-bold mb-6">Construction-Linked Payment Schedule</h3>
+        {/* GRID 2 — PAYMENT PLAN */}
+        <div className="mb-20">
+          <h3 className="text-3xl font-bold mb-6">Construction-Linked Payment Plan</h3>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {constructionStages.map(([stage, value], i) => (
-              <div
-                key={i}
-                className="bg-card border rounded-xl p-6 shadow-sm hover:shadow-lg transition pl-6 relative"
-                onClick={() => {
-                  trackGA("construction_stage_click", stage);
-                  trackMeta("ConstructionStageClick", stage);
-                }}
-              >
-                <div className="absolute left-0 top-0 h-full w-1 bg-primary/80 rounded-l-xl"></div>
+            {paymentStages.map((stage, i) => {
+              const isOpen = openPaymentIndex === i;
 
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-foreground">{stage}</span>
-                  <span className="text-primary font-semibold">{value}</span>
+              return (
+                <div
+                  key={i}
+                  className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-lg transition"
+                >
+                  <button
+                    className="w-full flex items-center justify-between"
+                    onClick={() =>
+                      stage.expandable
+                        ? setOpenPaymentIndex(isOpen ? null : i)
+                        : null
+                    }
+                  >
+                    <h4 className="text-xl font-semibold">{stage.title}</h4>
+                    <span className="text-primary font-bold">{stage.percentage}</span>
+
+                    {stage.expandable &&
+                      (isOpen ? (
+                        <ChevronUp className="text-primary ml-4" />
+                      ) : (
+                        <ChevronDown className="text-primary ml-4" />
+                      ))}
+                  </button>
+
+                  {isOpen && stage.items && (
+                    <ul className="mt-4 space-y-2 text-muted-foreground">
+                      {stage.items.map((p, idx) => (
+                        <li key={idx} className="flex gap-2">
+                          <CheckCircle className="text-primary w-4 h-4 mt-1" />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <p className="text-sm text-muted-foreground mt-4">
-            *GST extra as applicable. Billing happens milestone-wise.
+            *GST extra as applicable. Billing is milestone-driven.
           </p>
         </div>
 
         {/* CTA */}
-        <div className="text-center fade-up">
-          <div onClick={() => handleCTA("PaymentPlansCTA")} className="inline-block">
-            <CTAButtons onFormOpen={onCtaClick} />
-          </div>
+        <div className="text-center">
+          <CTAButtons onFormOpen={onCtaClick} />
         </div>
       </div>
-
-      {/* Animations */}
-      <style>
-        {`
-          .animate-floating {
-            animation: float 5s ease-in-out infinite;
-          }
-          @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-            100% { transform: translateY(0); }
-          }
-
-          .glass-card {
-            background: rgba(255,255,255,0.75);
-          }
-          html.dark .glass-card {
-            background: rgba(40,40,40,0.45);
-          }
-
-          .fade-up { opacity:0; transform:translateY(40px); transition:all 0.7s ease; }
-          .fade-up-active { opacity:1; transform:translateY(0); }
-        `}
-      </style>
     </section>
   );
 };
