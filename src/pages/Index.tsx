@@ -6,6 +6,7 @@ import Location from "@/components/Location";
 import FloorPlansTabs from "@/components/FloorPlansTabs";
 import Amenities from "@/components/Amenities";
 import Views from "@/components/Views";
+import PaymentPlans from "@/components/PaymentPlans";
 import CustomerSpeaks from "@/components/CustomerSpeaks";
 import Brochure from "@/components/Brochure";
 import ProvidentSection from "@/components/ProvidentSection";
@@ -57,6 +58,10 @@ const Index = () => {
 
 <div id="construction-status">
   <ConstructionStatus onCtaClick={openForm} />
+</div>
+
+<div id="payment-plans">
+  <PaymentPlans onCtaClick={openForm} />
 </div>
 
 <div id="testimonials">
