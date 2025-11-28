@@ -6,27 +6,26 @@ interface PaymentPlansProps {
   onCtaClick: () => void;
 }
 
-// ---------------------
-// TRACKING HELPERS
-// ---------------------
+/* -------------------------------------------------------
+   Tracking Helpers
+------------------------------------------------------- */
 const trackGA = (event: string, label: string) => {
-  if (typeof (window as any).gtag === "function") {
+  if ((window as any).gtag) {
     (window as any).gtag("event", event, {
       event_category: "engagement",
       event_label: label,
     });
   }
 };
-
 const trackMeta = (event: string, label: string) => {
-  if (typeof (window as any).fbq === "function") {
+  if ((window as any).fbq) {
     (window as any).fbq("trackCustom", event, { label });
   }
 };
 
-// ------------------------------
-// GRID 1 — PRICE COMPUTATION
-// ------------------------------
+/* -------------------------------------------------------
+   GRID 1 — PRICE COMPUTATION
+------------------------------------------------------- */
 const priceComponents = [
   {
     title: "Sales Consideration",
@@ -42,19 +41,18 @@ const priceComponents = [
     title: "GST on Sale Consideration",
     points: [
       "Applicable as per IT Act",
-      "Paid on milestone invoices",
-      "Ready-to-Move Homes: 0% GST",
-      "Under-Construction Homes: 5% GST",
+      "Milestone-based billing",
+      "Ready-to-Move: 0% GST",
+      "Under-Construction: 5% GST",
     ],
   },
   {
     title: "Other / Possession Charges",
     points: [
-      "Advance Maintenance – approx ₹6 per SFT",
-      "Infrastructure Charges (Electricity + Water)",
+      "Advance Maintenance – approx ₹6/SFT/month",
+      "Electricity + Water Infra Charges",
       "Corpus Fund: 0/-",
-      "Legal Charges – approx ₹50,000",
-      "Modifications (if applicable)",
+      "Legal Charges: approx ₹50,000",
       "Stamp/Share Papers (if applicable)",
       "GST @ 18% on other charges",
     ],
@@ -62,39 +60,43 @@ const priceComponents = [
   {
     title: "Stamp Duty & Registration",
     points: [
-      "Stamp Duty – 5%",
-      "Cess – 10% on stamp duty",
-      "Surcharge – 2%",
-      "Registration Fee – 2%",
-      "Total typically ~7.6% of Agreement Value",
+      "Stamp Duty: 5%",
+      "Cess: 10% of stamp duty",
+      "Surcharge: 2% of stamp duty",
+      "Registration: 2%",
+      "Approx 7.6% of Agreement Value",
       "Payable at actuals",
     ],
   },
 ];
 
-// ------------------------------
-// GRID 2 — PAYMENT PLAN
-// ------------------------------
+/* -------------------------------------------------------
+   GRID 2 — PAYMENT SCHEDULE (Vertical Timeline)
+------------------------------------------------------- */
 const paymentStages = [
   {
-    title: "Agreement Stage — 20%",
-    percentage: "20%",
+    title: "Agreement Stage",
+    percent: "20%",
     expandable: true,
-    items: ["Initial Advance – ₹2,00,000", "Balance Advance – 9%", "Agreement Execution – 11%"],
+    items: [
+      "Initial Advance – ₹2,00,000",
+      "Balance Advance – 9%",
+      "Agreement Execution – 11%",
+    ],
   },
   {
-    title: "Excavation Complete — 10%",
-    percentage: "10%",
+    title: "Excavation Complete",
+    percent: "10%",
     expandable: false,
   },
   {
-    title: "Foundation Complete — 15%",
-    percentage: "15%",
+    title: "Foundation Complete",
+    percent: "15%",
     expandable: false,
   },
   {
-    title: "Structure Complete — 35%",
-    percentage: "35%",
+    title: "Structure Completion",
+    percent: "35%",
     expandable: true,
     items: [
       "Ground/Stilt Slab – 7%",
@@ -105,67 +107,92 @@ const paymentStages = [
     ],
   },
   {
-    title: "Unit Completion — 15%",
-    percentage: "15%",
+    title: "Unit Completion",
+    percent: "15%",
     expandable: true,
-    items: ["Flooring – 5%", "External Windows – 5%", "Lift Erection – 5%"],
+    items: [
+      "Flooring Completion – 5%",
+      "External Windows – 5%",
+      "Lift Erection – 5%",
+    ],
   },
   {
-    title: "Possession — 5%",
-    percentage: "5%",
+    title: "Possession",
+    percent: "5%",
     expandable: false,
   },
 ];
 
+/* -------------------------------------------------------
+   EMI Calculator Widget (Simple 3-variable EMI formula)
+------------------------------------------------------- */
+const calculateEMI = (principal: number, rate: number, tenure: number) => {
+  const monthlyRate = rate / 12 / 100;
+  const emi =
+    (principal * monthlyRate * Math.pow(1 + monthlyRate, tenure)) /
+    (Math.pow(1 + monthlyRate, tenure) - 1);
+
+  return Math.round(emi);
+};
+
+/* -------------------------------------------------------
+   COMPONENT
+------------------------------------------------------- */
 const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
-  const [openPriceIndex, setOpenPriceIndex] = useState<number | null>(null);
-  const [openPayIndex, setOpenPayIndex] = useState<number | null>(null);
+  const [openPrice, setOpenPrice] = useState<number | null>(null);
+  const [openSchedule, setOpenSchedule] = useState<number | null>(null);
+
+  /* EMI State */
+  const [loan, setLoan] = useState(6000000); // 60L default
+  const [roi, setRoi] = useState(8.5); // 8.5%
+  const [tenure, setTenure] = useState(240); // 20 years
+
+  const emi = calculateEMI(loan, roi, tenure);
 
   return (
     <section id="payment-plans" className="py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4">
 
-        {/* HEADER */}
+        {/* ---------------- HEADER ---------------- */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <h2 className="text-4xl lg:text-5xl font-extrabold mb-3 text-foreground">
             Pricing & <span className="text-primary">Payment Plans</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Transparent pricing • Simple breakdown • RERA compliant
+            Two transparent widgets • One simple decision
           </p>
         </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* GRID 1: PRICE COMPUTATION */}
-        {/* ---------------------------------------------------------------- */}
-        <div className="mb-20">
-          <h3 className="text-2xl font-bold mb-4">1. Price Computation</h3>
+        {/* ------------------------------------------------------------------ */}
+        {/* --------------------- MAIN 2-WIDGET LAYOUT ------------------------ */}
+        {/* ------------------------------------------------------------------ */}
+        <div className="grid lg:grid-cols-2 gap-12">
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {priceComponents.map((comp, index) => {
-              const open = openPriceIndex === index;
+          {/* ================= GRID 1 — PRICING =================== */}
+          <div className="bg-card border rounded-2xl p-6 shadow-md">
+            <h3 className="text-2xl font-bold mb-4">Pricing Computation</h3>
+
+            {priceComponents.map((section, i) => {
+              const open = openPrice === i;
 
               return (
-                <div
-                  key={index}
-                  className="bg-card border rounded-xl p-5 shadow-sm hover:shadow-md transition"
-                >
+                <div key={i} className="border rounded-xl p-4 mb-4">
                   <button
                     className="w-full flex justify-between items-center"
                     onClick={() => {
-                      setOpenPriceIndex(open ? null : index);
-                      trackGA("price_component_click", comp.title);
-                      trackMeta("PriceComponentClick", comp.title);
+                      setOpenPrice(open ? null : i);
+                      trackGA("price_open", section.title);
+                      trackMeta("PriceOpen", section.title);
                     }}
                   >
-                    <h4 className="font-semibold text-lg text-foreground">{comp.title}</h4>
+                    <span className="font-semibold">{section.title}</span>
                     {open ? <ChevronUp /> : <ChevronDown />}
                   </button>
 
                   {open && (
-                    <ul className="mt-4 space-y-2 text-muted-foreground text-sm">
-                      {comp.points.map((p, i) => (
-                        <li key={i} className="flex gap-2">
+                    <ul className="mt-3 space-y-2 text-muted-foreground text-sm">
+                      {section.points.map((p, idx) => (
+                        <li key={idx} className="flex gap-2">
                           <CheckCircle className="w-4 h-4 text-primary mt-0.5" />
                           {p}
                         </li>
@@ -175,61 +202,116 @@ const PaymentPlans = ({ onCtaClick }: PaymentPlansProps) => {
                 </div>
               );
             })}
+          </div>
+
+          {/* ================= GRID 2 — PAYMENT SCHEDULE =================== */}
+          <div className="bg-card border rounded-2xl p-6 shadow-md">
+            <h3 className="text-2xl font-bold mb-4">Construction Payment Schedule</h3>
+
+            <div className="relative pl-6 border-l-2 border-primary/40">
+              {paymentStages.map((stage, i) => {
+                const open = openSchedule === i;
+
+                return (
+                  <div key={i} className="mb-6 relative">
+                    {/* Vertical timeline dot */}
+                    <div className="w-3 h-3 bg-primary rounded-full absolute -left-[9px] top-1" />
+
+                    <button
+                      className="w-full flex justify-between items-center"
+                      onClick={() =>
+                        stage.expandable
+                          ? setOpenSchedule(open ? null : i)
+                          : null
+                      }
+                    >
+                      <span className="font-semibold">{stage.title}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-primary font-bold">{stage.percent}</span>
+
+                        {stage.expandable &&
+                          (open ? <ChevronUp /> : <ChevronDown />)}
+                      </div>
+                    </button>
+
+                    {open && stage.items && (
+                      <ul className="mt-2 ml-2 space-y-2 text-muted-foreground text-sm">
+                        {stage.items.map((p, idx) => (
+                          <li key={idx} className="flex gap-2">
+                            <CheckCircle className="w-4 h-4 text-primary mt-1" />
+                            {p}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* GRID 2: PAYMENT PLAN */}
-        {/* ---------------------------------------------------------------- */}
-        <div className="mb-20">
-          <h3 className="text-2xl font-bold mb-4">2. Construction-Linked Payment Schedule</h3>
+        {/* ------------------------------------------------------------------ */}
+        {/* ------------------------ EMI CALCULATOR -------------------------- */}
+        {/* ------------------------------------------------------------------ */}
+        <div className="mt-20 bg-card border rounded-2xl p-6 shadow-md max-w-3xl mx-auto">
+          <h3 className="text-2xl font-bold mb-4 text-center">EMI Calculator</h3>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {paymentStages.map((stage, index) => {
-              const open = openPayIndex === index;
+          <div className="space-y-6">
+            {/* Loan Amount */}
+            <div>
+              <label className="font-semibold">Loan Amount (₹)</label>
+              <input
+                type="range"
+                min={500000}
+                max={20000000}
+                step={50000}
+                value={loan}
+                onChange={(e) => setLoan(Number(e.target.value))}
+                className="w-full"
+              />
+              <p className="text-sm mt-1">₹ {loan.toLocaleString()}</p>
+            </div>
 
-              return (
-                <div
-                  key={index}
-                  className="bg-card border rounded-xl p-5 shadow-sm hover:shadow-md transition"
-                >
-                  <button
-                    className="w-full flex justify-between items-center"
-                    onClick={() => {
-                      if (stage.expandable) setOpenPayIndex(open ? null : index);
-                      trackGA("payment_stage_click", stage.title);
-                      trackMeta("PaymentStageClick", stage.title);
-                    }}
-                  >
-                    <h4 className="font-semibold text-lg text-foreground">{stage.title}</h4>
-                    <div className="flex items-center gap-3">
-                      <span className="text-primary font-bold">{stage.percentage}</span>
-                      {stage.expandable && (open ? <ChevronUp /> : <ChevronDown />)}
-                    </div>
-                  </button>
+            {/* ROI */}
+            <div>
+              <label className="font-semibold">Rate of Interest (%)</label>
+              <input
+                type="range"
+                min={7}
+                max={12}
+                step={0.1}
+                value={roi}
+                onChange={(e) => setRoi(Number(e.target.value))}
+                className="w-full"
+              />
+              <p className="text-sm mt-1">{roi}%</p>
+            </div>
 
-                  {open && stage.items && (
-                    <ul className="mt-4 space-y-2 text-muted-foreground text-sm">
-                      {stage.items.map((p, i) => (
-                        <li key={i} className="flex gap-2">
-                          <CheckCircle className="w-4 h-4 text-primary mt-0.5" />
-                          {p}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              );
-            })}
+            {/* Tenure */}
+            <div>
+              <label className="font-semibold">Tenure (Months)</label>
+              <input
+                type="range"
+                min={60}
+                max={360}
+                step={12}
+                value={tenure}
+                onChange={(e) => setTenure(Number(e.target.value))}
+                className="w-full"
+              />
+              <p className="text-sm mt-1">{tenure} months</p>
+            </div>
+
+            {/* EMI Result */}
+            <div className="text-center text-2xl font-bold text-primary mt-6">
+              EMI: ₹ {emi.toLocaleString()}
+            </div>
           </div>
-
-          <p className="text-xs text-muted-foreground mt-4">
-            *GST extra as applicable. Billing is strictly milestone-based.
-          </p>
         </div>
 
         {/* CTA */}
-        <div className="text-center">
+        <div className="text-center mt-12">
           <CTAButtons onFormOpen={onCtaClick} />
         </div>
       </div>
