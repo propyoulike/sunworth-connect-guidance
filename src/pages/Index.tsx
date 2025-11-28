@@ -113,6 +113,8 @@ const Index = () => {
           <p className="text-background/80 mb-6">
             Your family's brighter everyday
           </p>
+          <p>RERA Number: PRM/KA/RERA/1251/310/AG/250811/005899</p>
+          <p>Email: propyolike@gmail.com</p>
           <p className="text-sm text-background/60">
             Disclaimer: All project information, including availability,
             pricing, floor plans, and amenities, is subject to change without
