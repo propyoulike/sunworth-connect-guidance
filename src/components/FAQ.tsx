@@ -154,17 +154,6 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
             >
               Pricing and Payments Section
             </button>
-
-            <button
-              className="text-blue-600 underline"
-              onClick={() => {
-                openLeadForm();
-                trackCtaClick("Payment Plan Lead Form");
-              }}
-            >
-              Lead Form
-            </button>
-            .
           </p>
         </div>
       ),
@@ -254,4 +243,5 @@ const FAQ = ({ openLeadForm }: FAQProps) => {
 };
 
 export default FAQ;
+
 
