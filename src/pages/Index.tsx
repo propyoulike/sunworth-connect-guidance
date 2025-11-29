@@ -18,7 +18,6 @@ import ProvidentSection from "@/components/ProvidentSection";
 import FAQ from "@/components/FAQ";
 
 import LeadFormModal from "@/components/LeadFormModal";
-// import StickyMobileCTA from "@/components/StickyMobileCTA";
 
 const Index = ({ trackEvent }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -33,27 +32,47 @@ const Index = ({ trackEvent }) => {
   return (
     <div className="min-h-screen smooth-scroll">
 
-      {/* ======================= HERO ======================= */}
+      {/* HERO */}
       <section id="hero-section">
-        <Hero onCtaClick={openForm} />
+        <Hero
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "Hero", page: "Sunworth" });
+            openForm("Hero");
+          }}
+        />
       </section>
 
-      {/* ======================= NAVBAR (Sticky) ======================= */}
+      {/* NAVBAR */}
       <div id="navbar-anchor">
-        <Navbar onCtaClick={openForm} />
+        <Navbar
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "Navbar", page: "Sunworth" });
+            openForm("Navbar");
+          }}
+        />
       </div>
 
-      {/* ======================= PROJECT SUMMARY ======================= */}
+      {/* PROJECT SUMMARY */}
       <section id="project-summary" className="scroll-mt-24">
-        <ProjectSummary onCtaClick={openForm} />
+        <ProjectSummary
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "ProjectSummary", page: "Sunworth" });
+            openForm("ProjectSummary");
+          }}
+        />
       </section>
 
-      {/* ======================= FLOOR PLANS ======================= */}
+      {/* FLOOR PLANS */}
       <section id="floor-plans" className="scroll-mt-24 py-20 lg:py-28">
-        <FloorPlansTabs onCtaClick={openForm} />
+        <FloorPlansTabs
+          onCtaClick={(unitType) => {
+            trackEvent("floorplan_interest", { unitType, page: "Sunworth" });
+            openForm(`Floorplan-${unitType}`);
+          }}
+        />
       </section>
 
-      {/* ======================= HOME SIZE ADVISOR ======================= */}
+      {/* HOME SIZE ADVISOR */}
       <section
         id="home-size-advisor"
         className="py-20 lg:py-28 bg-[#F5F7FA] scroll-mt-24"
@@ -73,60 +92,117 @@ const Index = ({ trackEvent }) => {
         </div>
       </section>
 
-      {/* ======================= LOCATION ======================= */}
+      {/* LOCATION */}
       <section id="location" className="scroll-mt-24">
-        <Location onCtaClick={openForm} />
+        <Location
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "Location", page: "Sunworth" });
+            openForm("Location");
+          }}
+        />
       </section>
 
-      {/* ======================= AMENITIES ======================= */}
+      {/* AMENITIES */}
       <section id="amenities" className="scroll-mt-24">
-        <Amenities onCtaClick={openForm} />
+        <Amenities
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "Amenities", page: "Sunworth" });
+            openForm("Amenities");
+          }}
+        />
       </section>
 
-      {/* ======================= VIEWS ======================= */}
+      {/* VIEWS */}
       <section id="views" className="scroll-mt-24">
-        <Views onCtaClick={openForm} />
+        <Views
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "Views", page: "Sunworth" });
+            openForm("Views");
+          }}
+        />
       </section>
 
-      {/* ======================= CONSTRUCTION STATUS ======================= */}
+      {/* CONSTRUCTION STATUS */}
       <section id="construction-status" className="scroll-mt-24">
-        <ConstructionStatus onCtaClick={openForm} />
+        <ConstructionStatus
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "ConstructionStatus", page: "Sunworth" });
+            openForm("ConstructionStatus");
+          }}
+        />
       </section>
 
-      {/* ======================= PAYMENT PLANS ======================= */}
+      {/* PAYMENT PLANS */}
       <section id="payment-plans" className="scroll-mt-24">
-        <PaymentPlans onCtaClick={openForm} />
+        <PaymentPlans
+          onCtaClick={(plan) => {
+            trackEvent("cta_click", { source: "PaymentPlans", plan, page: "Sunworth" });
+            openForm("PaymentPlans");
+          }}
+        />
       </section>
 
-      {/* ======================= LOAN ELIGIBILITY + AFFORDABILITY ======================= */}
+      {/* LOAN ELIGIBILITY */}
       <section id="loan-eligibility" className="scroll-mt-24">
-        <LoanEligibilityWidget onCtaClick={openForm} />
+        <LoanEligibilityWidget
+          onCtaClick={(loanData) => {
+            trackEvent("loan_submitted", { ...loanData, page: "Sunworth" });
+            openForm("LoanEligibility");
+          }}
+        />
       </section>
 
-      {/* ======================= TESTIMONIALS ======================= */}
+      {/* TESTIMONIALS */}
       <section id="testimonials" className="scroll-mt-24">
-        <CustomerSpeaks onCtaClick={openForm} />
+        <CustomerSpeaks
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "Testimonials", page: "Sunworth" });
+            openForm("Testimonials");
+          }}
+        />
       </section>
 
-      {/* ======================= BROCHURE ======================= */}
+      {/* BROCHURE DOWNLOAD */}
       <section id="brochure" className="scroll-mt-24">
-        <Brochure onCtaClick={openForm} />
+        <Brochure
+          onCtaClick={() => {
+            trackEvent("brochure_download", { page: "Sunworth" });
+          }}
+        />
       </section>
 
-      {/* ======================= ABOUT PROVIDENT ======================= */}
+      {/* PROVIDENT SECTION */}
       <section id="about-provident" className="scroll-mt-24">
-        <ProvidentSection onCtaClick={openForm} />
+        <ProvidentSection
+          onCtaClick={() => {
+            trackEvent("cta_click", { source: "ProvidentSection", page: "Sunworth" });
+            openForm("ProvidentSection");
+          }}
+        />
       </section>
 
-      {/* ======================= FAQ ======================= */}
+      {/* FAQ */}
       <section id="faq" className="scroll-mt-24">
-        <FAQ openLeadForm={openForm} />
+        <FAQ
+          openLeadForm={() => {
+            trackEvent("cta_click", { source: "FAQ", page: "Sunworth" });
+            openForm("FAQ");
+          }}
+        />
       </section>
 
-      {/* ======================= LEAD FORM MODAL ======================= */}
-      <LeadFormModal open={isFormOpen} onOpenChange={setIsFormOpen} />
+      {/* LEAD FORM MODAL */}
+      <LeadFormModal
+        open={isFormOpen}
+        onOpenChange={(open) => {
+          setIsFormOpen(open);
+          if (open && typeof trackEvent === "function") {
+            trackEvent("lead_form_opened", { source: "LeadFormModal", page: "Sunworth" });
+          }
+        }}
+      />
 
-      {/* ======================= FOOTER ======================= */}
+      {/* FOOTER */}
       <footer className="bg-foreground text-background py-12 mt-20">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-2xl font-bold mb-2">Provident Sunworth</h3>
@@ -160,6 +236,7 @@ const Index = ({ trackEvent }) => {
           </p>
         </div>
       </footer>
+
     </div>
   );
 };
