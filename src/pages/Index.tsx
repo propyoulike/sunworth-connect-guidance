@@ -20,10 +20,15 @@ import FAQ from "@/components/FAQ";
 import LeadFormModal from "@/components/LeadFormModal";
 // import StickyMobileCTA from "@/components/StickyMobileCTA";
 
-const Index = () => {
+const Index = ({ trackEvent }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const openForm = () => setIsFormOpen(true);
+  const openForm = (source) => {
+    if (typeof trackEvent === "function") {
+      trackEvent("lead_form_opened", { source, page: "Sunworth" });
+    }
+    setIsFormOpen(true);
+  };
 
   return (
     <div className="min-h-screen smooth-scroll">
