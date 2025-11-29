@@ -195,11 +195,12 @@ const Index = ({ trackEvent }) => {
       <LeadFormModal
         open={isFormOpen}
         onOpenChange={(open) => {
-          setIsFormOpen(open);
+        setIsFormOpen(open);
           if (open && typeof trackEvent === "function") {
-            trackEvent("lead_form_opened", { source: "LeadFormModal", page: "Sunworth" });
-          }
+        trackEvent("lead_form_opened", { source: "LeadFormModal", page: "Sunworth" });
+        }
         }}
+        trackEvent={trackEvent}   // <-- REQUIRED
       />
 
       {/* FOOTER */}
