@@ -12,9 +12,21 @@ import LeadForm from "./LeadForm";
 interface LeadFormModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  trackEvent?: (eventName: string, eventData?: any) => void;  // <-- ADDED
 }
 
-const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
+const LeadFormModal = ({ open, onOpenChange, trackEvent }: LeadFormModalProps) => {
+
+  // -------- Fire tracking when modal opens --------
+  useEffect(() => {
+    if (open && typeof trackEvent === "function") {
+      trackEvent("lead_form_opened", {
+        source: "LeadFormModal",
+        page: "Sunworth",
+      });
+    }
+  }, [open]);
+
   // -------- Ensure body scroll unlock on close --------
   useEffect(() => {
     if (!open) {
@@ -24,7 +36,6 @@ const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* FORCE MODAL TO RENDER AT ROOT LEVEL */}
       <DialogPortal>
         <DialogContent
           className="
@@ -42,7 +53,7 @@ const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
             bg-background
             shadow-xl
 
-            z-[999999]   /* TOPMOST LAYER */
+            z-[999999]
           "
         >
           {/* Mobile-friendly Close Button */}
@@ -67,7 +78,11 @@ const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
             </DialogTitle>
           </DialogHeader>
 
-          <LeadForm onSuccess={() => onOpenChange(false)} />
+          {/* Pass trackEvent into LeadForm */}
+          <LeadForm
+            trackEvent={trackEvent}
+            onSuccess={() => onOpenChange(false)}
+          />
         </DialogContent>
       </DialogPortal>
     </Dialog>
