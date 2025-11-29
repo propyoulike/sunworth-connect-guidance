@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
-// ---------- Validation Schema ----------
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
@@ -29,9 +28,10 @@ type FormData = z.infer<typeof formSchema>;
 interface LeadFormProps {
   className?: string;
   onSuccess?: () => void;
+  trackEvent?: (eventName: string, eventData?: any) => void;  // <-- added
 }
 
-const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
+const LeadForm = ({ className = "", onSuccess, trackEvent }: LeadFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -46,20 +46,6 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
     defaultValues: { bhkPreference: "" },
   });
 
-  // ---------- GA / Meta Tracking ----------
-  const trackConversion = () => {
-    if (typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "conversion", {
-        send_to: "AW-17754016716/abcd1234",
-        event_category: "lead_form",
-        event_label: "Provident_Sunworth_Lead",
-      });
-    }
-    if (typeof (window as any).fbq === "function") {
-      (window as any).fbq("track", "Lead");
-    }
-  };
-
   // ---------- WhatsApp Message Builder ----------
   const generateWhatsAppUrl = (data: FormData) =>
     `https://wa.me/919379822010?text=${encodeURIComponent(
@@ -71,9 +57,19 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
     setIsSubmitting(true);
 
     try {
-      trackConversion();
+      // ------ Push final conversion event to GTM ------
+      if (typeof trackEvent === "function") {
+        trackEvent("lead_form_submitted", {
+          page: "Sunworth",
+          source: "LeadFormModal",
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          bhkPreference: data.bhkPreference,
+        });
+      }
 
-      // Send lead to Privyr CRM
+      // ------ Send lead to Privyr CRM ------
       await fetch(
         "https://www.privyr.com/api/v1/incoming-leads/0vZfjMQw/5xrM2juN",
         {
@@ -88,7 +84,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
         }
       );
 
-      // Send email (Resend)
+      // ------ Send notification email (Resend) ------
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -111,7 +107,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
         }),
       });
 
-      // Open WhatsApp
+      // ------ Open WhatsApp ------
       const whatsappUrl = generateWhatsAppUrl(data);
       window.open(whatsappUrl, "_blank");
 
@@ -122,6 +118,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
 
       reset();
       onSuccess?.();
+
     } catch (error) {
       console.error("Lead form error:", error);
 
@@ -161,60 +158,31 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
       </h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-6">
+
         {/* NAME */}
         <div>
           <Label htmlFor="name">Name *</Label>
-          <Input
-            id="name"
-            {...register("name")}
-            placeholder="Your full name"
-            className="mt-1.5"
-          />
-          {errors.name && (
-            <p className="text-sm text-destructive mt-1">
-              {errors.name.message}
-            </p>
-          )}
+          <Input id="name" {...register("name")} placeholder="Your full name" className="mt-1.5" />
+          {errors.name && <p className="text-sm text-destructive mt-1">{errors.name.message}</p>}
         </div>
 
         {/* EMAIL */}
         <div>
           <Label htmlFor="email">Email *</Label>
-          <Input
-            id="email"
-            type="email"
-            {...register("email")}
-            placeholder="Your email"
-            className="mt-1.5"
-          />
-          {errors.email && (
-            <p className="text-sm text-destructive mt-1">
-              {errors.email.message}
-            </p>
-          )}
+          <Input id="email" type="email" {...register("email")} placeholder="Your email" className="mt-1.5" />
+          {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
         </div>
 
         {/* PHONE */}
         <div>
           <Label htmlFor="phone">Phone *</Label>
-          <Input
-            id="phone"
-            type="tel"
-            {...register("phone")}
-            placeholder="Your 10-digit phone number"
-            className="mt-1.5"
-          />
-          {errors.phone && (
-            <p className="text-sm text-destructive mt-1">
-              {errors.phone.message}
-            </p>
-          )}
+          <Input id="phone" type="tel" {...register("phone")} placeholder="Your 10-digit phone number" className="mt-1.5" />
+          {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone.message}</p>}
         </div>
 
-        {/* BHK PREFERENCE (FIXED) */}
+        {/* BHK PREFERENCE */}
         <div>
           <Label>BHK Preference *</Label>
-
           <Controller
             name="bhkPreference"
             control={control}
@@ -232,11 +200,8 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
               </Select>
             )}
           />
-
           {errors.bhkPreference && (
-            <p className="text-sm text-destructive mt-1">
-              {errors.bhkPreference.message}
-            </p>
+            <p className="text-sm text-destructive mt-1">{errors.bhkPreference.message}</p>
           )}
         </div>
 
@@ -250,7 +215,7 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
         </Button>
 
         <p className="text-xs text-muted-foreground text-center leading-relaxed">
-        This enquiry is collected and handled by PropYouLike, a RERA Registered Real Estate Agent (RERA No: PRM/KA/RERA/1251/310/AG/250811/005899).
+          This enquiry is collected and handled by PropYouLike, a RERA Registered Real Estate Agent (RERA No: PRM/KA/RERA/1251/310/AG/250811/005899).
         </p>
       </form>
     </div>
@@ -258,4 +223,3 @@ const LeadForm = ({ className = "", onSuccess }: LeadFormProps) => {
 };
 
 export default LeadForm;
-
