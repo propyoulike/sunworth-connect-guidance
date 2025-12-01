@@ -517,7 +517,7 @@ const LoanEligibilityWidget = ({ onCtaClick }: LoanWidgetProps) => {
                         max={sliderMax}
                         value={tenureYears as any}
                         onChange={(e) => {
-                          let v = e.target.value ? Number(e.target.value) : "";
+                          let v: number | "" = e.target.value ? Number(e.target.value) : "";
                           if (v === "") {
                             setTenureYears("");
                             onInputChange("tenureYears", "");
