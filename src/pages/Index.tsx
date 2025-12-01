@@ -19,13 +19,16 @@ import FAQ from "@/components/FAQ";
 
 import LeadFormModal from "@/components/LeadFormModal";
 
-const Index = ({ trackEvent }) => {
+const Index = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const openForm = (source) => {
-    if (typeof trackEvent === "function") {
-      trackEvent("lead_form_opened", { source, page: "Sunworth" });
-    }
+  // Default trackEvent function
+  const trackEvent = (eventName: string, eventData?: any) => {
+    console.log('Track Event:', eventName, eventData);
+  };
+
+  const openForm = (source: string) => {
+    trackEvent("lead_form_opened", { source, page: "Sunworth" });
     setIsFormOpen(true);
   };
 
@@ -65,9 +68,9 @@ const Index = ({ trackEvent }) => {
       {/* FLOOR PLANS */}
       <section id="floor-plans" className="scroll-mt-24 py-20 lg:py-28">
         <FloorPlansTabs
-          onCtaClick={(unitType) => {
+          onCtaClick={(unitType?: string) => {
             trackEvent("floorplan_interest", { unitType, page: "Sunworth" });
-            openForm(`Floorplan-${unitType}`);
+            openForm(`Floorplan-${unitType || 'unknown'}`);
           }}
         />
       </section>
@@ -135,7 +138,7 @@ const Index = ({ trackEvent }) => {
       {/* PAYMENT PLANS */}
       <section id="payment-plans" className="scroll-mt-24">
         <PaymentPlans
-          onCtaClick={(plan) => {
+          onCtaClick={(plan?: any) => {
             trackEvent("cta_click", { source: "PaymentPlans", plan, page: "Sunworth" });
             openForm("PaymentPlans");
           }}
@@ -145,7 +148,7 @@ const Index = ({ trackEvent }) => {
       {/* LOAN ELIGIBILITY */}
       <section id="loan-eligibility" className="scroll-mt-24">
         <LoanEligibilityWidget
-          onCtaClick={(loanData) => {
+          onCtaClick={(loanData?: any) => {
             trackEvent("loan_submitted", { ...loanData, page: "Sunworth" });
             openForm("LoanEligibility");
           }}
