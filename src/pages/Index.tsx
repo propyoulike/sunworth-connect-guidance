@@ -18,9 +18,13 @@ import ProvidentSection from "@/components/ProvidentSection";
 import FAQ from "@/components/FAQ";
 
 import LeadFormModal from "@/components/LeadFormModal";
+import { useScrollTracking, trackCTAClick } from "@/hooks/useScrollTracking";
 
 const Index = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  // Enable scroll depth and section tracking
+  useScrollTracking();
 
   // Default trackEvent function
   const trackEvent = (eventName: string, eventData?: any) => {
@@ -29,6 +33,7 @@ const Index = () => {
 
   const openForm = (source: string) => {
     trackEvent("lead_form_opened", { source, page: "Sunworth" });
+    trackCTAClick("Get Personalised Guidance", source);
     setIsFormOpen(true);
   };
 
@@ -36,7 +41,7 @@ const Index = () => {
     <div className="min-h-screen smooth-scroll">
 
       {/* HERO */}
-      <section id="hero-section">
+      <section id="hero-section" data-section="hero" data-section-name="Hero Section">
         <Hero
           onCtaClick={() => {
             trackEvent("cta_click", { source: "Hero", page: "Sunworth" });
@@ -56,7 +61,7 @@ const Index = () => {
       </div>
 
       {/* PROJECT SUMMARY */}
-      <section id="project-summary" className="scroll-mt-24">
+      <section id="project-summary" className="scroll-mt-24" data-section="project-summary" data-section-name="Project Summary">
         <ProjectSummary
           onCtaClick={() => {
             trackEvent("cta_click", { source: "ProjectSummary", page: "Sunworth" });
@@ -66,7 +71,7 @@ const Index = () => {
       </section>
 
       {/* FLOOR PLANS */}
-      <section id="floor-plans" className="scroll-mt-24 py-20 lg:py-28">
+      <section id="floor-plans" className="scroll-mt-24 py-20 lg:py-28" data-section="floor-plans" data-section-name="Floor Plans">
         <FloorPlansTabs
           onCtaClick={(unitType?: string) => {
             trackEvent("floorplan_interest", { unitType, page: "Sunworth" });
@@ -79,6 +84,8 @@ const Index = () => {
       <section
         id="home-size-advisor"
         className="py-20 lg:py-28 bg-[#F5F7FA] scroll-mt-24"
+        data-section="home-size-advisor"
+        data-section-name="Home Size Advisor"
       >
         <div className="container mx-auto px-4">
           <h2 className="text-3xl lg:text-5xl font-bold text-center mb-10">
@@ -96,7 +103,7 @@ const Index = () => {
       </section>
 
       {/* LOCATION */}
-      <section id="location" className="scroll-mt-24">
+      <section id="location" className="scroll-mt-24" data-section="location" data-section-name="Location & Connectivity">
         <Location
           onCtaClick={() => {
             trackEvent("cta_click", { source: "Location", page: "Sunworth" });
@@ -106,7 +113,7 @@ const Index = () => {
       </section>
 
       {/* AMENITIES */}
-      <section id="amenities" className="scroll-mt-24">
+      <section id="amenities" className="scroll-mt-24" data-section="amenities" data-section-name="Amenities">
         <Amenities
           onCtaClick={() => {
             trackEvent("cta_click", { source: "Amenities", page: "Sunworth" });
@@ -116,7 +123,7 @@ const Index = () => {
       </section>
 
       {/* VIEWS */}
-      <section id="views" className="scroll-mt-24">
+      <section id="views" className="scroll-mt-24" data-section="views" data-section-name="Views & Gallery">
         <Views
           onCtaClick={() => {
             trackEvent("cta_click", { source: "Views", page: "Sunworth" });
@@ -126,7 +133,7 @@ const Index = () => {
       </section>
 
       {/* CONSTRUCTION STATUS */}
-      <section id="construction-status" className="scroll-mt-24">
+      <section id="construction-status" className="scroll-mt-24" data-section="construction-status" data-section-name="Construction Status">
         <ConstructionStatus
           onCtaClick={() => {
             trackEvent("cta_click", { source: "ConstructionStatus", page: "Sunworth" });
@@ -136,7 +143,7 @@ const Index = () => {
       </section>
 
       {/* PAYMENT PLANS */}
-      <section id="payment-plans" className="scroll-mt-24">
+      <section id="payment-plans" className="scroll-mt-24" data-section="payment-plans" data-section-name="Payment Plans">
         <PaymentPlans
           onCtaClick={(plan?: any) => {
             trackEvent("cta_click", { source: "PaymentPlans", plan, page: "Sunworth" });
@@ -146,7 +153,7 @@ const Index = () => {
       </section>
 
       {/* LOAN ELIGIBILITY */}
-      <section id="loan-eligibility" className="scroll-mt-24">
+      <section id="loan-eligibility" className="scroll-mt-24" data-section="loan-eligibility" data-section-name="Loan Eligibility">
         <LoanEligibilityWidget
           onCtaClick={(loanData?: any) => {
             trackEvent("loan_submitted", { ...loanData, page: "Sunworth" });
@@ -156,7 +163,7 @@ const Index = () => {
       </section>
 
       {/* TESTIMONIALS */}
-      <section id="testimonials" className="scroll-mt-24">
+      <section id="testimonials" className="scroll-mt-24" data-section="testimonials" data-section-name="Customer Testimonials">
         <CustomerSpeaks
           onCtaClick={() => {
             trackEvent("cta_click", { source: "Testimonials", page: "Sunworth" });
@@ -166,7 +173,7 @@ const Index = () => {
       </section>
 
       {/* BROCHURE DOWNLOAD */}
-      <section id="brochure" className="scroll-mt-24">
+      <section id="brochure" className="scroll-mt-24" data-section="brochure" data-section-name="Brochure Download">
         <Brochure
           onCtaClick={() => {
             trackEvent("brochure_download", { page: "Sunworth" });
@@ -175,7 +182,7 @@ const Index = () => {
       </section>
 
       {/* PROVIDENT SECTION */}
-      <section id="about-provident" className="scroll-mt-24">
+      <section id="about-provident" className="scroll-mt-24" data-section="about-provident" data-section-name="About Provident">
         <ProvidentSection
           onCtaClick={() => {
             trackEvent("cta_click", { source: "ProvidentSection", page: "Sunworth" });
@@ -185,7 +192,7 @@ const Index = () => {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="scroll-mt-24">
+      <section id="faq" className="scroll-mt-24" data-section="faq" data-section-name="FAQ">
         <FAQ
           openLeadForm={() => {
             trackEvent("cta_click", { source: "FAQ", page: "Sunworth" });

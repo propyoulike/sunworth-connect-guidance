@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
+import { trackWhatsAppClick, trackCTAClick } from "@/hooks/useScrollTracking";
 
 interface CTAButtonsProps {
   onFormOpen: () => void;
@@ -9,17 +10,8 @@ interface CTAButtonsProps {
 const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
   // ---------------- WhatsApp Click ----------------
   const handleWhatsAppClick = () => {
-    if ((window as any).gtag) {
-      (window as any).gtag("event", "click", {
-        event_category: "WhatsApp",
-        event_label: "Click to WhatsApp",
-      });
-    }
-
-    if ((window as any).fbq) {
-      (window as any).fbq("track", "Contact");
-    }
-
+    trackWhatsAppClick("CTA Buttons");
+    
     window.open(
       "https://wa.me/919379822010?text=Hi,%20I%27d%20like%20to%20know%20more%20about%20Provident%20Sunworth",
       "_blank"
@@ -28,17 +20,7 @@ const CTAButtons = ({ onFormOpen, variant = "default" }: CTAButtonsProps) => {
 
   // ---------------- CTA Click → Open Form ----------------
   const handleFormClick = (buttonType: string) => {
-    if ((window as any).gtag) {
-      (window as any).gtag("event", "cta_click", {
-        event_category: "engagement",
-        event_label: buttonType,
-      });
-    }
-
-    if ((window as any).fbq) {
-      (window as any).fbq("track", "Lead");
-    }
-
+    trackCTAClick(buttonType, "CTA Buttons");
     onFormOpen();
   };
 
