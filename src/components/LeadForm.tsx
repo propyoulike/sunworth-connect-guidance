@@ -66,36 +66,24 @@ const LeadForm = ({ className = "", onSuccess, trackEvent }: LeadFormProps) => {
     setIsSubmitting(true);
 
     try {
-      // ------ Push conversion event to Google Ads & Analytics ------
-      if (typeof window !== "undefined" && (window as any).gtag) {
-        // Google Ads Conversion
-        (window as any).gtag('event', 'conversion', {
-          'send_to': 'AW-17754016716/CONVERSION_LABEL', // Replace CONVERSION_LABEL with your actual label
-          'value': 1.0,
-          'currency': 'INR',
-          'transaction_id': `${Date.now()}-${data.phone}`
-        });
-
-        // GA4 Event
-        (window as any).gtag('event', 'generate_lead', {
-          'event_category': 'Lead',
-          'event_label': 'Form Submission',
-          'bhk_preference': data.bhkPreference,
-          'value': 1
+      // ------ Push all tracking events to GTM dataLayer ------
+      if (typeof window !== "undefined" && window.dataLayer) {
+        // Lead form submission event
+        window.dataLayer.push({
+          event: 'lead_form_submitted',
+          page: 'Sunworth',
+          source: 'LeadFormModal',
+          lead_name: data.name,
+          lead_phone: data.phone,
+          lead_email: data.email,
+          bhk_preference: data.bhkPreference,
+          conversion_value: 1.0,
+          conversion_currency: 'INR',
+          transaction_id: `${Date.now()}-${data.phone}`
         });
       }
 
-      // ------ Facebook Pixel Conversion ------
-      if (typeof window !== "undefined" && (window as any).fbq) {
-        (window as any).fbq('track', 'Lead', {
-          content_name: 'Provident Sunworth Lead Form',
-          content_category: data.bhkPreference,
-          value: 1.0,
-          currency: 'INR'
-        });
-      }
-
-      // ------ Custom tracking event ------
+      // ------ Fallback: Custom tracking event ------
       if (typeof trackEvent === "function") {
         trackEvent("lead_form_submitted", {
           page: "Sunworth",
